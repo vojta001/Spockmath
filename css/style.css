@@ -1,0 +1,151 @@
+/*CSS styl pro obecnou stránku – nepatří sem CSS pro konkrétní podstránky!
+Styluje se tu zejména to, co se objevuje v hlavní render.php
+*/
+
+body {
+  color: #222;
+  background-color: #9EDC61;
+  font-family: Tahoma, sans-serif;
+  font-size: large;
+}
+
+div#flash-msg {
+  position: absolute;
+  z-index: 1;
+  top: 24px;
+  left: 24px;
+  max-width: 480px;
+}
+
+div#flash-msg div {
+  font-size: medium;
+  background-position: 5px 5px;
+  background-repeat: no-repeat;
+  border-width: 2px;
+  border-style: solid;
+  color: #000000;
+  margin: 0 0 5px 16px;
+  min-height: 21px;
+  padding: 5px 20px 5px 35px;
+}
+
+div#flash-msg div.debug {
+  border-color: #B8FF8C;
+  background-image: url("../img/sys/msg-dbg.png");
+  background-color: rgb(81,176,24);
+  background-color: rgba(81,176,24,.66);
+}
+
+div#flash-msg div.info {
+  border-color: #ff7;
+  background-image: url("../img/sys/msg-info.png");
+  background-color: rgb(255,255,204);
+  background-color: rgba(255,255,204,.66);
+}
+
+div#flash-msg div.warning {
+  border-color: #fc0;
+  background-image: url("../img/sys/msg-warning.png");
+  background-color: rgb(255,255,204);
+  background-color: rgba(255,255,204,.66);
+}
+
+div#flash-msg div.error {
+  border-color: #c00;
+  background-image: url("../img/sys/msg-error.png");
+  background-color: rgb(255,238,238);
+  background-color: rgba(255,238,238,.66);
+}
+
+div#container {
+  margin-top: 24px;
+  width:920px;
+  margin-left: auto;
+  margin-right: auto;
+  border: none;
+}
+
+div#header {
+  border: none;
+  height: 168px;
+  background-image: url("../img/design/spock-math.png");
+  color: #fff;
+  position: relative;
+}
+div#header h1 {
+    padding: 64px 0 0 160px;
+    text-shadow: #000 0 0 8px; 
+}
+
+div#menu {
+  position: absolute;
+  bottom: 2px;
+  width: 100%;
+}
+div#menu ul {
+  list-style-type: none;
+  margin: 0 0 0 400px;
+  padding: 0;
+}
+div#menu a {
+  margin-left: 8px;
+  display: inline-block;
+  border: 1px dashed #097744;
+  text-decoration: none;
+  color: #fff;
+  background-color: rgb(81,176,24);
+  background-color: rgba(81,176,24,.5);
+}
+div#menu a.active {
+  background-color: rgb(40,170,255);
+  background-color: rgba(80,170,255,.5);
+}
+div#menu a:hover {
+  background-color: rgb(81,176,24);
+}
+div#menu a.active:hover {
+  background-color: rgb(40,170,255);
+}
+div#menu li {
+  text-align:center;
+  height: 32px;
+  line-height: 32px;
+  width: 160px;
+}
+
+
+/*IE fix*/
+img { border: none; }
+
+div#content {
+  background-color: #EFFFA3;
+
+  border: 1px dashed #097744;
+
+  min-height:386px;
+
+  padding: 16px 32px;
+  margin: 2px;
+}
+
+div#footer {
+  height: 56px;
+  line-height: 56px;
+  text-align: right;
+  padding-right: 40px;
+  font-size: small;
+  text-shadow: #fff 0 0 2px;
+  background-image: url("../img/design/spock-foot.png"); 
+}
+div#footer img {
+  vertical-align: middle;
+  margin-right: 16px;
+}
+
+pre {
+  white-space: pre-wrap;       /* css-3 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}

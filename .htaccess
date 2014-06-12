@@ -1,0 +1,13 @@
+# REDIRECT NA BEZ WWW
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1%{REQUEST_URI} [R=301,QSA,NC,L]
+
+# POKUS O CLEAN URL
+RewriteRule ^([a-zA-Z0-9]+)$ index.php?page=$1
+RewriteRule ^([a-zA-Z0-9]+)/$ index.php?page=$1
+#RewriteRule ^([a-zA-Z0-9]+)/(.+)$ index.php?page=$1&$2
+
+# ERROR pages
+# ErrorDocument 403 403
+# ErrorDocument 404 404
