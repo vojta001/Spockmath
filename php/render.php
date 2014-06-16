@@ -10,6 +10,7 @@
   <meta name="author" content="<?php echo (isset($htmlAuthor)?$htmlAuthor:'$htmlAuthor not set');?>" />
   <link rel="icon" type="image/png" href="favicon.png" />
   <link type="text/css" rel="stylesheet" href="css/style.css" />
+  <link type="text/css" rel="stylesheet" href="css/bubble.css" />
 <?php if (is_array($cssStyles)) foreach($cssStyles as $css) {?>  <link type="text/css" rel="stylesheet" href="<?php echo $css; ?>" />
 <?php } ?></head>
 <body>

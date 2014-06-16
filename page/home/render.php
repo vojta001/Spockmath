@@ -1,6 +1,9 @@
 <?php if (!isSetOpen()): ?>
+
+<p class="spock-bubble right">Vítej pozemšťane! Co takhle malý test?</p>
+<img src="img/design/leonard-left.png" ale="Hlava Spocka" style="vertical-align: middle;" />
+
 <form method="post">
-  Vítej pozemšťane! Co takhle malý test?
   <input type="submit" name="submit-seznam" value="Nechci, jsem lama!" />
   <input type="submit" name="submit-create" value="Dobře, že jsi vulkánec, zkusím to." />
 </form>

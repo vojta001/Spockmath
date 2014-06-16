@@ -1,0 +1,94 @@
+.spock-bubble {
+  position: relative;
+  display: inline-block;
+  padding: 15px;
+  margin: 1em 0 3em;
+  border: 3px solid #5a8f00;
+  color: #333;
+  background: #fff;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.spock-bubble.left {
+  margin-left: 30px;
+}
+
+.spock-bubble.right {
+  margin-right: 30px;
+}
+
+.spock-bubble:before {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 40px;
+  border-width: 20px 20px 0;
+  border-style: solid;
+  border-color: #5a8f00 transparent;
+  display: block;
+  width: 0;
+}
+
+.spock-bubble:after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 45px;
+  border-width: 15px 15px 0;
+  border-style: solid;
+  border-color: #fff transparent;
+  display: block;
+  width: 0;
+}
+
+.spock-bubble.top:before {
+  top: -20px;
+  bottom: auto;
+  left: auto;
+  right: 40px;
+  border-width: 0 20px 20px;
+}
+
+.spock-bubble.top:after {
+  top: -15px;
+  bottom: auto;
+  left: auto;
+  right: 45px;
+  border-width: 0 15px 15px;
+}
+
+.spock-bubble.left:before {
+  top: 10px;
+  bottom: auto;
+  left: -30px;
+  border-width: 15px 30px 15px 0;
+  border-color: transparent #5a8f00;
+}
+
+.spock-bubble.left:after {
+  top: 14px;
+  bottom: auto;
+  left: -23px;
+  border-width: 11px 23px 11px 0;
+  border-color: transparent #fff;
+}
+
+.spock-bubble.right:before {
+  top: 10px;
+  bottom: auto;
+  left: auto;
+  right: -30px;
+  border-width: 15px 0 15px 30px;
+  border-color: transparent #5a8f00;
+}
+
+.spock-bubble.right:after {
+  top: 14px;
+  bottom: auto;
+  left: auto;
+  right: -23px;
+  border-width: 11px 0 11px 23px;
+  border-color: transparent #fff;
+}
