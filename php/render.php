@@ -27,7 +27,8 @@ if (file_exists($renderFile))
 ?>
 </div>
 <div id="footer">
-  <img id="kane" src="img/design/kane-foot.png" alt="" />připravil Vojtěch Káně
+  <img id="kane" src="img/design/kane-foot.png" alt="" />připravil <a href="mailto:kane@sekundani.cz">Vojtěch Káně</a>
+  <img id="rgb" src="img/design/rgb-foot.png" alt="" />a <a href="mailto:rgb@sekundani.cz">RgB</a>
 </div>
 </div>
 <?php echo renderFlashMsg(); ?>
