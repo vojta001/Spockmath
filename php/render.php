@@ -8,7 +8,7 @@
   <meta name="robots" content="index,follow" />
   <meta name="language" content="cs" />
   <meta name="author" content="<?php echo (isset($htmlAuthor)?$htmlAuthor:'$htmlAuthor not set');?>" />
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" type="image/png" href="<?php echo (isset($favIcon)?$favIcon:'favicon.png');?>" />
   <link type="text/css" rel="stylesheet" href="css/style.css" />
   <link type="text/css" rel="stylesheet" href="css/bubble.css" />
 <?php if (is_array($cssStyles)) foreach($cssStyles as $css) {?>  <link type="text/css" rel="stylesheet" href="<?php echo $css; ?>" />

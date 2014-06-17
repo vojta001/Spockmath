@@ -12,4 +12,5 @@ define('CSS_PATH', 'css/');
 $htmlTitle = 'Spockova matika';
 $htmlDesc = 'Web s matematickými testy';
 $htmlKwd = array('testy z matematiky', 'Spock');
-$htmlAuthor = 'Vojtěch Kane Káně';
+$htmlAuthor = array('Vojtěch Kane Káně', 'RgB');
+$favIcon = IMG_PATH.'design/favicon.png';
