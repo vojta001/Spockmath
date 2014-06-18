@@ -24,6 +24,11 @@ if (!empty($_POST)) {
   exit;
 }
 
+$jsScripts = array();
+$jsFileName = JS_PATH.$page.'.js';
+if (file_exists($jsFileName))
+  $jsScripts[] = $jsFileName;
+
 $cssStyles = array();
 $cssFileName = CSS_PATH.$page.'.css';
 if (file_exists($cssFileName))
