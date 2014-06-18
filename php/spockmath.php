@@ -38,7 +38,20 @@ function prepareSet($count) {
 	$_SESSION['sada']['stav'] = SADA_OPEN;
 	$_SESSION['sada']['hash'] = hash('crc32', print_r($_SESSION['sada']['otazky'], 1));
 
-  flm("Nová sada vytvořena.", '', MSG_DBG);
+  flm("Nová sada vytvořena.", '', MSG_INFO);
+}
+
+function clearSet() {
+  unset($_SESSION['sada']);
+  flm("Sada smazána.", '', MSG_INFO);
+}
+
+function setMoveNext() {
+  $_SESSION['sada']['pozice']++;
+}
+
+function setMovePrev() {
+  $_SESSION['sada']['pozice']--;
 }
 
 function isSetOpen() {

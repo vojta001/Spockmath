@@ -41,7 +41,7 @@ if (file_exists($prepFile))
 include $prepFile;
 
 flm($_GET, '$_GET is:');
-flm($_POST, '$_POST is:');
+//flm($_POST, '$_POST is:');
 flm($page, '$page is:');
 
   
