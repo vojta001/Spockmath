@@ -2,7 +2,7 @@
 
 require PHP_PATH.'spockmath.php';
 
-flm($_POST, '$_POST caught in submit: Nanana dlouhej text, neser...');
+flm($_POST, '$_POST caught in submit:');
 
 if (isset($_POST['submit-seznam'])) {
   header("Location: http://seznam.cz");
@@ -12,16 +12,16 @@ elseif (isset($_POST['submit-create'])) {
   prepareSet(3);
 }
 elseif (isset($_POST['submit-next'])) {
-  $_SESSION['sada']['pozice']++;
+  setMoveNext();
 }
 elseif (isset($_POST['submit-prev'])) {
-  $_SESSION['sada']['pozice']--;
+  setMovePrevious();
 }
 elseif (isset($_POST['submit-clear'])) {
-  unset($_SESSION['sada']);
+  clearSet();
 }
 elseif (isset($_POST['submit-save'])) {
-  flm('Sorry, barde, tohle ještě neděláme...', '', MSG_INFO);
+  flm('Sorry, tahle funkce ještě není implementována (bude-li vůbec).', '', MSG_ERROR);
 }
 
 

@@ -18,14 +18,3 @@ function spockSay($text, $left = FALSE) {
   return '<div class="spock-say">'.$out.'</div>';
 }
 
-
-
-if (isSetOpen()) {
-
-
-}
-else {
-
-
-}
-
