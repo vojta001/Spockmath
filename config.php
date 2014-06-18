@@ -5,6 +5,7 @@ define('PHP_PATH', 'php/');
 define('PAGES_PATH', 'page/');
 define('IMG_PATH', 'img/');
 define('CSS_PATH', 'css/');
+define('JS_PATH', 'js/');
 
 // VYCHOZI HODNOTY PRO CELOU SAJTU
 
@@ -12,5 +13,5 @@ define('CSS_PATH', 'css/');
 $htmlTitle = 'Spockova matika';
 $htmlDesc = 'Web s matematickými testy';
 $htmlKwd = array('testy z matematiky', 'Spock');
-$htmlAuthor = array('Vojtěch Kane Káně', 'RgB');
+$htmlAuthors = array('Vojtěch Kane Káně', 'RgB');
 $favIcon = IMG_PATH.'design/favicon.png';

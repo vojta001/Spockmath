@@ -7,11 +7,13 @@
   <meta name="keywords" content="<?php echo (is_array($htmlKwd)?implode($htmlKwd, ', '):'$htmlKwd not array');?>" /> 
   <meta name="robots" content="index,follow" />
   <meta name="language" content="cs" />
-  <meta name="author" content="<?php echo (isset($htmlAuthor)?$htmlAuthor:'$htmlAuthor not set');?>" />
+  <meta name="author" content="<?php echo (isset($htmlAuthors)?(is_array($htmlAuthors)?implode($htmlAuthors, ', '):$htmlAuthors):'$htmlAuthor not set');?>" />
   <link rel="icon" type="image/png" href="<?php echo (isset($favIcon)?$favIcon:'favicon.png');?>" />
   <link type="text/css" rel="stylesheet" href="css/style.css" />
   <link type="text/css" rel="stylesheet" href="css/bubble.css" />
-<?php if (is_array($cssStyles)) foreach($cssStyles as $css) {?>  <link type="text/css" rel="stylesheet" href="<?php echo $css; ?>" />
+<?php if (is_array($jsScripts)) foreach($jsScripts as $js) {?>  <script src="<?php echo $js; ?>"></script>
+<?php }
+if (is_array($cssStyles)) foreach($cssStyles as $css) {?>  <link type="text/css" rel="stylesheet" href="<?php echo $css; ?>" />
 <?php } ?></head>
 <body>
 <div id="container">

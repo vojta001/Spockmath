@@ -8,6 +8,8 @@
 </form>
 <?php else : ?>
 <form method="post">
+  <span class="mathquill-editable">\frac{d}{dx}\sqrt{x} = \frac{d}{dx}x^{\frac{1}{2}} = \frac{1}{2}x^{-\frac{1}{2}} = \frac{1}{2\sqrt{x}}</span><br />
+
   <?php echo "Zde je otázka ".(getPosition()+1)." z ".getQCount(); ?><br />
   <pre>
   <?php print_r(getCurrentQ()); ?>
