@@ -15,7 +15,7 @@ elseif (isset($_POST['submit-next'])) {
   setMoveNext();
 }
 elseif (isset($_POST['submit-prev'])) {
-  setMovePrevious();
+  setMovePrev();
 }
 elseif (isset($_POST['submit-clear'])) {
   clearSet();
