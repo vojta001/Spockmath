@@ -37,6 +37,7 @@ function getRandomQsDB($count) {
 		$Q->answer = array();			
 		while ($A = $Arows->fetch_object()){
       $A->selected = 0;
+      $A->odpovedText = '';
       $Q->answer[] = $A;
 		}
 		$Qs[] = $Q;	
