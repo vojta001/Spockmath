@@ -6,3 +6,13 @@ div.spock-say img {
 .mathquill-editable {
   background-color: #fff;
 }
+
+/*debug*/
+div#content div {
+	border: 1px dashed #000;
+}
+
+div.odpoved ul {
+    list-style-type: none;
+    padding: 0;
+}

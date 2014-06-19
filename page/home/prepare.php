@@ -18,3 +18,52 @@ function spockSay($text, $left = FALSE) {
   return '<div class="spock-say">'.$out.'</div>';
 }
 
+
+function renderOtazka($q) {        
+	switch ($q->typ) {
+    case QT_TEXT:
+        $x = '<p>'.$q->data.'</p>';
+        break;
+    case QT_OBR:
+        $x = '<img src="'.PATH_IMG.$q->data.'" alt="otázka" />';
+        break;
+    case QT_MATH:                 
+        $x = '<p class="mathquill-embedded-latex">'.$q->data.'</p>';
+        break;
+	}
+  return '<div class="otazka">'.$x.'</div>';	
+}
+
+
+function renderOdpoved($q) {
+	$out = '';
+	$i = 0;
+	foreach ($q->answer as $a) {
+		$i++;
+		switch ($a->typ) {
+    	case AT_TEXT:
+      	  $x = '<span>'.$a->data.'</span>';
+        	break;
+    	case AT_OBR:
+      		$x = '<img src="'.PATH_IMG.$a->data.'" alt="otázka" />';
+        	break;
+    	case AT_MATH:                 
+      	  $x = '<span class="mathquill-embedded-latex">'.$a->data.'</span>';
+        	break;
+    	case AT_EDIT:                 
+      	  $x = '<input type="text" name="edit-'.$i.'" value="" />';
+        	break;
+		}
+		$out .= '<li><input type="'.($q->multi?'checkbox':'radio').'" name="moznost" value="'.$i.'" />'.$x.'</li>';	
+	}
+	
+  return '<div class="odpoved"><ul>'.$out.'</ul></div>';	 
+} 
+
+
+function renderQ() {
+	$q = getCurrentQ();   
+	$out = renderotazka($q);
+	$out .= renderOdpoved($q);
+	return '<div class="priklad">'.$out.'</div>';
+}               
