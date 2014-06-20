@@ -19,17 +19,21 @@ function spockSay($text, $left = FALSE) {
 }
 
 
-function renderOtazka($q) {        
+function renderOtazka($q) {
 	switch ($q->typ) {
     case QT_TEXT:
-        $x = '<p>'.$q->data.'</p>';
-        break;
+      $x = '<p>'.$q->data.'</p>';
+      break;
     case QT_OBR:
-        $x = '<img src="'.PATH_IMG.$q->data.'" alt="otázka" />';
-        break;
+      $x = '<img src="'.PATH_IMG.$q->data.'" alt="otázka" />';
+      break;
     case QT_MATH:                 
-        $x = '<p class="mathquill-embedded-latex">'.$q->data.'</p>';
-        break;
+      $x = '<p class="mathquill-embedded-latex">'.$q->data.'</p>';
+      break;
+    default:
+      flm('Není definováno chování pro otázku typu '.$q->typ, '', MSG_ERROR);
+      $x = '<p class="error">Zobrazení není definováno!</p>';
+      break;
 	}
   return '<div class="otazka">'.$x.'</div>';	
 }
@@ -42,17 +46,21 @@ function renderOdpoved($q) {
 		$i++;
 		switch ($a->typ) {
     	case AT_TEXT:
-      	  $x = '<span>'.$a->data.'</span>';
-        	break;
+    	  $x = '<span>'.$a->data.'</span>';
+      	break;
     	case AT_OBR:
-      		$x = '<img src="'.PATH_IMG.$a->data.'" alt="otázka" />';
-        	break;
+    		$x = '<img src="'.PATH_IMG.$a->data.'" alt="otázka" />';
+      	break;
     	case AT_MATH:                 
-      	  $x = '<span class="mathquill-embedded-latex">'.$a->data.'</span>';
-        	break;
+    	  $x = '<span class="mathquill-embedded-latex">'.$a->data.'</span>';
+      	break;
     	case AT_EDIT:                 
-      	  $x = '<input type="text" name="edit-'.$i.'" value="" />';
-        	break;
+    	  $x = '<input type="text" name="edit-'.$i.'" value="" />';
+      	break;
+      default:
+        flm('Není definováno chování pro odpověď typu '.$a->typ, '', MSG_ERROR);
+        $x = '<p class="error">Zobrazení není definováno!</p>';
+        break;
 		}
 		$out .= '<li><input type="'.($q->multi?'checkbox':'radio').'" name="moznost" value="'.$i.'" />'.$x.'</li>';	
 	}
