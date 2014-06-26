@@ -21,6 +21,7 @@ function getQCountDB() {
 	return $rows->fetch_object()->cnt;
 }
 
+
 function getRandomQsDB($count) {
 	global $mysqli;
   
@@ -37,7 +38,32 @@ function getRandomQsDB($count) {
 		$Q->answer = array();			
 		while ($A = $Arows->fetch_object()){
       $A->selected = 0;
-      $A->odpovedText = '';
+      $A->odpovedDecimal = '';
+      $Q->answer[] = $A;
+		}
+		$Qs[] = $Q;	
+	}		
+  return $Qs;
+}
+
+
+function getAllQsDB() {
+	global $mysqli;
+  
+  $Qrows = $mysqli->query('SELECT * FROM `otazka` ORDER BY `id`');
+	if (!$Qrows) {
+    flm("Ti povidam, že namem `otazka`!", '', MSG_ERROR);
+    return array();
+  }
+  
+  $Qs = array();
+	while ($Q = $Qrows->fetch_object()) {
+		
+		$Arows = $mysqli->query('SELECT * FROM `odpoved` WHERE `fid` = '.$Q->id.' ORDER BY `id`');
+		$Q->answer = array();			
+		while ($A = $Arows->fetch_object()){
+      $A->selected = 0;
+      $A->odpovedDecimal = '';
       $Q->answer[] = $A;
 		}
 		$Qs[] = $Q;	
