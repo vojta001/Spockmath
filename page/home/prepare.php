@@ -25,10 +25,10 @@ function renderOtazka($q) {
       $x = '<p>'.$q->data.'</p>';
       break;
     case QT_OBR:
-      $x = '<img src="'.PATH_IMG.$q->data.'" alt="otázka" />';
+      $x = '<p>'.$q->data2.'</p><img src="'.IMG_PATH.'q/'.$q->data.'" alt="otázka" />';
       break;
     case QT_MATH:                 
-      $x = '<p class="mathquill-embedded-latex">'.$q->data.'</p>';
+      $x = '<p>'.$q->data2.'</p><span class="mathquill-embedded-latex">'.$q->data.'</span>';
       break;
     default:
       flm('Není definováno chování pro otázku typu '.$q->typ, '', MSG_ERROR);
@@ -49,20 +49,23 @@ function renderOdpoved($q) {
     	  $x = '<span>'.$a->data.'</span>';
       	break;
     	case AT_OBR:
-    		$x = '<img src="'.PATH_IMG.$a->data.'" alt="otázka" />';
+    		$x = '<img src="'.IMG_PATH.'a/'.$a->data.'" alt="otázka" />';
       	break;
     	case AT_MATH:                 
     	  $x = '<span class="mathquill-embedded-latex">'.$a->data.'</span>';
       	break;
     	case AT_EDIT:                 
-    	  $x = '<input type="text" name="edit-'.$i.'" value="" />';
+    	  $x = '<span>'.$a->data.'</span><input type="text" name="edit-'.$i.'" value="" />';
       	break;
       default:
         flm('Není definováno chování pro odpověď typu '.$a->typ, '', MSG_ERROR);
         $x = '<p class="error">Zobrazení není definováno!</p>';
         break;
 		}
-		$out .= '<li><input type="'.($q->multi?'checkbox':'radio').'" name="moznost" value="'.$i.'" />'.$x.'</li>';	
+		if ($q->multi)
+			$out .= '<li><input type="checkbox" name="'.$i.'" />'.$x.'</li>';	
+		else
+			$out .= '<li><input type="radio" name="moznost" value="'.$i.'" />'.$x.'</li>';	
 	}
 	
   return '<div class="odpoved"><ul>'.$out.'</ul></div>';	 
@@ -71,7 +74,9 @@ function renderOdpoved($q) {
 
 function renderQ() {
 	$q = getCurrentQ();   
+	$qn = getCurrentQnum();   
 	$out = renderotazka($q);
-	$out .= renderOdpoved($q);
+	$out .= renderOdpoved($q);                
+	$out .= '<input type="hidden" name="hash" value="'.getSetHash().'" /><input type="hidden" name="qnum" value="'.$qn.'" />';
 	return '<div class="priklad">'.$out.'</div>';
 }               

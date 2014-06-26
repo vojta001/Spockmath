@@ -13,7 +13,7 @@ define('SADA_OPEN', 1);
 define('SADA_CLOSED', 2);
 
 
-function prepareSet($count) {
+function prepareRandomSet($count) {
 	if (isset($_SESSION['sada'], $_SESSION['sada']['stav']) && $_SESSION['sada']['stav'] == SADA_OPEN) {
     flm("Sada už byla otevřená!");
     return;
@@ -34,6 +34,23 @@ function prepareSet($count) {
     $_SESSION['sada'] = array();
   
 	$_SESSION['sada']['otazky'] = getRandomQsDB($count);
+	$_SESSION['sada']['pozice'] = 0;
+	$_SESSION['sada']['stav'] = SADA_OPEN;
+	$_SESSION['sada']['hash'] = hash('crc32', print_r($_SESSION['sada']['otazky'], 1));
+
+  flm("Nová sada vytvořena.", '', MSG_INFO);
+}
+
+function prepareDebugSet() {
+	if (isset($_SESSION['sada'], $_SESSION['sada']['stav']) && $_SESSION['sada']['stav'] == SADA_OPEN) {
+    flm("Sada už byla otevřená!");
+    return;
+  }
+
+  if (!isset($_SESSION['sada']))
+    $_SESSION['sada'] = array();
+  
+	$_SESSION['sada']['otazky'] = getAllQsDB($count);
 	$_SESSION['sada']['pozice'] = 0;
 	$_SESSION['sada']['stav'] = SADA_OPEN;
 	$_SESSION['sada']['hash'] = hash('crc32', print_r($_SESSION['sada']['otazky'], 1));
@@ -82,7 +99,17 @@ function getCurrentQ() {
   return $_SESSION['sada']['otazky'][$current];
 }
 
+function getCurrentQnum() {
+  return $_SESSION['sada']['pozice'];
+}
+
 function getSetHash() {
   return $_SESSION['sada']['hash'];
+}
+
+
+function saveQPost() {
+
+
 }
 
