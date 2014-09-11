@@ -59,16 +59,18 @@ function renderOdpoved($q) {
       	break;
       default:
         flm('Není definováno chování pro odpověď typu '.$a->typ, '', MSG_ERROR);
+				flm (print_r ($a, 1));
         $x = '<p class="error">Zobrazení není definováno!</p>';
         break;
 		}
+		if ($q->answer[$i-1]->selected == 1) $checked = 'checked="checked"'; else $checked = '';
 		if ($q->multi)
-			$out .= '<li><input type="checkbox" name="'.$i.'" />'.$x.'</li>';	
+			$out .= '<li><input type="checkbox" name="'.$i.'" '.$checked.'/>'.$x.'</li>';
 		else
-			$out .= '<li><input type="radio" name="moznost" value="'.$i.'" />'.$x.'</li>';	
+			$out .= '<li><input type="radio" name="moznost" value="'.$i.'" '.$checked.'/>'.$x.'</li>';
 	}
 	
-  return '<div class="odpoved"><ul>'.$out.'</ul></div>';	 
+  return '<div class="odpoved"><ul>'.$out.'</ul></div>';
 } 
 
 

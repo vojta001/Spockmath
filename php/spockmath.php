@@ -107,9 +107,41 @@ function getSetHash() {
   return $_SESSION['sada']['hash'];
 }
 
+function saveSingleAnswer() {
+	$q = getCurrentQ();
+
+  $selected = $_POST['moznost'];
+	if (isset($selected) && is_numeric($selected) && ($selected > 0)) {
+		//clear all answer selections
+		foreach ($q->answer as &$a)
+	    $a->seleceted = 0;
+
+    $q->answer[$selected-1]->seleceted = 1;
+
+	}
+}
+
+function saveSingleMulti() {
+	$q = getCurrentQ();
+
+	foreach ($q->answer as &$a)
+    $a->seleceted = 0;
+
+  //count($q->answer)
+
+}
+
 
 function saveQPost() {
+	$q = getCurrentQ();
+
+	if ($q->multi) {
 
 
+	} else {
+		saveSingleAnswer();
+	}
+
+	//TODO + uložit hodnotu custom odpovědí
 }
 
