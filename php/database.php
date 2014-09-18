@@ -63,7 +63,7 @@ function getAllQsDB() {
 		$Q->answer = array();			
 		while ($A = $Arows->fetch_object()){
       $A->selected = 0;
-      $A->odpovedDecimal = '';
+			if ($A->typ == AT_EDIT) $A->odpovedDecimal = '';
       $Q->answer[] = $A;
 		}
 		$Qs[] = $Q;	
