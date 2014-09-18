@@ -2,7 +2,7 @@
 
 require PHP_PATH.'spockmath.php';
 
-$jsScripts[] = '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js';
+$jsScripts[] = JS_PATH.'jquery.min.js';
 $jsScripts[] = JS_PATH.'mathquill.min.js';
 $cssStyles[] = CSS_PATH.'mathquill.css';
 
@@ -63,7 +63,11 @@ function renderOdpoved($q) {
         $x = '<p class="error">Zobrazení není definováno!</p>';
         break;
 		}
-		if ($q->answer[$i-1]->selected == 1) $checked = 'checked="checked"'; else $checked = '';
+		if ($q->answer[$i-1]->selected == 1)
+			$checked = 'checked="checked"';
+		else
+			$checked = '';
+
 		if ($q->multi)
 			$out .= '<li><input type="checkbox" name="'.$i.'" '.$checked.'/>'.$x.'</li>';
 		else

@@ -114,20 +114,23 @@ function saveSingleAnswer() {
 	if (isset($selected) && is_numeric($selected) && ($selected > 0)) {
 		//clear all answer selections
 		foreach ($q->answer as &$a)
-	    $a->seleceted = 0;
+	    $a->selected = 0;
 
-    $q->answer[$selected-1]->seleceted = 1;
-
+    $q->answer[$selected-1]->selected = 1;
 	}
 }
 
-function saveSingleMulti() {
+function saveMultiAnswer() {
 	$q = getCurrentQ();
-
-	foreach ($q->answer as &$a)
-    $a->seleceted = 0;
-
-  //count($q->answer)
+	/*$multi = array();
+  for ($i = 1; $i <= count($q->answer); $i++) {
+    if (isset($_POST[$i])) $multi[] = $i;
+	}*/
+	$i = 0;
+	foreach ($q->answer as &$a){
+		$i++;
+    $a->selected = isset($_POST[$i]);
+	}
 
 }
 
@@ -136,12 +139,10 @@ function saveQPost() {
 	$q = getCurrentQ();
 
 	if ($q->multi) {
-
-
+  	saveMultiAnswer();
 	} else {
 		saveSingleAnswer();
 	}
 
 	//TODO + uložit hodnotu custom odpovědí
 }
-
