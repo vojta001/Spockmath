@@ -134,9 +134,21 @@ function saveMultiAnswer() {
 
 }
 
-
+/**
+ * return value = success
+ */
 function saveQPost() {
+	//TODO check hash
+
+
+	//TODO get Q [Post[qnum]] instead!
 	$q = getCurrentQ();
+
+	//TODO validate POST[edits]
+
+
+	//TODO save all edits to SET (sada, woe)
+
 
 	if ($q->multi) {
   	saveMultiAnswer();
@@ -144,5 +156,5 @@ function saveQPost() {
 		saveSingleAnswer();
 	}
 
-	//TODO + uložit hodnotu custom odpovědí
+	return TRUE;
 }
