@@ -1,0 +1,34 @@
+
+
+
+
+
+
+
+//TODO napsat funkci, která kontroluje správnost obsahu textboxu
+
+
+
+
+
+
+
+
+
+
+
+//TODO namapovat funkci na událost onChange textboxů classy "decimalTextBox"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
