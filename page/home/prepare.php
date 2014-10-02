@@ -6,8 +6,8 @@ $jsScripts[] = JS_PATH.'jquery.min.js';
 $jsScripts[] = JS_PATH.'mathquill.min.js';
 $cssStyles[] = CSS_PATH.'mathquill.css';
 
-
-function addDeciamlJS() {
+function addDecimalCodes() {
+  global $jsScripts, $cssStyles;
 	$q = getCurrentQ();
 	$raise = FALSE;
 	foreach ($q->answer as $a) {
@@ -16,42 +16,43 @@ function addDeciamlJS() {
 			break;
 		}
 	}
-	if ($raise)
+	if ($raise) {
 		$jsScripts[] = JS_PATH.'validatedecimals.js';
-}
+		$cssStyles[] = CSS_PATH.'editsanimations.css';
+	}
 
-addDeciamlJS();
+addDecimalCodes();
 
 
 function spockSay($text, $left = FALSE) {
-  $out = '';
-  if ($left)
-    $out .= '<img src="img/design/leonard-right.png" ale="Hlava Spocka" />'.PHP_EOL
-    .'<p class="spock-bubble left">'.$text.'</p>';
-  else
-    $out .= '<p class="spock-bubble right">'.$text.'</p>'.PHP_EOL
-      .'<img src="img/design/leonard-left.png" ale="Hlava Spocka" />';
-  return '<div class="spock-say">'.$out.'</div>';
+	$out = '';
+	if ($left)
+		$out .= '<img src="img/design/leonard-right.png" ale="Hlava Spocka" />'.PHP_EOL
+		.'<p class="spock-bubble left">'.$text.'</p>';
+	else
+		$out .= '<p class="spock-bubble right">'.$text.'</p>'.PHP_EOL
+			.'<img src="img/design/leonard-left.png" ale="Hlava Spocka" />';
+	return '<div class="spock-say">'.$out.'</div>';
 }
 
 
 function renderOtazka($q) {
 	switch ($q->typ) {
-    case QT_TEXT:
-      $x = '<p>'.$q->data.'</p>';
-      break;
-    case QT_OBR:
-      $x = '<p>'.$q->data2.'</p><img src="'.IMG_PATH.'q/'.$q->data.'" alt="otázka" />';
-      break;
-    case QT_MATH:
-      $x = '<p>'.$q->data2.'</p><span class="mathquill-embedded-latex">'.$q->data.'</span>';
-      break;
-    default:
-      flm('Není definováno chování pro otázku typu '.$q->typ, '', MSG_ERROR);
-      $x = '<p class="error">Zobrazení není definováno!</p>';
-      break;
+		case QT_TEXT:
+			$x = '<p>'.$q->data.'</p>';
+			break;
+		case QT_OBR:
+			$x = '<p>'.$q->data2.'</p><img src="'.IMG_PATH.'q/'.$q->data.'" alt="otázka" />';
+			break;
+		case QT_MATH:
+			$x = '<p>'.$q->data2.'</p><span class="mathquill-embedded-latex">'.$q->data.'</span>';
+			break;
+		default:
+			flm('Není definováno chování pro otázku typu '.$q->typ, '', MSG_ERROR);
+			$x = '<p class="error">Zobrazení není definováno!</p>';
+			break;
 	}
-  return '<div class="otazka">'.$x.'</div>';
+	return '<div class="otazka">'.$x.'</div>';
 }
 
 
@@ -61,23 +62,23 @@ function renderOdpoved($q) {
 	foreach ($q->answer as $a) {
 		$i++;
 		switch ($a->typ) {
-    	case AT_TEXT:
-    	  $x = '<span>'.$a->data.'</span>';
-      	break;
-    	case AT_OBR:
-    		$x = '<img src="'.IMG_PATH.'a/'.$a->data.'" alt="otázka" />';
-      	break;
-    	case AT_MATH:
-    	  $x = '<span class="mathquill-embedded-latex">'.$a->data.'</span>';
-      	break;
-    	case AT_EDIT:
-				$x = '<span>'.$a->data.'</span><input class="decimalTextBox" type="text" name="edit-'.$i.'" value="'.$a->odpovedDecimal.'" />';
+			case AT_TEXT:
+				$x = '<span>'.$a->data.'</span>';
 				break;
-      default:
-        flm('Není definováno chování pro odpověď typu '.$a->typ, '', MSG_ERROR);
+			case AT_OBR:
+				$x = '<img src="'.IMG_PATH.'a/'.$a->data.'" alt="otázka" />';
+				break;
+			case AT_MATH:
+				$x = '<span class="mathquill-embedded-latex">'.$a->data.'</span>';
+				break;
+			case AT_EDIT:
+				$x = '<span>'.$a->data.'</span><input class="decimalTextBox" type="text" name="edit-'.$i.'" value="'.$a->odpovedDecimal.'" autocomplete="off" />';
+				break;
+			default:
+				flm('Není definováno chování pro odpověď typu '.$a->typ, '', MSG_ERROR);
 				flm (print_r ($a, 1));
-        $x = '<p class="error">Zobrazení není definováno!</p>';
-        break;
+				$x = '<p class="error">Zobrazení není definováno!</p>';
+				break;
 		}
 		if ($q->answer[$i-1]->selected == 1)
 			$checked = 'checked="checked"';
@@ -90,7 +91,7 @@ function renderOdpoved($q) {
 			$out .= '<li><input type="radio" name="moznost" value="'.$i.'" '.$checked.'/>'.$x.'</li>';
 	}
 
-  return '<div class="odpoved"><ul>'.$out.'</ul></div>';
+	return '<div class="odpoved"><ul>'.$out.'</ul></div>';
 }
 
 

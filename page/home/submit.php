@@ -27,6 +27,7 @@ elseif (isset($_POST['submit-save'])) {
 	saveQPost();
 //	if (saveQPost())
 
+//TODO: místo toho uložit odpovědi do tabulek, které ještě neexistují
   flm('Sorry, tahle funkce ještě není implementována (bude-li vůbec).', '', MSG_ERROR);
 }
 
