@@ -20,6 +20,7 @@ function addDecimalCodes() {
 		$jsScripts[] = JS_PATH.'validatedecimals.js';
 		$cssStyles[] = CSS_PATH.'editsanimations.css';
 	}
+}
 
 addDecimalCodes();
 
