@@ -5,6 +5,33 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+DROP TABLE IF EXISTS `inst_odpoved`;
+CREATE TABLE `inst_odpoved` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `iqid` int(11) NOT NULL,
+  `aid` int(11) NOT NULL,
+  `data` decimal(10,0) NOT NULL COMMENT 'decimal odpoved editu',
+  PRIMARY KEY (`id`),
+  KEY `iqid` (`iqid`),
+  KEY `aid` (`aid`),
+  CONSTRAINT `inst_odpoved_ibfk_4` FOREIGN KEY (`aid`) REFERENCES `inst_odpoved` (`id`),
+  CONSTRAINT `inst_odpoved_ibfk_3` FOREIGN KEY (`iqid`) REFERENCES `inst_otazka` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `inst_otazka`;
+CREATE TABLE `inst_otazka` (
+  `id` int(11) NOT NULL,
+  `qid` int(11) NOT NULL,
+  `sid` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sid` (`sid`),
+  KEY `oid` (`qid`),
+  CONSTRAINT `inst_otazka_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `sada` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `inst_otazka_ibfk_5` FOREIGN KEY (`qid`) REFERENCES `otazka` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 DROP TABLE IF EXISTS `odpoved`;
 CREATE TABLE `odpoved` (
   `id` int(11) NOT NULL,
@@ -14,8 +41,8 @@ CREATE TABLE `odpoved` (
   `data2` decimal(16,6) NOT NULL COMMENT 'správná hodnota, pokud typu edit',
   `spravna` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`,`fid`),
-  KEY `fk_table2_table1` (`fid`),
-  CONSTRAINT `fk_table2_table1` FOREIGN KEY (`fid`) REFERENCES `otazka` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fid` (`fid`),
+  CONSTRAINT `odpoved_ibfk_1` FOREIGN KEY (`fid`) REFERENCES `otazka` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `odpoved` (`id`, `fid`, `typ`, `data`, `data2`, `spravna`) VALUES
@@ -30,6 +57,7 @@ INSERT INTO `odpoved` (`id`, `fid`, `typ`, `data`, `data2`, `spravna`) VALUES
 (3,	1,	1,	'Emm... PI?',	0.000000,	0),
 (3,	2,	1,	'????',	0.000000,	0),
 (3,	3,	1,	'správná',	0.000000,	1),
+(3,	4,	4,	'Nebo třeba...',	0.000000,	0),
 (4,	2,	1,	'125',	0.000000,	0),
 (4,	3,	3,	'\\frac{9}{16}',	0.000000,	1);
 
@@ -50,4 +78,13 @@ INSERT INTO `otazka` (`id`, `typ`, `data`, `data2`, `multi`) VALUES
 (4,	1,	'Je 4 prvočíslo?',	'',	0),
 (5,	2,	'kruh.png',	'Jaké vlastnosti splňuje tato množina bodů?',	1);
 
--- 2014-06-26 19:07:19
+DROP TABLE IF EXISTS `sada`;
+CREATE TABLE `sada` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `datum` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `jmeno` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- 2014-10-09 17:56:20
