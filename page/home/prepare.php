@@ -8,18 +8,20 @@ $cssStyles[] = CSS_PATH.'mathquill.css';
 
 function addDecimalCodes() {
   global $jsScripts, $cssStyles;
-	$q = getCurrentQ();
-	$raise = FALSE;
-	foreach ($q->answer as $a) {
-		if ($a->typ == AT_EDIT) {
+  if (isSetOpen()) {
+		$q = getCurrentQ();
+		$raise = FALSE;
+		foreach ($q->answer as $a) {
+			if ($a->typ == AT_EDIT) {
 			$raise = TRUE;
 			break;
+			}
 		}
-	}
-	if ($raise) {
-		$jsScripts[] = JS_PATH.'validatedecimals.js';
-		$cssStyles[] = CSS_PATH.'editsanimations.css';
-	}
+		if ($raise) {
+			$jsScripts[] = JS_PATH.'validatedecimals.js';
+			$cssStyles[] = CSS_PATH.'editsanimations.css';
+		}
+  }
 }
 
 addDecimalCodes();
@@ -28,11 +30,11 @@ addDecimalCodes();
 function spockSay($text, $left = FALSE) {
 	$out = '';
 	if ($left)
-		$out .= '<img src="img/design/leonard-right.png" ale="Hlava Spocka" />'.PHP_EOL
+		$out .= '<img src="img/design/leonard-right.png" alt="Hlava Spocka" />'.PHP_EOL
 		.'<p class="spock-bubble left">'.$text.'</p>';
 	else
 		$out .= '<p class="spock-bubble right">'.$text.'</p>'.PHP_EOL
-			.'<img src="img/design/leonard-left.png" ale="Hlava Spocka" />';
+			.'<img src="img/design/leonard-left.png" alt="Hlava Spocka" />';
 	return '<div class="spock-say">'.$out.'</div>';
 }
 
