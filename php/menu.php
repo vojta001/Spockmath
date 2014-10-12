@@ -13,7 +13,7 @@ function renderMenu() {
   
   $out = '';
   foreach ($menu as $key => $item)
-    $out .= '<a href="'.$key.'"'.($page == $key?'class="active"':'').'><li>'.$item.'</li></a>';
-    
+    $out .= '<li><a href="'.$key.'"'.($page == $key?' class="active"':'').'>'.$item.'</a></li>';
+
   return '<div id="menu"><ul>'.$out.'</ul></div>';
 }

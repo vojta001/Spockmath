@@ -17,7 +17,7 @@ function prepareRandomSet($count) {
 	if (isset($_SESSION['sada'], $_SESSION['sada']['stav']) && $_SESSION['sada']['stav'] == SADA_OPEN) {
 		flm("Sada už byla otevřená!");
 		return;
-  }
+	}
 
 	if ($count < 1) {
 		flm("Minimální velikost sady je 1 otázka!", '', MSG_ERROR);
@@ -195,7 +195,7 @@ function saveQPost() {
 	if (!validatePostEdit())
 		return FALSE;
 
-  saveQuestion();
+	saveQuestion();
 
 	return TRUE;
 }

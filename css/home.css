@@ -1,18 +1,24 @@
 
 div.spock-say img {
-  vertical-align: middle;
+	vertical-align: middle;
 }
 
 .mathquill-editable {
-  background-color: #fff;
+	background-color: #fff;
 }
 
-/*debug*/
-div#content div {
-	border: 1px dashed #000;
+div#content div div{
+	width: 50%;
+	float: left;
 }
 
-div.odpoved ul {
-    list-style-type: none;
-    padding: 0;
+div#content hr.clearfix {
+	clear: both;
+	border: none;
+	border-bottom: 1px dashed #097744;
+}
+
+div#odpoved ul {
+	list-style-type: none;
+	padding: 0;
 }

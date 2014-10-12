@@ -1,12 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="cs" dir="ltr">
+<!DOCTYPE html>
+<html lang="cs">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="utf-8" />
   <title><?php echo (isset($htmlTitle)?$htmlTitle:'$htmlTitle not set');?></title>
   <meta name="description" content="<?php echo (isset($htmlDesc)?$htmlDesc:'$htmlDesc not set');?>" />
   <meta name="keywords" content="<?php echo (is_array($htmlKwd)?implode($htmlKwd, ', '):'$htmlKwd not array');?>" /> 
   <meta name="robots" content="index,follow" />
-  <meta name="language" content="cs" />
   <meta name="author" content="<?php echo (isset($htmlAuthors)?(is_array($htmlAuthors)?implode($htmlAuthors, ', '):$htmlAuthors):'$htmlAuthor not set');?>" />
   <link rel="icon" type="image/png" href="<?php echo (isset($favIcon)?$favIcon:'favicon.png');?>" />
   <link type="text/css" rel="stylesheet" href="css/style.css" />
