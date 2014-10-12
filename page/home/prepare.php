@@ -7,8 +7,8 @@ $jsScripts[] = JS_PATH.'mathquill.min.js';
 $cssStyles[] = CSS_PATH.'mathquill.css';
 
 function addDecimalCodes() {
-  global $jsScripts, $cssStyles;
-  if (isSetOpen()) {
+	global $jsScripts, $cssStyles;
+	if (isSetOpen()) {
 		$q = getCurrentQ();
 		$raise = FALSE;
 		foreach ($q->answer as $a) {
@@ -21,7 +21,7 @@ function addDecimalCodes() {
 			$jsScripts[] = JS_PATH.'validatedecimals.js';
 			$cssStyles[] = CSS_PATH.'editsanimations.css';
 		}
-  }
+	}
 }
 
 addDecimalCodes();
@@ -30,12 +30,12 @@ addDecimalCodes();
 function spockSay($text, $left = FALSE) {
 	$out = '';
 	if ($left)
-		$out .= '<img src="img/design/leonard-right.png" alt="Hlava Spocka" />'.PHP_EOL
+		$out .= '<img src="img/design/leonard-right.png" alt="Hlava Spocka" />'
 		.'<p class="spock-bubble left">'.$text.'</p>';
 	else
-		$out .= '<p class="spock-bubble right">'.$text.'</p>'.PHP_EOL
+		$out .= '<p class="spock-bubble right">'.$text.'</p>'
 			.'<img src="img/design/leonard-left.png" alt="Hlava Spocka" />';
-	return '<div class="spock-say">'.$out.'</div>';
+	return '<div class="spock-say">'.$out.'</div>'.PHP_EOL;
 }
 
 
@@ -55,7 +55,7 @@ function renderOtazka($q) {
 			$x = '<p class="error">Zobrazení není definováno!</p>';
 			break;
 	}
-	return '<div class="otazka">'.$x.'</div>';
+	return '<div id="otazka">'.$x.'</div>';
 }
 
 
@@ -89,20 +89,26 @@ function renderOdpoved($q) {
 			$checked = '';
 
 		if ($q->multi)
-			$out .= '<li><input type="checkbox" name="'.$i.'" '.$checked.'/>'.$x.'</li>';
+			$out .= PHP_EOL.'  <li><input type="checkbox" name="'.$i.'" '.$checked.'/>'.$x.'</li>';
 		else
-			$out .= '<li><input type="radio" name="moznost" value="'.$i.'" '.$checked.'/>'.$x.'</li>';
+			$out .= PHP_EOL.'  <li><input type="radio" name="moznost" value="'.$i.'" '.$checked.'/>'.$x.'</li>';
 	}
 
-	return '<div class="odpoved"><ul>'.$out.'</ul></div>';
+	return '<div id="odpoved"><ul>'.$out.PHP_EOL.'</ul></div>';
 }
 
 
 function renderQ() {
 	$q = getCurrentQ();
 	$qn = getCurrentQnum();
-	$out = renderotazka($q);
+	$out = renderotazka($q).PHP_EOL;
 	$out .= renderOdpoved($q);
-	$out .= '<input type="hidden" name="hash" value="'.getSetHash().'" /><input type="hidden" name="qnum" value="'.$qn.'" />';
+	$out .= '<input type="hidden" name="hash" value="'.getSetHash().'" />'.PHP_EOL.'<input type="hidden" name="qnum" value="'.$qn.'" /><hr class="clearfix" />';
 	return '<div class="priklad">'.$out.'</div>';
+}
+
+
+function renderSpockQuestion() {
+	$comment = getCurrentQ()->comment;
+	return spockSay("Zde je otázka ".(getPosition()+1)." z ".getQCount().($comment?'<br />'.$comment:''));
 }

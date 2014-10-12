@@ -14,8 +14,8 @@ CREATE TABLE `inst_odpoved` (
   PRIMARY KEY (`id`),
   KEY `iqid` (`iqid`),
   KEY `aid` (`aid`),
-  CONSTRAINT `inst_odpoved_ibfk_4` FOREIGN KEY (`aid`) REFERENCES `inst_odpoved` (`id`),
-  CONSTRAINT `inst_odpoved_ibfk_3` FOREIGN KEY (`iqid`) REFERENCES `inst_otazka` (`id`) ON DELETE CASCADE
+  CONSTRAINT `inst_odpoved_ibfk_3` FOREIGN KEY (`iqid`) REFERENCES `inst_otazka` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `inst_odpoved_ibfk_4` FOREIGN KEY (`aid`) REFERENCES `inst_odpoved` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -65,18 +65,19 @@ DROP TABLE IF EXISTS `otazka`;
 CREATE TABLE `otazka` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `typ` int(11) NOT NULL COMMENT 'text, cesta k souboru, mathquill',
-  `data` varchar(255) NOT NULL COMMENT 'text nebo obrazek',
-  `data2` varchar(255) NOT NULL COMMENT 'text k obrázku nebo mathquill',
+  `comment` varchar(511) NOT NULL COMMENT 'Spockův komentář k otázce',
+  `data` varchar(511) NOT NULL COMMENT 'text nebo obrazek',
+  `data2` varchar(511) NOT NULL COMMENT 'text k obrázku nebo mathquill',
   `multi` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Jestli je to multiselect',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `otazka` (`id`, `typ`, `data`, `data2`, `multi`) VALUES
-(1,	1,	'Kolik je 3 + 3?',	'',	0),
-(2,	1,	'Jaký je obsah čtverce se stranou 7cm?',	'',	0),
-(3,	3,	'\\frac{\\frac{3}{4}}{\\frac{4}{3}}',	'Jaká je hodnota tohoto výrazu?',	1),
-(4,	1,	'Je 4 prvočíslo?',	'',	0),
-(5,	2,	'kruh.png',	'Jaké vlastnosti splňuje tato množina bodů?',	1);
+INSERT INTO `otazka` (`id`, `typ`, `comment`, `data`, `data2`, `multi`) VALUES
+(1,	1,	'Dej si pozor, je to pro pokročilé!',	'Kolik je 3 + 3?',	'',	0),
+(2,	1,	'',	'Jaký je obsah čtverce se stranou 7cm?',	'',	0),
+(3,	3,	'Už jste se učili zlomky?',	'\\frac{\\frac{3}{4}}{\\frac{4}{3}}',	'Jaká je hodnota tohoto výrazu?',	1),
+(4,	1,	'Zkusíme trochu logiky.',	'Je 4 prvočíslo?',	'',	0),
+(5,	2,	'Doufám, že nejsi discirculik.',	'kruh.png',	'Jaké vlastnosti splňuje tato množina bodů?',	1);
 
 DROP TABLE IF EXISTS `sada`;
 CREATE TABLE `sada` (
@@ -87,4 +88,4 @@ CREATE TABLE `sada` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- 2014-10-09 17:56:20
+-- 2014-10-12 06:40:34
