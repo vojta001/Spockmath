@@ -22,13 +22,15 @@ elseif (isset($_POST['submit-prev'])) {
 }
 elseif (isset($_POST['submit-clear'])) {
   clearSet();
+  flm("Sada smazána.", '', MSG_INFO);
 }
 elseif (isset($_POST['submit-save'])) {
-	saveQPost();
-//	if (saveQPost())
-
 //TODO: místo toho uložit odpovědi do tabulek, které ještě neexistují
-  flm('Sorry, tahle funkce ještě není implementována (bude-li vůbec).', '', MSG_ERROR);
+  //flm('Sorry, tahle funkce ještě není implementována (bude-li vůbec).', '', MSG_ERROR);
+
+	if(saveQPost())
+  	if (sadaSave()) {
+      flm("Sada uložena.", '', MSG_INFO);
+    	clearSet();
+		}
 }
-
-

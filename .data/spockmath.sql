@@ -10,18 +10,18 @@ CREATE TABLE `inst_odpoved` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `iqid` int(11) NOT NULL,
   `aid` int(11) NOT NULL,
-  `data` decimal(10,0) NOT NULL COMMENT 'decimal odpoved editu',
+  `data` decimal(16,6) NOT NULL COMMENT 'decimal odpoved editu',
   PRIMARY KEY (`id`),
   KEY `iqid` (`iqid`),
   KEY `aid` (`aid`),
-  CONSTRAINT `inst_odpoved_ibfk_3` FOREIGN KEY (`iqid`) REFERENCES `inst_otazka` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `inst_odpoved_ibfk_4` FOREIGN KEY (`aid`) REFERENCES `inst_odpoved` (`id`)
+  CONSTRAINT `inst_odpoved_ibfk_6` FOREIGN KEY (`iqid`) REFERENCES `inst_otazka` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `inst_odpoved_ibfk_5` FOREIGN KEY (`aid`) REFERENCES `odpoved` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 DROP TABLE IF EXISTS `inst_otazka`;
 CREATE TABLE `inst_otazka` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `qid` int(11) NOT NULL,
   `sid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -70,7 +70,7 @@ CREATE TABLE `otazka` (
   `data2` varchar(511) NOT NULL COMMENT 'text k obrázku nebo mathquill',
   `multi` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Jestli je to multiselect',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 INSERT INTO `otazka` (`id`, `typ`, `comment`, `data`, `data2`, `multi`) VALUES
 (1,	1,	'Dej si pozor, je to pro pokročilé!',	'Kolik je 3 + 3?',	'',	0),
@@ -88,4 +88,4 @@ CREATE TABLE `sada` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- 2014-10-12 06:40:34
+-- 2014-10-16 19:56:35
