@@ -60,7 +60,6 @@ function prepareDebugSet() {
 
 function clearSet() {
 	unset($_SESSION['sada']);
-	flm("Sada smazána.", '', MSG_INFO);
 }
 
 function setMoveNext() {
