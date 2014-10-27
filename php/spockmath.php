@@ -11,6 +11,7 @@ define('AT_EDIT', 4);
 
 define('SADA_OPEN', 1);
 define('SADA_CLOSED', 2);
+define('SADA_READ_ONLY', 3);
 
 
 function prepareRandomSet($count) {
@@ -74,6 +75,14 @@ function isSetOpen() {
 	return isset($_SESSION['sada']['stav']) && ($_SESSION['sada']['stav'] === SADA_OPEN);
 }
 
+function isSetClosed() {
+	return isset($_SESSION['sada']['stav']) && ($_SESSION['sada']['stav'] === SADA_CLOSED);
+}
+
+function isSetReadOnly() {
+	return isset($_SESSION['sada']['stav']) && ($_SESSION['sada']['stav'] === SADA_READ_ONLY);
+}
+
 function getPosition() {
 	return $_SESSION['sada']['pozice'];
 }
@@ -83,7 +92,7 @@ function getQCount() {
 }
 
 function getCurrentQ() {
-	if (!isSetOpen()) {
+	if (!isSetOpen() && !isSetReadOnly()) {
 		flm('Nedam ti aktuální otázku! Není otevřená sada!', '', MSG_ERROR);
 		return;
 	}
