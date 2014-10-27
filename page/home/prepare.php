@@ -62,6 +62,7 @@ function renderOtazka($q) {
 function renderOdpoved($q) {
 	$out = '';
 	$i = 0;
+	if (isSetReadOnly()) $readOnly = 'disabled="disabled"'; else $readOnly = '';
 	foreach ($q->answer as $a) {
 		$i++;
 		switch ($a->typ) {
@@ -75,7 +76,7 @@ function renderOdpoved($q) {
 				$x = '<span class="mathquill-embedded-latex">'.$a->data.'</span>';
 				break;
 			case AT_EDIT:
-				$x = '<span>'.$a->data.'</span><input class="decimalTextBox" type="text" name="edit-'.$i.'" value="'.$a->odpovedDecimal.'" autocomplete="off" />';
+				$x = '<span>'.$a->data.'</span><input class="decimalTextBox" type="text" name="edit-'.$i.'" value="'.$a->odpovedDecimal.'" '.$readOnly.' autocomplete="off" />';
 				break;
 			default:
 				flm('Není definováno chování pro odpověď typu '.$a->typ, '', MSG_ERROR);
@@ -89,9 +90,9 @@ function renderOdpoved($q) {
 			$checked = '';
 
 		if ($q->multi)
-			$out .= PHP_EOL.'  <li><input type="checkbox" name="'.$i.'" '.$checked.'/>'.$x.'</li>';
+			$out .= PHP_EOL.'  <li><input type="checkbox" name="'.$i.'" '.$readOnly.' '.$checked.'/>'.$x.'</li>';
 		else
-			$out .= PHP_EOL.'  <li><input type="radio" name="moznost" value="'.$i.'" '.$checked.'/>'.$x.'</li>';
+			$out .= PHP_EOL.'  <li><input type="radio" name="moznost" value="'.$i.'" '.$readOnly.' '.$checked.'/>'.$x.'</li>';
 	}
 
 	return '<div id="odpoved"><ul>'.$out.PHP_EOL.'</ul></div>';
