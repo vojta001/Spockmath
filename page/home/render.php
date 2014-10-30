@@ -8,6 +8,7 @@
 <form method="post">
 	<?php echo renderSpockQuestion(); ?>
 <?php echo renderQ(); ?>
+<?php if (isSetReadOnly()) echo ('<input type="text" name="name" placeholder="Zadej svoje jméno:">'); ?>
 <?php //echo '<pre>'.print_r(getCurrentQ(), 1).getSetHash().</pre>; ?>
 	</pre>
 	<input type="submit" name="submit-prev<?php if (isSetReadOnly()) echo ('-ro') ?>" value="Předchozí" <?php if (getPosition() == 0) echo 'disabled '; ?>/>
