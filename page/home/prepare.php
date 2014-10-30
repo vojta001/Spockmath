@@ -62,9 +62,42 @@ function renderOtazka($q) {
 function renderOdpoved($q) {
 	$out = '';
 	$i = 0;
-	if (isSetReadOnly()) $readOnly = 'disabled="disabled"'; else $readOnly = '';
+	if (isSetReadOnly())
+		$readOnly = 'disabled="disabled"';
+	else
+		$readOnly = '';
+	$cssClass = '';
+	$cssEdit = '';
 	foreach ($q->answer as $a) {
 		$i++;
+		$editVal = (($a->typ == AT_EDIT) ? $a->odpovedDecimal : '');
+		if (isSetReadOnly()) {
+			$cssClass = 'class="';
+
+			if ($a->spravna && $a->selected)
+				$cssClass .= 'right';
+
+			elseif ($a->spravna && !$a->selected)
+				$cssClass .= 'right';
+
+			elseif (!$a->spravna && $a->selected)
+				$cssClass .= 'wrong';
+
+			if ($a->typ == AT_EDIT) {
+				$cssEdit = ' ';
+				if ($a->selected)
+					if ($a->data2 == $a->odpovedDecimal)
+						$cssEdit .= 'right';
+					else
+						$cssEdit .= 'wrong';
+				elseif ($a->spravna) {
+					$editVal = $a->data2 + 0;
+					$cssEdit .= 'shouldbe';
+				}
+			}
+
+		$cssClass .= '"';
+		}
 		switch ($a->typ) {
 			case AT_TEXT:
 				$x = '<span>'.$a->data.'</span>';
@@ -76,7 +109,7 @@ function renderOdpoved($q) {
 				$x = '<span class="mathquill-embedded-latex">'.$a->data.'</span>';
 				break;
 			case AT_EDIT:
-				$x = '<span>'.$a->data.'</span><input class="decimalTextBox" type="text" name="edit-'.$i.'" value="'.$a->odpovedDecimal.'" '.$readOnly.' autocomplete="off" />';
+				$x = '<span>'.$a->data.'</span><input class="decimalTextBox'.$cssEdit.'" type="text" name="edit-'.$i.'" value="'.$editVal.'" '.$readOnly.' autocomplete="off" />';
 				break;
 			default:
 				flm('Není definováno chování pro odpověď typu '.$a->typ, '', MSG_ERROR);
@@ -90,9 +123,9 @@ function renderOdpoved($q) {
 			$checked = '';
 
 		if ($q->multi)
-			$out .= PHP_EOL.'  <li><input type="checkbox" name="'.$i.'" '.$readOnly.' '.$checked.'/>'.$x.'</li>';
+			$out .= PHP_EOL.'  <li '.$cssClass.'><input type="checkbox" name="'.$i.'" '.$readOnly.' '.$checked.'/>'.$x.'</li>';
 		else
-			$out .= PHP_EOL.'  <li><input type="radio" name="moznost" value="'.$i.'" '.$readOnly.' '.$checked.'/>'.$x.'</li>';
+			$out .= PHP_EOL.'  <li '.$cssClass.'><input type="radio" name="moznost" value="'.$i.'" '.$readOnly.' '.$checked.'/>'.$x.'</li>';
 	}
 
 	return '<div id="odpoved"><ul>'.$out.PHP_EOL.'</ul></div>';
