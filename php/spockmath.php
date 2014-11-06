@@ -71,16 +71,11 @@ function setMovePrev() {
 	$_SESSION['sada']['pozice']--;
 }
 
-function isSetOpen() {
-	return isset($_SESSION['sada']['stav']) && ($_SESSION['sada']['stav'] === SADA_OPEN);
-}
-
-function isSetClosed() {
-	return isset($_SESSION['sada']['stav']) && ($_SESSION['sada']['stav'] === SADA_CLOSED);
-}
-
-function isSetReadOnly() {
-	return isset($_SESSION['sada']['stav']) && ($_SESSION['sada']['stav'] === SADA_READ_ONLY);
+function getSetState() {
+	if (isset($_SESSION['sada']['stav']))
+		return ($_SESSION['sada']['stav']);
+	else
+		return false;
 }
 
 function getPosition() {
@@ -92,7 +87,7 @@ function getQCount() {
 }
 
 function getCurrentQ() {
-	if (!isSetOpen() && !isSetReadOnly()) {
+	if (!getSetState() == SADA_OPEN && !getSetState() == SADA_READ_ONLY) {
 		flm('Nedam ti aktuální otázku! Není otevřená sada!', '', MSG_ERROR);
 		return;
 	}

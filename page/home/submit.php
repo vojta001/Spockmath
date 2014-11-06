@@ -10,16 +10,16 @@ if (isset($_POST['submit-seznam'])) {
 }
 elseif (isset($_POST['submit-create'])) {
 	//prepareRandomSet(3);
-	if (!isSetOpen() || !isSetRead-Only())
+	if (!getSetState() == SADA_OPEN || !getSetState() == READ_ONLY)
 		prepareDebugSet();
 }
 elseif (isset($_POST['submit-next'])) {
-	if (isSetOpen())
+	if (getSetState() == SADA_OPEN)
 		if (saveQPost())
 			setMoveNext();
 }
 elseif (isset($_POST['submit-prev'])) {
-	if (isSetOpen())
+	if (getSetState() == SADA_OPEN)
 		if (saveQPost())
 			setMovePrev();
 }
@@ -30,7 +30,7 @@ elseif (isset($_POST['submit-clear'])) {
 elseif (isset($_POST['submit-save'])) {
 //TODO: místo toho uložit odpovědi do tabulek, které ještě neexistují
 	//flm('Sorry, tahle funkce ještě není implementována (bude-li vůbec).', '', MSG_ERROR);
-	if (isSetOpen())
+	if (getSetState() == SADA_OPEN)
 		if(saveQPost())
 			if (sadaSave()) {
 				flm("Sada uložena.", '', MSG_INFO);
@@ -40,7 +40,7 @@ elseif (isset($_POST['submit-save'])) {
 			}
 }
 elseif (isset($_POST['submit-next-ro'])) {
-	if (isSetReadOnly()) {
+	if (getSetState() == SADA_READ_ONLY) {
 		setMoveNext();
 
 		if (isset ($_POST['name']) && is_string($_POST['name']) && trim($_POST['name'])) {
@@ -50,7 +50,7 @@ elseif (isset($_POST['submit-next-ro'])) {
 	}
 }
 elseif (isset($_POST['submit-prev-ro'])) {
-	if (isSetReadOnly()) {
+	if (getSetState() == READ_ONLY) {
 		setMovePrev();
 
 		if (isset ($_POST['name']) && is_string($_POST['name']) && trim($_POST['name'])) {
@@ -60,6 +60,6 @@ elseif (isset($_POST['submit-prev-ro'])) {
 	}
 }
 elseif (isset($_POST['submit-save-ro'])) {
-	if (isSetReadOnly())
+	if (getSetState() == READ_ONLY)
 		clearSet();
 }

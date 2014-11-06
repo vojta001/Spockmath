@@ -8,7 +8,7 @@ $cssStyles[] = CSS_PATH.'mathquill.css';
 
 function addDecimalCodes() {
 	global $jsScripts, $cssStyles;
-	if (isSetOpen()) {
+	if (getSetState() == SADA_OPEN) {
 		$q = getCurrentQ();
 		$raise = FALSE;
 		foreach ($q->answer as $a) {
@@ -62,7 +62,7 @@ function renderOtazka($q) {
 function renderOdpoved($q) {
 	$out = '';
 	$i = 0;
-	if (isSetReadOnly())
+	if (getSetState() == SADA_READ_ONLY)
 		$readOnly = 'disabled="disabled"';
 	else
 		$readOnly = '';
@@ -71,7 +71,7 @@ function renderOdpoved($q) {
 	foreach ($q->answer as $a) {
 		$i++;
 		$editVal = (($a->typ == AT_EDIT) ? $a->odpovedDecimal : '');
-		if (isSetReadOnly()) {
+		if (getSetState() == SADA_READ_ONLY) {
 			$cssClass = 'class="';
 
 			if ($a->spravna && $a->selected)
