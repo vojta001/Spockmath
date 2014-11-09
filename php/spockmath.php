@@ -188,7 +188,7 @@ function saveQuestion() {
 }
 
 
-/**
+/*
  * return value = success
  */
 function saveQPost() {
