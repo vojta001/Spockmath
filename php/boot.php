@@ -18,8 +18,12 @@ if (!empty($_POST)) {
   if (file_exists($submitFile))
   include $submitFile;
 
-  header("HTTP/1.1 303 See Other");
-  header("Location: http://$_SERVER[SERVER_NAME]$_SERVER[REQUEST_URI]");
+	if (!headers_sent($file, $line)) {
+	  header("HTTP/1.1 303 See Other");
+	  header("Location: http://$_SERVER[SERVER_NAME]$_SERVER[REQUEST_URI]");
+	} else {
+		echo "\nHeaders sent in $file at line $line";
+	}
 
   exit;
 }

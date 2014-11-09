@@ -50,7 +50,7 @@ elseif (isset($_POST['submit-next-ro'])) {
 	}
 }
 elseif (isset($_POST['submit-prev-ro'])) {
-	if (getSetState() == READ_ONLY) {
+	if (getSetState() == SADA_READ_ONLY) {
 		setMovePrev();
 
 		if (isset ($_POST['name']) && is_string($_POST['name']) && trim($_POST['name'])) {
@@ -60,6 +60,6 @@ elseif (isset($_POST['submit-prev-ro'])) {
 	}
 }
 elseif (isset($_POST['submit-save-ro'])) {
-	if (getSetState() == READ_ONLY)
+	if (getSetState() == SADA_READ_ONLY)
 		clearSet();
 }

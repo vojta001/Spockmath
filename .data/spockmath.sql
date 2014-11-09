@@ -14,8 +14,8 @@ CREATE TABLE `inst_odpoved` (
   PRIMARY KEY (`id`),
   KEY `iqid` (`iqid`),
   KEY `aid` (`aid`),
-  CONSTRAINT `inst_odpoved_ibfk_6` FOREIGN KEY (`iqid`) REFERENCES `inst_otazka` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `inst_odpoved_ibfk_5` FOREIGN KEY (`aid`) REFERENCES `odpoved` (`id`)
+  CONSTRAINT `inst_odpoved_ibfk_5` FOREIGN KEY (`aid`) REFERENCES `odpoved` (`id`),
+  CONSTRAINT `inst_odpoved_ibfk_6` FOREIGN KEY (`iqid`) REFERENCES `inst_otazka` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -50,10 +50,12 @@ INSERT INTO `odpoved` (`id`, `fid`, `typ`, `data`, `data2`, `spravna`) VALUES
 (1,	2,	1,	'1540 km3',	0.000000,	0),
 (1,	3,	1,	'3',	0.000000,	0),
 (1,	4,	2,	'troll.jpg',	0.000000,	0),
+(1,	5,	1,	'Trojúhelník',	0.000000,	0),
 (2,	1,	1,	'Nevim, 10?',	0.000000,	0),
 (2,	2,	1,	'49 cm2',	0.000000,	1),
 (2,	3,	3,	'\\sqrt{78}',	0.000000,	0),
 (2,	4,	4,	'Jo a to přesně:',	42.000000,	1),
+(2,	5,	1,	'Šestiúhelník',	0.000000,	0),
 (3,	1,	1,	'Emm... PI?',	0.000000,	0),
 (3,	2,	1,	'????',	0.000000,	0),
 (3,	3,	1,	'správná',	0.000000,	1),
@@ -79,6 +81,17 @@ INSERT INTO `otazka` (`id`, `typ`, `comment`, `data`, `data2`, `multi`) VALUES
 (4,	1,	'Zkusíme trochu logiky.',	'Je 4 prvočíslo?',	'',	0),
 (5,	2,	'Doufám, že nejsi discirculik.',	'kruh.png',	'Jaké vlastnosti splňuje tato množina bodů?',	1);
 
+DROP TABLE IF EXISTS `otazka_tema`;
+CREATE TABLE `otazka_tema` (
+  `otazka_id` int(11) NOT NULL,
+  `tema_id` int(11) NOT NULL,
+  PRIMARY KEY (`otazka_id`,`tema_id`),
+  KEY `tema_id` (`tema_id`),
+  CONSTRAINT `otazka_tema_ibfk_1` FOREIGN KEY (`otazka_id`) REFERENCES `otazka` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `otazka_tema_ibfk_2` FOREIGN KEY (`tema_id`) REFERENCES `tema` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 DROP TABLE IF EXISTS `sada`;
 CREATE TABLE `sada` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -88,4 +101,13 @@ CREATE TABLE `sada` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- 2014-10-16 19:56:35
+DROP TABLE IF EXISTS `tema`;
+CREATE TABLE `tema` (
+  `id` int(11) NOT NULL,
+  `jmeno` varchar(255) NOT NULL,
+  `komentar` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- 2014-11-09 16:54:25

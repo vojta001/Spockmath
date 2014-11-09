@@ -62,6 +62,7 @@ function renderOtazka($q) {
 function renderOdpoved($q) {
 	$out = '';
 	$i = 0;
+  $rightA = '';
 	if (getSetState() == SADA_READ_ONLY)
 		$readOnly = 'disabled="disabled"';
 	else
@@ -70,16 +71,16 @@ function renderOdpoved($q) {
 	$cssEdit = '';
 	foreach ($q->answer as $a) {
 		$i++;
+    $rightA = '';
 		$editVal = (($a->typ == AT_EDIT) ? $a->odpovedDecimal : '');
 		if (getSetState() == SADA_READ_ONLY) {
 			$cssClass = 'class="';
 
-			if ($a->spravna && $a->selected)
+			if ($a->spravna) {
 				$cssClass .= 'right';
-
-			elseif ($a->spravna && !$a->selected)
-				$cssClass .= 'right';
-
+        $rightA = 'Správná: ';
+      	$rightA .= $a->data2 + 0;
+			}
 			elseif (!$a->spravna && $a->selected)
 				$cssClass .= 'wrong';
 
@@ -109,7 +110,7 @@ function renderOdpoved($q) {
 				$x = '<span class="mathquill-embedded-latex">'.$a->data.'</span>';
 				break;
 			case AT_EDIT:
-				$x = '<span>'.$a->data.'</span><input class="decimalTextBox'.$cssEdit.'" type="text" name="edit-'.$i.'" value="'.$editVal.'" '.$readOnly.' autocomplete="off" />';
+				$x = '<span>'.$a->data.'</span><input class="decimalTextBox'.$cssEdit.'" type="text" name="edit-'.$i.'" value="'.$editVal.'" '.$readOnly.' autocomplete="off" />'.$rightA;
 				break;
 			default:
 				flm('Není definováno chování pro odpověď typu '.$a->typ, '', MSG_ERROR);
