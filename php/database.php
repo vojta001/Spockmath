@@ -22,12 +22,12 @@ function getQCountDB() {
 }
 
 
-function getRandomQsDB($count) {
+function getRandomQsDB($count, $temas) {
 	global $mysqli;
 
-	$Qrows = $mysqli->query('SELECT * FROM `otazka` ORDER BY rand() LIMIT '.$count);
+	$Qrows = $mysqli->query('SELECT o.* FROM `otazka` AS o JOIN `otazka_tema` AS ot ON o.id = ot.otazka_id WHERE ot.tema_id IN ('.implode(',', $temas).') ORDER BY rand() LIMIT '.$count);
 	if (!$Qrows) {
-		flm("Ti povidam, že namem `otazka`!", '', MSG_ERROR);
+		flm("Ti povidam, že nemam `otazka`!", '', MSG_ERROR);
 		return array();
 	}
 
@@ -38,7 +38,7 @@ function getRandomQsDB($count) {
 		$Q->answer = array();			
 		while ($A = $Arows->fetch_object()){
 			$A->selected = 0;
-			$A->odpovedDecimal = '';
+			if ($A->typ == AT_EDIT) $A->odpovedDecimal = '';
 			$Q->answer[] = $A;
 		}
 		$Qs[] = $Q;	
@@ -83,9 +83,9 @@ function sadaSave() {
 	}
 
 	$sadaId =  $mysqli->insert_id;
-	$_SESSION['sada']['dbId'] = $sadaId;
+	$_SESSION['home']['sada']['dbId'] = $sadaId;
 
-	$arr = $_SESSION['sada']['otazky'];
+	$arr = $_SESSION['home']['sada']['otazky'];
 	//flm($arr,'otazky...');
 
 	foreach($arr as $q) {
@@ -97,10 +97,15 @@ function sadaSave() {
 		$iqId =  $mysqli->insert_id;
 
 		foreach($q->answer as $a) if ($a->selected) {
-			if (isset($a->odpovedDecimal)) $data = $a->odpovedDecimal;
-			else $data = 0;
+//flm($a);
+			if (isset($a->odpovedDecimal))
+				$data = $a->odpovedDecimal;
+			else
+				$data = 0;
 
-			$retVal = $mysqli->query('INSERT INTO `inst_odpoved` (`iqid`, `aid`, `data`) VALUES ('.$iqId.', '.$a->id.', '.$data.')');
+			$sql = 'INSERT INTO `inst_odpoved` (`iqid`, `aid`, `data`) VALUES ('.$iqId.', '.$a->id.', '.$data.')';
+//flm($sql);
+			$retVal = $mysqli->query($sql);
 			if ($retVal !== TRUE) {
 				flm('Štestí kámo, nejde mi uložit int_odpoved. Že tys to hackoval?', '', MSG_ERROR);
 				return FALSE;
@@ -115,8 +120,8 @@ function updateSadaName($name) {
 	global $mysqli;
 
   $secName = $mysqli->escape_string($name);
-	if (isset($_SESSION['sada']['dbId']) && is_numeric($_SESSION['sada']['dbId']) && $_SESSION['sada']['dbId'] > 0)
-		$id = $_SESSION['sada']['dbId'];
+	if (isset($_SESSION['home']['sada']['dbId']) && is_numeric($_SESSION['home']['sada']['dbId']) && $_SESSION['home']['sada']['dbId'] > 0)
+		$id = $_SESSION['home']['sada']['dbId'];
 	else {
 		flm('Jujda, nemám ID tvojí sady! Takhle to jméno neuložím', '', MSG_ERROR);
 		return false;
@@ -129,4 +134,15 @@ function updateSadaName($name) {
 		return FALSE;
 	}
 	return true;
+}
+
+function getTemas(){
+	global $mysqli;
+
+	$retValue = $mysqli->query('SELECT t.*, COUNT(*) AS cnt FROM `tema` AS t JOIN `otazka_tema` AS ot ON t.id = ot.tema_id GROUP BY t.id');
+	$tema = array();
+	while ($obj = $retValue->fetch_object()) {
+    $tema[] = $obj;
+	}
+	return $tema;
 }

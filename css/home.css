@@ -7,7 +7,7 @@ div.spock-say img {
 	background-color: #fff;
 }
 
-div#content div div{
+div#content div.priklad div{
 	width: 50%;
 	float: left;
 }
@@ -45,4 +45,35 @@ input[type=text].shouldbe {
 	font-weight:bold;
 	background-color:rgba(80,80,80,0.7);
 	color:rgb(0,255,0);
+}
+
+div#setparams {
+	float: right;
+	width: 360px;
+	/*border: 1px dotted black;*/
+}
+
+div#temata ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+div#temata li {
+	/*border: 1px dotted black;
+	display: block;*/
+	margin-bottom: 12px;
+}
+
+div#temata .description {
+	font-size: small;
+	color: #333;
+	margin: 4px 0 0 24px;
+}
+
+div#limit {
+	margin-bottom: 24px;
+}
+
+div#limit span {
+	margin-right: 16px;
 }

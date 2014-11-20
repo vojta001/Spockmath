@@ -9,81 +9,107 @@ define('AT_OBR', 2);
 define('AT_MATH', 3);
 define('AT_EDIT', 4);
 
-define('SADA_OPEN', 1);
-define('SADA_CLOSED', 2);
-define('SADA_READ_ONLY', 3);
+define('HOME_INIT', 1);
+define('HOME_TEMA', 2);
+define('SADA_OPEN', 3);
+define('SADA_READ_ONLY', 4);
+define('SADA_SCORE', 5);
 
 
-function prepareRandomSet($count) {
-	if (isset($_SESSION['sada'], $_SESSION['sada']['stav']) && $_SESSION['sada']['stav'] == SADA_OPEN) {
+function getChosenTema() {
+	$temas = array();
+
+	foreach (getTemas() as $tema) {
+		if (isset($_POST['tema-'.$tema->id])) $temas[] = $tema->id;
+	}
+
+	return $temas;
+}
+
+function prepareRandomSet($count, $temas) {
+	if (isset($_SESSION['home']['sada']) && (getSetState() == SADA_OPEN || getSetState() == SADA_READ_ONLY)) {
 		flm("Sada už byla otevřená!");
-		return;
+		return false;
 	}
 
 	if ($count < 1) {
 		flm("Minimální velikost sady je 1 otázka!", '', MSG_ERROR);
-		return;
+		return false;
 	}
 
 	$totalQs = getQCountDB();
 	if ($count > $totalQs) {
 		flm("Žádáš větší sadu, než je otázek!", '', MSG_ERROR);
-		return;
+		return false;
 	}
 
-	if (!isset($_SESSION['sada']))
-		$_SESSION['sada'] = array();
+	if (!isset($_SESSION['home']['sada']))
+		$_SESSION['home']['sada'] = array();
 
-	$_SESSION['sada']['otazky'] = getRandomQsDB($count);
-	$_SESSION['sada']['pozice'] = 0;
-	$_SESSION['sada']['stav'] = SADA_OPEN;
-	$_SESSION['sada']['hash'] = hash('crc32', print_r($_SESSION['sada']['otazky'], 1));
+  if (!getChosenTema()) {
+		flm('Nejdřív si vyber téma', '', MSG_ERROR);
+		return false;
+	}
+
+	$_SESSION['home']['sada']['otazky'] = getRandomQsDB($count, $temas);
+	$_SESSION['home']['sada']['pozice'] = 0;
+	setSetState(SADA_OPEN);
+	$_SESSION['home']['sada']['hash'] = hash('crc32', print_r($_SESSION['home']['sada']['otazky'], 1));
 
 	flm("Nová sada vytvořena.", '', MSG_INFO);
+	return true;
 }
 
 function prepareDebugSet() {
-	if (isset($_SESSION['sada'], $_SESSION['sada']['stav']) && $_SESSION['sada']['stav'] == SADA_OPEN) {
+	if (isset($_SESSION['home']['sada']) && (getSetState() == SADA_OPEN || getSetState() == SADA_READ_ONLY)) {
 		flm("Sada už byla otevřená!");
 		return;
 	}
 
-	if (!isset($_SESSION['sada']))
-		$_SESSION['sada'] = array();
+	if (!isset($_SESSION['home']['sada']))
+		$_SESSION['home']['sada'] = array();
 
-	$_SESSION['sada']['otazky'] = getAllQsDB($count);
-	$_SESSION['sada']['pozice'] = 0;
-	$_SESSION['sada']['stav'] = SADA_OPEN;
-	$_SESSION['sada']['hash'] = hash('crc32', print_r($_SESSION['sada']['otazky'], 1));
+	$_SESSION['home']['sada']['otazky'] = getAllQsDB($count);
+	$_SESSION['home']['sada']['pozice'] = 0;
+	setSetState(SADA_OPEN);
+	$_SESSION['home']['sada']['hash'] = hash('crc32', print_r($_SESSION['home']['sada']['otazky'], 1));
 
 	flm("Nová sada vytvořena.", '', MSG_INFO);
 }
 
 function clearSet() {
-	unset($_SESSION['sada']);
+	unset($_SESSION['home']['sada']);
+	setSetState(HOME_INIT);
 }
 
 function setMoveNext() {
-	$_SESSION['sada']['pozice']++;
+	$_SESSION['home']['sada']['pozice']++;
 }
 
 function setMovePrev() {
-	$_SESSION['sada']['pozice']--;
+	$_SESSION['home']['sada']['pozice']--;
 }
 
 function getSetState() {
-	if (isset($_SESSION['sada']['stav']))
-		return ($_SESSION['sada']['stav']);
+	if (!isset($_SESSION['home']['stav']))
+    $_SESSION['home']['stav'] = HOME_INIT;
+
+ 	return ($_SESSION['home']['stav']);
+}
+
+function setSetState($state){
+	if (isset($_SESSION['home']['stav']))
+		$_SESSION['home']['stav'] = $state;
 	else
 		return false;
 }
 
 function getPosition() {
-	return $_SESSION['sada']['pozice'];
+	return $_SESSION['home']['sada']['pozice'];
 }
 
 function getQCount() {
-	return count($_SESSION['sada']['otazky']);
+	return count($_SESSION['home']['sada']['otazky']);
 }
 
 function getCurrentQ() {
@@ -92,22 +118,22 @@ function getCurrentQ() {
 		return;
 	}
 
-	$current = $_SESSION['sada']['pozice'];
-	$count = count($_SESSION['sada']['otazky']);
+	$current = $_SESSION['home']['sada']['pozice'];
+	$count = count($_SESSION['home']['sada']['otazky']);
 	if ($current < 0 || $current >= $count) {
 		flm("Jsmem mimo rozsah sady! ($current/$count)", '', MSG_WARNING);
 		$current = max(0, min($count-1, $current));
 	}
 
-	return $_SESSION['sada']['otazky'][$current];
+	return $_SESSION['home']['sada']['otazky'][$current];
 }
 
 function getCurrentQnum() {
-	return $_SESSION['sada']['pozice'];
+	return $_SESSION['home']['sada']['pozice'];
 }
 
 function getSetHash() {
-	return $_SESSION['sada']['hash'];
+	return $_SESSION['home']['sada']['hash'];
 }
 
 function saveSingleAnswer() {
@@ -133,7 +159,7 @@ function saveMultiAnswer() {
 }
 
 function getPostQnum() {
-	if (isset($_POST['qnum']) && is_numeric($_POST['qnum']) && $_POST['qnum'] >= 0 && $_POST['qnum'] < count($_SESSION['sada']['otazky']))
+	if (isset($_POST['qnum']) && is_numeric($_POST['qnum']) && $_POST['qnum'] >= 0 && $_POST['qnum'] < count($_SESSION['home']['sada']['otazky']))
 		return $_POST['qnum'];
 	else
 		return FALSE;
@@ -144,7 +170,7 @@ function checkHash() {
 }
 
 function validatePostEdit() {
-	$count = count($_SESSION['sada']['otazky'][$_POST['qnum']]->answer);
+	$count = count($_SESSION['home']['sada']['otazky'][$_POST['qnum']]->answer);
 
 	$isOk = TRUE;
 	for ($i = 1; $i <= $count; $i++) {
@@ -163,7 +189,7 @@ function validatePostEdit() {
 
 
 function saveEdits() {
-	$count = count($_SESSION['sada']['otazky'][$_POST['qnum']]->answer);
+	$count = count($_SESSION['home']['sada']['otazky'][$_POST['qnum']]->answer);
 
 	for ($i = 1; $i <= $count; $i++) {
 		if (isset($_POST['edit-'.$i])) {
@@ -171,14 +197,14 @@ function saveEdits() {
 			$text = preg_replace('/\s+/', '', $text);
 			$num = str_replace(',', '.', $text);
 			if (is_numeric($num) || !$text)
-			$_SESSION['sada']['otazky'][$_POST['qnum']]->answer[$i-1]->odpovedDecimal = $num;
+			$_SESSION['home']['sada']['otazky'][$_POST['qnum']]->answer[$i-1]->odpovedDecimal = $num;
 		}
 	}
 }
 
 
 function saveQuestion() {
-	if ($_SESSION['sada']['otazky'][$_POST['qnum']]->multi) {
+	if ($_SESSION['home']['sada']['otazky'][$_POST['qnum']]->multi) {
 		saveMultiAnswer();
 	} else {
 		saveSingleAnswer();

@@ -147,3 +147,16 @@ function renderSpockQuestion() {
 	$comment = getCurrentQ()->comment;
 	return spockSay("Zde je otázka ".(getPosition()+1)." z ".getQCount().($comment?'<br />'.$comment:''));
 }
+
+function renderSetParams(){
+	$out = '<div id="temata"><ul>';
+
+	foreach (getTemas() as $tema) {
+		$out .= '<li><input type="checkbox" name="tema-'.$tema->id.'" /><span class="name">'.htmlspecialchars($tema->jmeno).'</span><div class="description">'.htmlspecialchars($tema->komentar).'</div></li>';
+	}
+  $out .= '</ul></div>';
+	//zohlednit defaultSetParams
+	$out .= '<div id="limit"><span>Velikost sady</span><input type="number" name="limit" min="1" max="30" value="10" step="1" /></div>';
+
+	return '<div id="setparams">'.$out.'</div><hr class="clearfix" />';
+}
