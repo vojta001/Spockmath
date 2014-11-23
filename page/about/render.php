@@ -1,8 +1,8 @@
 <?php echo spockSay('Vítej pozemšťane! Chceš vědět něco o tomto webu?', FALSE); ?>
-<p>Stránky školního projektu vznikly samoúčelně. Nešlo původně ani tak o to, co web bude dělat, jako o to, jaké prostředky k tomu budou úpoužity.</p>
+<p>Stránky školního projektu vznikly samoúčelně. Nešlo původně ani tak o to, co web bude dělat, jako o to, jaké prostředky k tomu budou použity.</p>
 <p>Následují nezajímavé technické detaily. Stránky využívají:
 <ul>
-<li>PHP; vyvýjeno na verzi 5.5.9 v rámci XAMPP 1.8.3</li>
+<li>PHP; vyvíjeno na verzi 5.5.9 v rámci XAMPP 1.8.3</li>
 <li>MySQL; až na výjimky nebyly použity odchylky od SQL standardu</li>
 <li>Javascript v minimálním množství</li>
 <li>jQuery a <a href="http://mathquill.com">MathQuill</a> je použit pro zobrazení zlomků, odmocnin apod.</li>
