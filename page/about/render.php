@@ -12,7 +12,7 @@
 <p>Děkujeme tímto <a href="http://www.gbl.cz">Gymnáziu J. S. Machara</a>, budiž mu věčná sláva a tak dále. Samostatně děkujeme Ing. Evě Kospachové za morální podporu nejen v souvislosti s tímto projektem. Dále <a href="http://duhajsky.gbl.cz">Josefu Duhajskému</a> za sobotní výlety, kterým přejeme rovněž slávu a hojnou účast rozumných studentů<sup>2)</sup>. Paní ředitelce 3x hurá! No a tak dále.</p>
 <hr class="clearfix" />
 <ul style="font-size: xx-small; list-style-type: none; padding: 0;">
-	<li><sup>1)</sup> Výjimky jsou uvedeny v <a href="http://tenhleserverneexistuje.cz/soubor.pdf">přiloženém seznamu.</li>
+	<li><sup>1)</sup> Výjimky jsou uvedeny v <a href="http://tenhleserverneexistuje.cz/soubor.pdf">přiloženém seznamu</a>.</li>
 	<li><sup>2)</sup> Prosíme zejména žákyně septimy, aby zvážili pravidelnější účast a vazli s sebou další spolužačky.</li>
 </ul>
 
