@@ -166,3 +166,13 @@ input.error {
   background-color: #fee;
 }
 
+div#content hr.clearfix {
+	clear: both;
+	border: none;
+	border-bottom: 1px dashed #097744;
+}
+
+sup {
+	font-size: xx-small;
+}
+

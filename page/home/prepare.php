@@ -27,18 +27,6 @@ function addDecimalCodes() {
 addDecimalCodes();
 
 
-function spockSay($text, $left = FALSE) {
-	$out = '';
-	if ($left)
-		$out .= '<img src="img/design/leonard-right.png" alt="Hlava Spocka" />'
-		.'<p class="spock-bubble left">'.$text.'</p>';
-	else
-		$out .= '<p class="spock-bubble right">'.$text.'</p>'
-			.'<img src="img/design/leonard-left.png" alt="Hlava Spocka" />';
-	return '<div class="spock-say">'.$out.'</div>'.PHP_EOL;
-}
-
-
 function renderOtazka($q) {
 	switch ($q->typ) {
 		case QT_TEXT:
@@ -62,11 +50,8 @@ function renderOtazka($q) {
 function renderOdpoved($q) {
 	$out = '';
 	$i = 0;
-  $rightA = '';
-	if (getSetState() == SADA_READ_ONLY)
-		$readOnly = 'disabled="disabled"';
-	else
-		$readOnly = '';
+	$rightA = '';
+	$readOnly = getSetState() == SADA_READ_ONLY ? 'disabled="disabled" ' : '';
 	$cssClass = '';
 	$cssEdit = '';
 	foreach ($q->answer as $a) {
@@ -110,7 +95,7 @@ function renderOdpoved($q) {
 				$x = '<span class="mathquill-embedded-latex">'.$a->data.'</span>';
 				break;
 			case AT_EDIT:
-				$x = '<span>'.$a->data.'</span><input class="decimalTextBox'.$cssEdit.'" type="text" name="edit-'.$i.'" value="'.$editVal.'" '.$readOnly.' autocomplete="off" />'.$rightA;
+				$x = '<span>'.$a->data.'</span><input class="decimalTextBox'.$cssEdit.'" type="text" name="edit-'.$i.'" value="'.$editVal.'" '.$readOnly.'autocomplete="off" />'.$rightA;
 				break;
 			default:
 				flm('Není definováno chování pro odpověď typu '.$a->typ, '', MSG_ERROR);

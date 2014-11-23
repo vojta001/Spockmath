@@ -1,8 +1,4 @@
 
-div.spock-say img {
-	vertical-align: middle;
-}
-
 .mathquill-editable {
 	background-color: #fff;
 }
@@ -10,12 +6,6 @@ div.spock-say img {
 div#content div.priklad div{
 	width: 50%;
 	float: left;
-}
-
-div#content hr.clearfix {
-	clear: both;
-	border: none;
-	border-bottom: 1px dashed #097744;
 }
 
 div#odpoved ul {
