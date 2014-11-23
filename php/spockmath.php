@@ -16,6 +16,19 @@ define('SADA_READ_ONLY', 4);
 define('SADA_SCORE', 5);
 
 
+$cssStyles[] = CSS_PATH.'spockmath.css';
+
+function spockSay($text, $left = FALSE) {
+	$out = '';
+	if ($left)
+		$out .= '<img src="img/design/leonard-right.png" alt="Hlava Spocka" />'
+		.'<p class="spock-bubble left">'.$text.'</p>';
+	else
+		$out .= '<p class="spock-bubble right">'.$text.'</p>'
+			.'<img src="img/design/leonard-left.png" alt="Hlava Spocka" />';
+	return '<div class="spock-say">'.$out.'</div>'.PHP_EOL;
+}
+
 function getChosenTema() {
 	$temas = array();
 
