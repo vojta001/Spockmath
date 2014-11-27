@@ -103,11 +103,14 @@ CREATE TABLE `sada` (
 
 DROP TABLE IF EXISTS `tema`;
 CREATE TABLE `tema` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `jmeno` varchar(255) NOT NULL,
   `komentar` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `tema` (`id`, `jmeno`, `komentar`) VALUES
+(1,	'Zlomky',	'Zlomky pro sekundu'),
+(2,	'Geometrie',	'Geometrie z první třídy');
 
--- 2014-11-09 16:54:25
+-- 2014-11-27 21:09:58
