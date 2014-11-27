@@ -13,6 +13,6 @@
 <hr class="clearfix" />
 <ul style="font-size: xx-small; list-style-type: none; padding: 0;">
 	<li><sup>1)</sup> Výjimky jsou uvedeny v <a href="http://tenhleserverneexistuje.cz/soubor.pdf">přiloženém seznamu</a>.</li>
-	<li><sup>2)</sup> Prosíme zejména žákyně septimy, aby zvážili pravidelnější účast a vazli s sebou další spolužačky.</li>
+	<li><sup>2)</sup> Prosíme zejména žákyně septimy, aby zvážily pravidelnější účast a vzaly s sebou další spolužačky.</li>
 </ul>
 

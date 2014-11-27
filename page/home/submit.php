@@ -44,23 +44,35 @@ elseif (isset($_POST['submit-save'])) {
 			if (sadaSave()) {
 				flm("Sada uložena.", '', MSG_INFO);
 				//clearSet();
-				setSetState(SADA_READ_ONLY);
-				$_SESSION['home']['sada']['pozice'] = 0;
+				setSetState(SADA_REG);
+				//$_SESSION['home']['sada']['pozice'] = 0;
 			}
+}
+elseif (isset($_POST['submit-reg'])) {
+	if (getSetState() == SADA_REG) {
+		if (isset ($_POST['name']) && is_string($_POST['name']) && trim($_POST['name'])) {
+			if (updateSadaName($_POST['name'])) {
+				flm('Nastavil jsem ti jméno na: "'.$_POST['name'].'"', '', MSG_INFO);
+        setSetState(SADA_SCORE);
+			}
+		} else
+			flm('Uveď prosím své jméno nebo přezdívku!', '', MSG_INFO);
+	}
 }
 elseif (isset($_POST['submit-next-ro'])) {
 	if (getSetState() == SADA_READ_ONLY) {
-		setMoveNext();
-
-		if (isset ($_POST['name']) && is_string($_POST['name']) && trim($_POST['name'])) {
-			if (updateSadaName($_POST['name']))
-				flm('Nastavil jsem ti jméno na: "'.$_POST['name'].'"', '', MSG_INFO);
-		}
+		if (getPosition() < getQCount()-1)
+			setMoveNext();
+		else
+			setSetState(SADA_SCORE);
 	}
 }
 elseif (isset($_POST['submit-prev-ro'])) {
 	if (getSetState() == SADA_READ_ONLY) {
-		setMovePrev();
+		if (getPosition() > 0)
+			setMovePrev();
+		else
+			setSetState(SADA_SCORE);;
 
 		if (isset ($_POST['name']) && is_string($_POST['name']) && trim($_POST['name'])) {
 			if (updateSadaName($_POST['name']))
@@ -70,10 +82,23 @@ elseif (isset($_POST['submit-prev-ro'])) {
 }
 elseif (isset($_POST['submit-save-ro'])) {
 	if (getSetState() == SADA_READ_ONLY) {
+		setSetState(SADA_SCORE);
 		if (isset ($_POST['name']) && is_string($_POST['name']) && trim($_POST['name'])) {
 			if (updateSadaName($_POST['name']))
 				flm('Nastavil jsem ti jméno na: "'.$_POST['name'].'"', '', MSG_INFO);
+		} elseif(getSetState() == SADA_SCORE) {
+			clearSet();
 		}
-		clearSet();
+	}
+}
+elseif (isset($_POST['submit-score'])) {
+	if (getSetState() == SADA_READ_ONLY) {
+		setSetState(SADA_SCORE);
+	}
+}
+elseif (isset($_POST['submit-walk'])) {
+	if (getSetState() == SADA_SCORE) {
+		setSetState(SADA_READ_ONLY);
+		setPosition(0);
 	}
 }

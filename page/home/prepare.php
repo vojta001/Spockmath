@@ -51,38 +51,41 @@ function renderOdpoved($q) {
 	$out = '';
 	$i = 0;
 	$rightA = '';
-	$readOnly = getSetState() == SADA_READ_ONLY ? 'disabled="disabled" ' : '';
-	$cssClass = '';
+	$readOnly = (getSetState() == SADA_READ_ONLY) ? 'disabled="disabled" ' : '';
+	$itemClass = '';
 	$cssEdit = '';
 	foreach ($q->answer as $a) {
 		$i++;
-    $rightA = '';
+		$rightA = '';
 		$editVal = (($a->typ == AT_EDIT) ? $a->odpovedDecimal : '');
 		if (getSetState() == SADA_READ_ONLY) {
-			$cssClass = 'class="';
+			$itemClass = 'class="';
 
 			if ($a->spravna) {
-				$cssClass .= 'right';
-        $rightA = 'Správná: ';
-      	$rightA .= $a->data2 + 0;
+				$itemClass .= 'right';
+				if ($a->typ == AT_EDIT && $a->data2 != $a->odpovedDecimal) {
+					$rightA = 'Správná: ';
+					$rightA .= $a->data2 + 0;
+				}
 			}
 			elseif (!$a->spravna && $a->selected)
-				$cssClass .= 'wrong';
+				$itemClass .= 'wrong';
 
 			if ($a->typ == AT_EDIT) {
 				$cssEdit = ' ';
-				if ($a->selected)
-					if ($a->data2 == $a->odpovedDecimal)
+				if ($a->selected) {
+					if ($a->data2 == $a->odpovedDecimal && $a->spravna)
 						$cssEdit .= 'right';
 					else
 						$cssEdit .= 'wrong';
+				}
 				elseif ($a->spravna) {
 					$editVal = $a->data2 + 0;
 					$cssEdit .= 'shouldbe';
 				}
 			}
 
-		$cssClass .= '"';
+			$itemClass .= '"';
 		}
 		switch ($a->typ) {
 			case AT_TEXT:
@@ -95,6 +98,8 @@ function renderOdpoved($q) {
 				$x = '<span class="mathquill-embedded-latex">'.$a->data.'</span>';
 				break;
 			case AT_EDIT:
+
+
 				$x = '<span>'.$a->data.'</span><input class="decimalTextBox'.$cssEdit.'" type="text" name="edit-'.$i.'" value="'.$editVal.'" '.$readOnly.'autocomplete="off" />'.$rightA;
 				break;
 			default:
@@ -103,15 +108,13 @@ function renderOdpoved($q) {
 				$x = '<p class="error">Zobrazení není definováno!</p>';
 				break;
 		}
-		if ($q->answer[$i-1]->selected == 1)
-			$checked = 'checked="checked"';
-		else
-			$checked = '';
+
+		$checked = ($q->answer[$i-1]->selected == 1)?'checked="checked" ':'';
 
 		if ($q->multi)
-			$out .= PHP_EOL.'  <li '.$cssClass.'><input type="checkbox" name="'.$i.'" '.$readOnly.' '.$checked.'/>'.$x.'</li>';
+			$out .= PHP_EOL.'  <li '.$itemClass.'><input type="checkbox" name="'.$i.'" '.$readOnly.$checked.'/>'.$x.'</li>';
 		else
-			$out .= PHP_EOL.'  <li '.$cssClass.'><input type="radio" name="moznost" value="'.$i.'" '.$readOnly.' '.$checked.'/>'.$x.'</li>';
+			$out .= PHP_EOL.'  <li '.$itemClass.'><input type="radio" name="moznost" value="'.$i.'" '.$readOnly.$checked.'/>'.$x.'</li>';
 	}
 
 	return '<div id="odpoved"><ul>'.$out.PHP_EOL.'</ul></div>';
@@ -139,9 +142,53 @@ function renderSetParams(){
 	foreach (getTemas() as $tema) {
 		$out .= '<li><input type="checkbox" name="tema-'.$tema->id.'" /><span class="name">'.htmlspecialchars($tema->jmeno).'</span><div class="description">'.htmlspecialchars($tema->komentar).'</div></li>';
 	}
-  $out .= '</ul></div>';
+	$out .= '</ul></div>';
 	//zohlednit defaultSetParams
 	$out .= '<div id="limit"><span>Velikost sady</span><input type="number" name="limit" min="1" max="30" value="10" step="1" /></div>';
 
 	return '<div id="setparams">'.$out.'</div><hr class="clearfix" />';
+}
+
+function isRightQ($q) {
+	if ($q->multi) {
+		$all = true;
+		foreach ($q->answer as $a) {
+			if ($a->selected) {
+				if ($a->spravna)
+					$all &= true;
+				else {
+					return false;
+					break;
+				}
+			}
+		return $all;
+		}
+	} else {
+		foreach ($q->answer as $a) {
+			if ($a->selected) {
+				if ($a->spravna)
+					return true;
+				else
+					return false;
+				break;
+			}
+		}
+	}
+}
+
+function renderScore() {
+	$out = '';
+
+	$i = 0;
+	foreach ($_SESSION['home']['sada']['otazky'] as $q) {
+		$i++;
+		if (isRightQ($q))
+			$class = 'right';
+		else
+			$class = 'wrong';
+
+		$out .= '<li class="'.$class.'">Otázka číslo:'.$i.'</li>';
+	}
+
+	return '<div id="score"><ul>'.$out.'</ul></div>';
 }

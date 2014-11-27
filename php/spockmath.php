@@ -13,7 +13,8 @@ define('HOME_INIT', 1);
 define('HOME_TEMA', 2);
 define('SADA_OPEN', 3);
 define('SADA_READ_ONLY', 4);
-define('SADA_SCORE', 5);
+define('SADA_REG', 5);
+define('SADA_SCORE', 6);
 
 
 $cssStyles[] = CSS_PATH.'spockmath.css';
@@ -119,6 +120,10 @@ function setSetState($state){
 
 function getPosition() {
 	return $_SESSION['home']['sada']['pozice'];
+}
+
+function setPosition($pos) {
+	$_SESSION['home']['sada']['pozice'] = $pos;
 }
 
 function getQCount() {
