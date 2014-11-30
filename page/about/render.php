@@ -1,4 +1,4 @@
-<?php echo spockSay('Vítej pozemšťane! Chceš vědět něco o tomto webu?', FALSE); ?>
+<?php echo jarSay('Vítej pozemšťane! Chceš vědět něco o tomto webu?', JAR_SPOCK, FALSE); ?>
 <p>Stránky školního projektu vznikly samoúčelně. Nešlo původně ani tak o to, co web bude dělat, jako o to, jaké prostředky k tomu budou použity.</p>
 <p>Následují nezajímavé technické detaily. Stránky využívají:
 <ul>

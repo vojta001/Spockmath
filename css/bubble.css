@@ -1,4 +1,8 @@
-.spock-bubble {
+div.jar-say img {
+	vertical-align: middle;
+}
+
+.jar-bubble {
   position: relative;
   display: inline-block;
   padding: 15px;
@@ -11,15 +15,15 @@
   border-radius: 10px;
 }
 
-.spock-bubble.left {
+.jar-bubble.right {
   margin-left: 30px;
 }
 
-.spock-bubble.right {
+.jar-bubble.left {
   margin-right: 30px;
 }
 
-.spock-bubble:before {
+.jar-bubble:before {
   content: "";
   position: absolute;
   bottom: -20px;
@@ -31,7 +35,7 @@
   width: 0;
 }
 
-.spock-bubble:after {
+.jar-bubble:after {
   content: "";
   position: absolute;
   bottom: -15px;
@@ -43,7 +47,7 @@
   width: 0;
 }
 
-.spock-bubble.top:before {
+.jar-bubble.top:before {
   top: -20px;
   bottom: auto;
   left: auto;
@@ -51,7 +55,7 @@
   border-width: 0 20px 20px;
 }
 
-.spock-bubble.top:after {
+.jar-bubble.top:after {
   top: -15px;
   bottom: auto;
   left: auto;
@@ -59,7 +63,7 @@
   border-width: 0 15px 15px;
 }
 
-.spock-bubble.left:before {
+.jar-bubble.right:before {
   top: 10px;
   bottom: auto;
   left: -30px;
@@ -67,7 +71,7 @@
   border-color: transparent #5a8f00;
 }
 
-.spock-bubble.left:after {
+.jar-bubble.right:after {
   top: 14px;
   bottom: auto;
   left: -23px;
@@ -75,7 +79,7 @@
   border-color: transparent #fff;
 }
 
-.spock-bubble.right:before {
+.jar-bubble.left:before {
   top: 10px;
   bottom: auto;
   left: auto;
@@ -84,7 +88,7 @@
   border-color: transparent #5a8f00;
 }
 
-.spock-bubble.right:after {
+.jar-bubble.left:after {
   top: 14px;
   bottom: auto;
   left: auto;
