@@ -19,15 +19,25 @@ define('SADA_SCORE', 6);
 
 $cssStyles[] = CSS_PATH.'spockmath.css';
 
-function spockSay($text, $left = FALSE) {
-	$out = '';
-	if ($left)
-		$out .= '<img src="img/design/leonard-right.png" alt="Hlava Spocka" />'
-		.'<p class="spock-bubble left">'.$text.'</p>';
-	else
-		$out .= '<p class="spock-bubble right">'.$text.'</p>'
-			.'<img src="img/design/leonard-left.png" alt="Hlava Spocka" />';
-	return '<div class="spock-say">'.$out.'</div>'.PHP_EOL;
+define('JAR_SPOCK', 1);
+define('JAR_UHURA', 2);
+
+function jarSay($text, $jar = JAR_SPOCK, $left = FALSE) {
+	$sideStr = $left?'left':'right';
+	switch($jar) {
+		case JAR_UHURA:
+			$actorNameNominativ = 'nichelle'; 	
+			$roleNameGenitiv = 'Uhury';
+			break; 	
+		default:
+			$actorNameNominativ = 'leonard'; 	
+			$roleNameGenitiv = 'Spocka';
+	}		
+
+	$img = '<img src="img/design/'.$actorNameNominativ.'-'.$sideStr.'.png" alt="Hlava '.$roleNameGenitiv.'" />';
+	$p = '<p class="jar-bubble '.$sideStr.'">'.$text.'</p>';
+
+	return '<div class="jar-say">'.($left?($p.$img):($img.$p)).'</div>'.PHP_EOL;	
 }
 
 function getChosenTema() {

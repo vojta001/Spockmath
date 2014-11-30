@@ -1,11 +1,11 @@
 <?php /*flm($_SESSION, "Session");*/ if (getSetState() == HOME_INIT) { ?>
-<?php echo spockSay('Vítej pozemšťane! Co takhle malý test?', FALSE); ?>
+<?php echo jarSay('Vítej pozemšťane! Co takhle malý test?', JAR_SPOCK, FALSE); ?>
 <form method="post">
 	<input type="submit" name="submit-seznam" value="Nechci, jsem lama!" />
 	<input type="submit" name="submit-start" value="Dobře, že jsi vulkánec, zkusím to." />
 </form>
 <?php } elseif (getSetState() == HOME_TEMA) { ?>
-<?php echo spockSay('Vyber si téma!', TRUE); ?>
+<?php echo jarSay('Vyber si téma!', JAR_SPOCK, TRUE); ?>
 <form method="post">
 	<?php echo renderSetParams(); ?>
 	<input type="submit" name="submit-seznam" value="Rozmyslel jsem si to!" />
@@ -27,7 +27,7 @@
 </form>
 <?php } elseif (getSetState() == SADA_REG) { ?>
 <form method="post">
-	<?php echo spockSay('Pověz nám něco o sobě a můžeš si prohlédnout své skóre!', false); ?>
+	<?php echo jarSay('Pověz nám něco o sobě a můžeš si prohlédnout své skóre!', JAR_SPOCK); ?>
   <input type="text" name="name" placeholder="Zadej svoje jméno:" />
   <input type="submit" name="submit-reg" value="Dokončit a vyhodnotit" />
 </form>
@@ -47,7 +47,7 @@
 </form>
 <?php } elseif (getSetState() == SADA_SCORE) { ?>
 <form method="post">
-	<?php echo spockSay('No tak takhle jsi dopadl:', true); ?>
+	<?php echo jarSay('No tak takhle jsi dopadl:', JAR_SPOCK, TRUE); ?>
 	<?php echo renderScore(); ?>
 	<input type="submit" name="submit-walk" value="Projít sadu" />
 	<input type="submit" name="submit-save-ro" value="Konec" />

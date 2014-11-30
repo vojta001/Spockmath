@@ -133,7 +133,7 @@ function renderQ() {
 
 function renderSpockQuestion() {
 	$comment = getCurrentQ()->comment;
-	return spockSay("Zde je otázka ".(getPosition()+1)." z ".getQCount().($comment?'<br />'.$comment:''));
+	return jarSay("Zde je otázka ".(getPosition()+1)." z ".getQCount().($comment?'<br />'.$comment:''), JAR_SPOCK, FALSE);
 }
 
 function renderSetParams(){
