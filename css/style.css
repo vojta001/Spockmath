@@ -82,18 +82,19 @@ div#header {
   position: relative;
 }
 div#header h1 {
-    padding: 64px 0 0 160px;
-    text-shadow: #000 0 0 8px; 
+  padding: 64px 0 0 160px;
+  text-shadow: #000 0 0 8px; 
 }
 
 div#menu {
   position: absolute;
   bottom: 2px;
   width: 100%;
+  text-align: right;
 }
 div#menu ul {
   list-style-type: none;
-  margin: 0 0 0 400px;
+  margin: 0 8px 0 0;
   padding: 0;
 }
 div#menu li {
@@ -109,7 +110,7 @@ div#menu a {
   background-color: rgb(81,176,24);
   background-color: rgba(81,176,24,.5);
 
-  width: 160px;
+  width: 140px;
   height: 32px;
   line-height: 32px;
 }
