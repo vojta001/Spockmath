@@ -21,6 +21,7 @@ $cssStyles[] = CSS_PATH.'spockmath.css';
 
 define('JAR_SPOCK', 1);
 define('JAR_UHURA', 2);
+define('JAR_NIXON', 3);
 
 function jarSay($text, $jar = JAR_SPOCK, $left = FALSE) {
 	$sideStr = $left?'left':'right';
@@ -28,7 +29,11 @@ function jarSay($text, $jar = JAR_SPOCK, $left = FALSE) {
 		case JAR_UHURA:
 			$actorNameNominativ = 'nichelle'; 	
 			$roleNameGenitiv = 'Uhury';
-			break; 	
+			break;
+		case JAR_NIXON: 	
+			$actorNameNominativ = 'nixon'; 	
+			$roleNameGenitiv = 'Richarda Nixona';
+			break;
 		default:
 			$actorNameNominativ = 'leonard'; 	
 			$roleNameGenitiv = 'Spocka';

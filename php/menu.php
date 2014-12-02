@@ -3,6 +3,7 @@
 $menu = array(
   'home' => 'Testy',
   'stats' => 'Statistiky',
+  'edit' => 'Editor',
   'about' => 'O projektu'
 );
 
