@@ -1,5 +1,7 @@
 <?php
 
+$cssStyles[] = "flashmsg.css";
+
 define('MSG_DBG', 0);
 define('MSG_INFO', 1);
 define('MSG_WARNING', 2);

@@ -2,9 +2,9 @@
 
 require PHP_PATH.'spockmath.php';
 
-$jsScripts[] = JS_PATH.'jquery.min.js';
-$jsScripts[] = JS_PATH.'mathquill.min.js';
-$cssStyles[] = CSS_PATH.'mathquill.css';
+$jsScripts[] = 'jquery.min.js';
+$jsScripts[] = 'mathquill.min.js';
+$cssStyles[] = 'mathquill.css';
 
 function addDecimalCodes() {
 	global $jsScripts, $cssStyles;

@@ -3,11 +3,13 @@
 define('QT_TEXT', 1);
 define('QT_OBR', 2);
 define('QT_MATH', 3);
+$QT_STR = array(1 => 'text', 2 => 'obrázek', 3 => 'vzorec');
 
 define('AT_TEXT', 1);
 define('AT_OBR', 2);
 define('AT_MATH', 3);
 define('AT_EDIT', 4);
+$AT_STR = array(1 => 'text', 2 => 'obrázek', 3 => 'vzorec', 4 => 'ruční');
 
 define('HOME_INIT', 1);
 define('HOME_TEMA', 2);
@@ -17,33 +19,7 @@ define('SADA_REG', 5);
 define('SADA_SCORE', 6);
 
 
-$cssStyles[] = CSS_PATH.'spockmath.css';
-
-define('JAR_SPOCK', 1);
-define('JAR_UHURA', 2);
-define('JAR_NIXON', 3);
-
-function jarSay($text, $jar = JAR_SPOCK, $left = FALSE) {
-	$sideStr = $left?'left':'right';
-	switch($jar) {
-		case JAR_UHURA:
-			$actorNameNominativ = 'nichelle'; 	
-			$roleNameGenitiv = 'Uhury';
-			break;
-		case JAR_NIXON: 	
-			$actorNameNominativ = 'nixon'; 	
-			$roleNameGenitiv = 'Richarda Nixona';
-			break;
-		default:
-			$actorNameNominativ = 'leonard'; 	
-			$roleNameGenitiv = 'Spocka';
-	}		
-
-	$img = '<img src="img/design/'.$actorNameNominativ.'-'.$sideStr.'.png" alt="Hlava '.$roleNameGenitiv.'" />';
-	$p = '<p class="jar-bubble '.$sideStr.'">'.$text.'</p>';
-
-	return '<div class="jar-say">'.($left?($p.$img):($img.$p)).'</div>'.PHP_EOL;	
-}
+//$cssStyles[] = CSS_PATH.'spockmath.css';
 
 function getChosenTema() {
 	$temas = array();
