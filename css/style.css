@@ -18,54 +18,6 @@ a {
   color: #f00;
 }
 
-div#flash-msg {
-  position: absolute;
-  z-index: 1;
-  top: 24px;
-  left: 24px;
-  max-width: 480px;
-}
-
-div#flash-msg div {
-  font-size: medium;
-  background-position: 5px 5px;
-  background-repeat: no-repeat;
-  border-width: 2px;
-  border-style: solid;
-  color: #000000;
-  margin: 0 0 5px 16px;
-  min-height: 21px;
-  padding: 5px 20px 5px 35px;
-}
-
-div#flash-msg div.debug {
-  border-color: #B8FF8C;
-  background-image: url("../img/sys/msg-dbg.png");
-  background-color: rgb(81,176,24);
-  background-color: rgba(81,176,24,.66);
-}
-
-div#flash-msg div.info {
-  border-color: #ff7;
-  background-image: url("../img/sys/msg-info.png");
-  background-color: rgb(255,255,204);
-  background-color: rgba(255,255,204,.66);
-}
-
-div#flash-msg div.warning {
-  border-color: #fc0;
-  background-image: url("../img/sys/msg-warning.png");
-  background-color: rgb(255,255,204);
-  background-color: rgba(255,255,204,.66);
-}
-
-div#flash-msg div.error {
-  border-color: #c00;
-  background-image: url("../img/sys/msg-error.png");
-  background-color: rgb(255,238,238);
-  background-color: rgba(255,238,238,.66);
-}
-
 div#container {
   margin-top: 24px;
   width:920px;

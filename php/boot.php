@@ -2,8 +2,8 @@
 
 session_start();
 
-require 'flashmsg.php';
 require 'database.php';
+
 
 $page = 'home';
 if (isset($_GET['page'])) {
@@ -38,7 +38,13 @@ $cssFileName = CSS_PATH.$page.'.css';
 if (file_exists($cssFileName))
   $cssStyles[] = $cssFileName;
 
+$cssStyles[] = "style.css";
+
+
+require 'flashmsg.php';
+require 'bubble.php';
 require 'menu.php';
+
 
 $prepFile = PAGES_PATH.$page.'/prepare.php';
 if (file_exists($prepFile))
