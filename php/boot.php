@@ -2,7 +2,12 @@
 
 session_start();
 
+$jsScripts = array();
+$cssStyles = array();
+
+
 require 'database.php';
+require 'flashmsg.php';
 
 
 $page = 'home';
@@ -28,12 +33,10 @@ if (!empty($_POST)) {
   exit;
 }
 
-$jsScripts = array();
 $jsFileName = JS_PATH.$page.'.js';
 if (file_exists($jsFileName))
   $jsScripts[] = $jsFileName;
 
-$cssStyles = array();
 $cssFileName = CSS_PATH.$page.'.css';
 if (file_exists($cssFileName))
   $cssStyles[] = $cssFileName;
@@ -41,7 +44,6 @@ if (file_exists($cssFileName))
 $cssStyles[] = "style.css";
 
 
-require 'flashmsg.php';
 require 'bubble.php';
 require 'menu.php';
 
