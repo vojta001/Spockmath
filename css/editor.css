@@ -1,0 +1,23 @@
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.8em;
+}
+
+th, td {
+	border: 1px solid #51B018;
+	padding: 3px 7px 2px 7px;
+}
+
+th {
+	font-size: 1em;
+	text-align: left;
+	padding-top: 5px;
+	padding-bottom: 4px;
+	background-color: #99CC33;
+}
+
+tr.odd td {
+	background-color: #D1EA4F;
+}

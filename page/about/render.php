@@ -1,5 +1,5 @@
 <?php echo jarSay('Vítej pozemšťane! Chceš vědět něco o tomto webu?', JAR_SPOCK, FALSE); ?>
-<p>Stránky školního projektu vznikly samoúčelně. Nešlo původně ani tak o to, co web bude dělat, jako o to, jaké prostředky k tomu budou použity.</p>
+<p>Stránky školního projektu vznikly samoúčelně. Nešlo původně ani tak o to, co web bude dělat, jako o to, jaké prostředky a postupy k tomu budou použity. Výsledek sesmolili Vojtěch <i>Kane</i> Káně za dohledu RgB.</p>
 <p>Následují nezajímavé technické detaily. Stránky využívají:
 <ul>
 <li>PHP; vyvíjeno na verzi 5.5.9 v rámci XAMPP 1.8.3</li>
