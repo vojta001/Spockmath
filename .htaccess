@@ -6,7 +6,7 @@ RewriteRule ^(.*)$ http://%1%{REQUEST_URI} [R=301,QSA,NC,L]
 # POKUS O CLEAN URL
 RewriteRule ^([a-zA-Z0-9]+)$ index.php?page=$1
 RewriteRule ^([a-zA-Z0-9]+)/$ index.php?page=$1
-RewriteRule ^([a-zA-Z0-9]+)/([^/\.]+)$ index.php?page=$1&$2
+RewriteRule ^([a-zA-Z0-9]+)/([^/\.]+)$ index.php?page=$1&q=$2
 
 # ERROR pages
 # ErrorDocument 403 403

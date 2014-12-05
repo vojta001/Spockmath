@@ -19,10 +19,10 @@ function renderQtab() {
 	
 	while($q = $qRows->fetch_object()) {
 		$otazka = ($q->typ == 1) ? $q->data : $q->data2;
-		$out .= '<tr class="'.$eo[($row++)%2].'"><td>'.$q->id.'</td><td>'.$QT_STR[$q->typ].'</td><td>'.$otazka.'</td><td>'.$q->comment.'</td><td>'.$q->temata.'</td><td>'.($q->multi?'Ano':'Ne').'</td></tr>';
+		$out .= '<tr class="'.$eo[($row++)%2].'"><td class="center"><a href="'.WEB_ROOT.'edit/'.$q->id.'">'.$q->id.'</a></td><td>'.$QT_STR[$q->typ].'</td><td>'.$otazka.'</td><td>'.$q->comment.'</td><td>'.$q->temata.'</td><td>'.($q->multi?'Ano':'Ne').'</td></tr>';
 	}
 	
-	$out .= '<tr class="'.$eo[($row++)%2].'"><td colspan="6">Přidat novou</td></tr>';
+	$out .= '<tr class="'.$eo[($row++)%2].'"><td colspan="6" class="center"><a href="'.WEB_ROOT.'edit/new">Přidat novou</a></td></tr>';
 	$out .= '</table>';
 	return $out;
 }

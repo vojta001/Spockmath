@@ -21,3 +21,18 @@ th {
 tr.odd td {
 	background-color: #D1EA4F;
 }
+
+td.center {
+	text-align: center;
+}
+
+table a {
+	display: inline-block;
+	width: 100%;
+	outline: 1px dashed #51B018;
+}
+
+table a:hover {
+	background-color: rgb(40,170,255);
+	background-color: rgba(80,170,255,.5);
+}
