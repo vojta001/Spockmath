@@ -45,7 +45,13 @@ div#setparams {
 
 div#temata ul {
 	list-style-type: none;
+	padding-left: 0;
+}
+
+div#temata ul ul {
+	list-style-type: none;
 	padding: 0;
+ 	margin: 8px 0 0 16px;
 }
 
 div#temata li {

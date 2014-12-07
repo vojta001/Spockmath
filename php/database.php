@@ -139,7 +139,8 @@ function updateSadaName($name) {
 function getTemas(){
 	global $mysqli;
 
-	$retValue = $mysqli->query('SELECT t.*, COUNT(*) AS cnt FROM `tema` AS t JOIN `otazka_tema` AS ot ON t.id = ot.tema_id GROUP BY t.id');
+	$retValue = $mysqli->query('SELECT p.jmeno AS p_jmeno, t.*, COUNT(*) AS cnt FROM `tema` AS t JOIN `otazka_tema` AS ot ON t.id = ot.tema_id JOIN `predmet` AS p ON t.pid = p.id GROUP BY t.id ORDER BY t.`pid`');
+	//$retValue = $mysqli->query('SELECT t.*, COUNT(*) AS cnt FROM `tema` AS t JOIN `otazka_tema` AS ot ON t.id = ot.tema_id GROUP BY t.id');
 	$tema = array();
 	while ($obj = $retValue->fetch_object()) {
     $tema[] = $obj;
