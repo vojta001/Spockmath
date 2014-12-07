@@ -289,15 +289,20 @@ INSERT INTO `odpoved` (`id`, `fid`, `typ`, `data`, `data2`, `spravna`) VALUES
 (1,	3,	1,	'3',	0.000000,	0),
 (1,	4,	2,	'troll.jpg',	0.000000,	0),
 (1,	5,	1,	'Trojúhelník',	0.000000,	0),
+(1,	6,	1,	'Louskáček na ořechy',	0.000000,	1),
+(1,	7,	1,	'Fyzikální veličina',	0.000000,	1),
 (2,	1,	1,	'Nevim, 10?',	0.000000,	0),
 (2,	2,	1,	'49 cm2',	0.000000,	1),
 (2,	3,	3,	'\\sqrt{78}',	0.000000,	0),
 (2,	4,	4,	'Jo a to přesně:',	42.000000,	1),
 (2,	5,	1,	'Šestiúhelník',	0.000000,	0),
+(2,	6,	1,	'Šroub',	0.000000,	0),
+(2,	7,	1,	'Nesmysl',	0.000000,	0),
 (3,	1,	1,	'Emm... PI?',	0.000000,	0),
 (3,	2,	1,	'????',	0.000000,	0),
 (3,	3,	1,	'správná',	0.000000,	1),
 (3,	4,	4,	'Nebo třeba...',	0.000000,	0),
+(3,	6,	1,	'Nůžky',	0.000000,	1),
 (4,	2,	1,	'125',	0.000000,	0),
 (4,	3,	3,	'\\frac{9}{16}',	0.000000,	1);
 
@@ -310,14 +315,17 @@ CREATE TABLE `otazka` (
   `data2` varchar(511) NOT NULL COMMENT 'text k obrázku nebo mathquill',
   `multi` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Jestli je to multiselect',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 INSERT INTO `otazka` (`id`, `typ`, `comment`, `data`, `data2`, `multi`) VALUES
 (1,	1,	'Dej si pozor, je to pro pokročilé!',	'Kolik je 3 + 3?',	'',	0),
 (2,	1,	'',	'Jaký je obsah čtverce se stranou 7cm?',	'',	0),
 (3,	3,	'Už jste se učili zlomky?',	'\\frac{\\frac{3}{4}}{\\frac{4}{3}}',	'Jaká je hodnota tohoto výrazu?',	1),
 (4,	1,	'Zkusíme trochu logiky.',	'Je 4 prvočíslo?',	'',	0),
-(5,	2,	'Doufám, že nejsi discirculik.',	'kruh.png',	'Jaké vlastnosti splňuje tato množina bodů?',	1);
+(5,	2,	'Doufám, že nejsi discirculik.',	'kruh.png',	'Jaké vlastnosti splňuje tato množina bodů?',	1),
+(6,	1,	'Páka. To zvládneš, ne?',	'Ve kterých jednoduchých strojích se vyskytuje páka?',	'',	1),
+(7,	1,	'Pche. Tohle jsme se učili už ve školce',	'Teplota je:',	'',	0),
+(8,	1,	'No Comment',	'Data',	'',	0);
 
 DROP TABLE IF EXISTS `otazka_tema`;
 CREATE TABLE `otazka_tema` (
@@ -335,7 +343,22 @@ INSERT INTO `otazka_tema` (`otazka_id`, `tema_id`) VALUES
 (3,	1),
 (4,	1),
 (2,	2),
-(5,	2);
+(5,	2),
+(6,	3),
+(7,	3);
+
+DROP TABLE IF EXISTS `predmet`;
+CREATE TABLE `predmet` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `jmeno` varchar(255) NOT NULL,
+  `komentar` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+INSERT INTO `predmet` (`id`, `jmeno`, `komentar`) VALUES
+(1,	'Fyzika',	'Aplikovaná matematika'),
+(2,	'Matematika',	'Aplikovaná fylosofie'),
+(3,	'Informatika',	'Věda a internetech a počítačích');
 
 DROP TABLE IF EXISTS `sada`;
 CREATE TABLE `sada` (
@@ -343,7 +366,7 @@ CREATE TABLE `sada` (
   `datum` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `jmeno` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
 
 INSERT INTO `sada` (`id`, `datum`, `jmeno`) VALUES
 (23,	'2014-10-16 19:25:07',	'Příliš \'); DROP TABLE sada; -- žluťoučký kůň úpěl ďábelské ódy.'),
@@ -383,13 +406,17 @@ INSERT INTO `sada` (`id`, `datum`, `jmeno`) VALUES
 DROP TABLE IF EXISTS `tema`;
 CREATE TABLE `tema` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` int(11) NOT NULL COMMENT 'predmetid',
   `jmeno` varchar(255) NOT NULL,
   `komentar` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `pid` (`pid`),
+  CONSTRAINT `tema_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `predmet` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-INSERT INTO `tema` (`id`, `jmeno`, `komentar`) VALUES
-(1,	'Zlomky',	'Zlomky pro sekundu'),
-(2,	'Geometrie',	'Geometrie z první třídy');
+INSERT INTO `tema` (`id`, `pid`, `jmeno`, `komentar`) VALUES
+(1,	2,	'Zlomky',	'Zlomky pro sekundu'),
+(2,	2,	'Geometrie',	'Geometrie z první třídy'),
+(3,	1,	'Jednoduché stroje a veličiny',	'Fyzika pro 1. třídu');
 
--- 2014-11-30 14:22:03
+-- 2014-12-07 20:53:12
