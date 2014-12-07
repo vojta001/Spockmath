@@ -139,9 +139,21 @@ function renderSpockQuestion() {
 function renderSetParams(){
 	$out = '<div id="temata"><ul>';
 
+	$predmet = '';
 	foreach (getTemas() as $tema) {
+		if ($predmet != $tema->p_jmeno) {
+			if ($predmet)
+	      $out .= '</ul></li>';
+
+      $predmet = $tema->p_jmeno;
+      $out .= '<li><span class="predmet">'.$predmet.'</span><ul>';
+		}
+
 		$out .= '<li><input type="checkbox" name="tema-'.$tema->id.'" /><span class="name">'.htmlspecialchars($tema->jmeno).'</span><div class="description">'.htmlspecialchars($tema->komentar).'</div></li>';
 	}
+	if ($predmet)
+    $out .= '</ul></li>';
+
 	$out .= '</ul></div>';
 	//zohlednit defaultSetParams
 	$out .= '<div id="limit"><span>Velikost sady</span><input type="number" name="limit" min="1" max="30" value="10" step="1" /></div>';
@@ -151,28 +163,16 @@ function renderSetParams(){
 
 function isRightQ($q) {
 	if ($q->multi) {
-		$all = true;
-		foreach ($q->answer as $a) {
-			if ($a->selected) {
-				if ($a->spravna)
-					$all &= true;
-				else {
-					return false;
-					break;
-				}
-			}
-		return $all;
-		}
-	} else {
-		foreach ($q->answer as $a) {
-			if ($a->selected) {
-				if ($a->spravna)
-					return true;
-				else
-					return false;
-				break;
-			}
-		}
+		foreach ($q->answer as $a)
+			if ($a->selected != $a->spravna)
+				return false;
+		return true;
+	}
+	else {
+		foreach ($q->answer as $a)
+			if ($a->selected)
+				return $a->spravna;
+		return false;
 	}
 }
 
