@@ -3,6 +3,33 @@
 require PHP_PATH.'spockmath.php';
 $cssStyles[] = 'editor.css';
 
+$_id = getIdFromQuery();
+
+if ($_id === FALSE) {
+	header('HTTP/1.0 404 Not Found');
+  header('Location: '.WEB_ROOT.'404');
+	exit;
+}	
+
+function getIdFromQuery() {
+	if (isset($_GET['q'])) {
+		$id = $_GET['q'];
+		if ($id == 'new')
+			return 0;
+		elseif (is_numeric($id))
+			return (int)$id;
+		else
+			return FALSE; 
+	}
+	else
+		return NULL;
+}
+
+function renderQEdit($id) {
+
+
+}
+
 function renderQtab() {
 	global $mysqli, $QT_STR;
 	
