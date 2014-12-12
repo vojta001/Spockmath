@@ -77,6 +77,12 @@ function renderQTemas($id) {
 }
 
 
+function renderAnswers($id) {
+
+
+}
+
+
 function renderQEdit($id) {
 	global $mysqli, $QT_STR;
 	
@@ -95,10 +101,12 @@ function renderQEdit($id) {
 	
 	$out .= renderQInputs($q);
 	$out .= renderQTemas($id);
+	$out .= renderAnswers($id);
 	
 	$out .= '</form>'.PHP_EOL;
 	return $out;
 }
+
 
 function renderQtab() {
 	global $mysqli, $QT_STR;
@@ -106,19 +114,20 @@ function renderQtab() {
 	$eo = array('even', 'odd');
 	$row = 0;
 	
-	$qRows = $mysqli->query('SELECT q.id, typ, data2, data, comment, multi, GROUP_CONCAT(t.jmeno SEPARATOR \', \') AS temata FROM (`otazka` AS q INNER JOIN `otazka_tema` AS qt ON q.id = qt.otazka_id) INNER JOIN tema AS t ON t.id = qt.tema_id GROUP BY q.id ORDER BY q.id');
+	$sql = 'SELECT q.*, (SELECT GROUP_CONCAT(t.jmeno SEPARATOR \', \') FROM `otazka_tema` AS qt INNER JOIN tema AS t ON t.id = qt.tema_id WHERE q.id = qt.otazka_id) AS temata, (SELECT COUNT(*) FROM `odpoved` AS a WHERE q.id = a.fid) AS pocet_odpovedi, (SELECT COUNT(*) FROM `inst_otazka` AS io WHERE q.id = io.qid) AS pocet_zodpovezeni FROM `otazka` AS q';	
+	$qRows = $mysqli->query($sql);
 	if (!$qRows) {
 		flm("Dotaz na vše z `otazka` selhal.", '', MSG_ERROR);
 		return '';
 	}
-	$out = '<table><tr><th>Číslo</th><th>Typ</th><th>Otázka</th><th>Komentář</th><th>Témata</th><th>Multi</th></tr>';
+	$out = '<table><tr><th>Číslo</th><th>Typ</th><th>Otázka</th><th>Komentář</th><th>Témata</th><th>Odpov.</th><th>Multi</th><th>Zodpo.</th></tr>';
 	
 	while($q = $qRows->fetch_object()) {
 		$otazka = ($q->typ == 1) ? $q->data : $q->data2;
-		$out .= '<tr class="'.$eo[($row++)%2].'"><td class="center"><a href="'.WEB_ROOT.'edit/'.$q->id.'">'.$q->id.'</a></td><td>'.$QT_STR[$q->typ].'</td><td>'.$otazka.'</td><td>'.$q->comment.'</td><td>'.$q->temata.'</td><td>'.($q->multi?'Ano':'Ne').'</td></tr>';
+		$out .= '<tr class="'.$eo[($row++)%2].'"><td class="center"><a href="'.WEB_ROOT.'edit/'.$q->id.'">'.$q->id.'</a></td><td>'.$QT_STR[$q->typ].'</td><td>'.$otazka.'</td><td>'.$q->comment.'</td><td>'.$q->temata.'</td><td>'.$q->pocet_odpovedi.'</td><td>'.($q->multi?'Ano':'Ne').'</td><td>'.$q->pocet_zodpovezeni.'</td></tr>';
 	}
 	
-	$out .= '<tr class="'.$eo[($row++)%2].'"><td colspan="6" class="center"><a href="'.WEB_ROOT.'edit/new">Přidat novou</a></td></tr>';
+	$out .= '<tr class="'.$eo[($row++)%2].'"><td colspan="8" class="center"><a href="'.WEB_ROOT.'edit/new">Přidat novou</a></td></tr>';
 	$out .= '</table>';
 	return $out;
 }
