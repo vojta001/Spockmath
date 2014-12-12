@@ -36,15 +36,15 @@ function renderQInputs($arr) {
 	
 	//$out .= print_r($arr, 1).'<br /><br />'.PHP_EOL; 
 
-	$out .= '<select>'; 
+	$out .= '<select name="typ">'; 
 	foreach($QT_STR as $key => $typ)
 		$out .= '<option value="'.$key.'">'.$typ.'</option>';
 	$out .= '</select>'.PHP_EOL; 
 
-	$out .= '<textarea rows="4" cols="50">'.$arr['comment'].'</textarea>'.PHP_EOL;
-	$out .= '<textarea rows="4" cols="50">'.$arr['data'].'</textarea>'.PHP_EOL;
-	$out .= '<textarea rows="4" cols="50">'.$arr['data2'].'</textarea>'.PHP_EOL;
-	$out .= '<label><input type="checkbox" value="multi" '.($arr['multi']?'checked ':'').'/>Možno více voleb</label>'.PHP_EOL;
+	$out .= '<textarea name="comment">'.$arr['comment'].'</textarea>'.PHP_EOL;
+	$out .= '<textarea name="data">'.$arr['data'].'</textarea>'.PHP_EOL;
+	$out .= '<textarea name="data2">'.$arr['data2'].'</textarea>'.PHP_EOL;
+	$out .= '<label><input name="multi" type="checkbox" value="multi" '.($arr['multi']?'checked ':'').'/>Možno více voleb</label>'.PHP_EOL;
 
 	$out .= '</fieldset>';
 
