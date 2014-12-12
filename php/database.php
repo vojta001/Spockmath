@@ -142,7 +142,7 @@ function getTemas($qId = 0) {
 	$qId = (int)$qId;
 	
 	if ($qId > 0)
-		$sql = 'SELECT p.jmeno AS p_jmeno, t.*, (ot.otazka_id IS NULL) AS cnt FROM `tema` AS t JOIN `predmet` AS p ON t.`pid` = p.`id` LEFT JOIN `otazka_tema` AS ot ON (t.`id` = ot.`tema_id` AND ot.`otazka_id` = '.$qId.') GROUP BY t.`id` ORDER BY t.`pid`';
+		$sql = 'SELECT p.jmeno AS p_jmeno, t.*, (ot.otazka_id IS NOT NULL) AS cnt FROM `tema` AS t JOIN `predmet` AS p ON t.`pid` = p.`id` LEFT JOIN `otazka_tema` AS ot ON (t.`id` = ot.`tema_id` AND ot.`otazka_id` = '.$qId.') GROUP BY t.`id` ORDER BY t.`pid`';
 	else
 		$sql = 'SELECT p.jmeno AS p_jmeno, t.*, (SELECT COUNT(*) FROM `otazka_tema` AS ot WHERE ot.tema_id = t.id) AS cnt FROM `tema` AS t JOIN `predmet` AS p ON t.pid = p.id GROUP BY t.id ORDER BY t.`pid`';
 
