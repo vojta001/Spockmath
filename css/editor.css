@@ -36,3 +36,8 @@ table a:hover {
 	background-color: rgb(40,170,255);
 	background-color: rgba(80,170,255,.5);
 }
+
+/*testovaci ramecek*/
+#content div {
+	outline: 1px dashed #097744;
+}
