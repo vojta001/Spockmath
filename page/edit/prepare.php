@@ -32,7 +32,8 @@ function getIdFromQuery() {
 function renderQInputs($arr) {
 	global $QT_STR;
 	
-	$out = '<div id="otazka-form">';
+	$out = '<fieldset name="otazka-form"><legend>Otázka</legend>';
+	
 	//$out .= print_r($arr, 1).'<br /><br />'.PHP_EOL; 
 
 	$out .= '<select>'; 
@@ -45,7 +46,7 @@ function renderQInputs($arr) {
 	$out .= '<textarea rows="4" cols="50">'.$arr['data2'].'</textarea>'.PHP_EOL;
 	$out .= '<label><input type="checkbox" value="multi" '.($arr['multi']?'checked ':'').'/>Možno více voleb</label>'.PHP_EOL;
 
-	$out .= '</div>';
+	$out .= '</fieldset>';
 
 	return $out;
 }
@@ -54,7 +55,7 @@ function renderQInputs($arr) {
 function renderQTemas($id) {
 	global $QT_STR;
 	
-	$out = '<div id="temata"><ul>';
+	$out = '<fieldset name="temata"><legend>Zařazení do témat</legend><ul>';
 
 	$predmet = '';
 	foreach (getTemas($id) as $tema) {
@@ -71,15 +72,17 @@ function renderQTemas($id) {
 	if ($predmet)
     $out .= '</ul></li>';
 
-	$out .= '</ul></div>';
+	$out .= '</ul></fieldset>';
 
 	return $out;
 }
 
 
 function renderAnswers($id) {
+	$out = '<fieldset name="odpovedi"><legend>Odpovědi</legend>';
+	$out .= '</fieldset>';
 
-
+	return $out;
 }
 
 
@@ -102,6 +105,8 @@ function renderQEdit($id) {
 	$out .= renderQInputs($q);
 	$out .= renderQTemas($id);
 	$out .= renderAnswers($id);
+
+	$out .= '<input type="submit" value="Submit-test">';	
 	
 	$out .= '</form>'.PHP_EOL;
 	return $out;

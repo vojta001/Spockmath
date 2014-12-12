@@ -37,6 +37,17 @@ table a:hover {
 	background-color: rgba(80,170,255,.5);
 }
 
+#content fieldset {
+	border: 1px solid #51B018;
+  margin: 8px 0;
+}
+
+#content legend {
+  border: 1px solid #51B018;
+	/*padding: 0.2em 0.5em;*/
+  /*color: #51B018;*/
+}
+
 /*testovaci ramecek*/
 #content div {
 	outline: 1px dashed #097744;
