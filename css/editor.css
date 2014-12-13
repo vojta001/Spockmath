@@ -27,14 +27,27 @@ td.center {
 }
 
 table a {
-	display: inline-block;
 	width: 100%;
+}
+
+a.button {
+	display: inline-block;
 	outline: 1px dashed #51B018;
 }
 
-table a:hover {
+a.button:hover {
 	background-color: rgb(40,170,255);
 	background-color: rgba(80,170,255,.5);
+	cursor: pointer;
+}
+
+a.delete {
+	float: right;
+}
+
+a.delete:hover {
+	background-color: rgb(255,40,40);
+	background-color: rgba(255,40,40,.5);
 }
 
 #content fieldset {
