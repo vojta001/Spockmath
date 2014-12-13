@@ -6,7 +6,6 @@ body {
   color: #222;
   background-color: #9EDC61;
   font-family: Tahoma, sans-serif;
-  font-size: large;
 }
 
 a {
@@ -24,6 +23,8 @@ div#container {
   margin-left: auto;
   margin-right: auto;
   border: none;
+
+  font-size: 15px;
 }
 
 div#header {
@@ -34,8 +35,9 @@ div#header {
   position: relative;
 }
 div#header h1 {
-  padding: 64px 0 0 160px;
-  text-shadow: #000 0 0 8px; 
+	padding: 64px 0 0 160px;
+  text-shadow: #000 0 0 8px;
+	font-size: 36px; 
 }
 
 div#menu {
@@ -43,6 +45,7 @@ div#menu {
   bottom: 2px;
   width: 100%;
   text-align: right;
+  font-size: 18px;
 }
 div#menu ul {
   list-style-type: none;
@@ -97,7 +100,7 @@ div#footer {
   line-height: 56px;
   text-align: right;
   padding-right: 24px;
-  font-size: small;
+  font-size: 13px;
   text-shadow: #fff 0 0 2px;
   background-image: url("../img/design/spock-foot.png"); 
 }
