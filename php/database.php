@@ -1,5 +1,11 @@
 <?php
 
+define('DB_OTAZKA', 'otazka');
+define('DB_SADA', 'sada');
+define('DB_TEMA', 'tema');
+define('DB_PREDMET', 'predmet');
+define('DB_ODPOVED', 'odpoved');
+
 $mysqli = new mysqli("localhost", "root", "", "spockmath");
 
 if ($mysqli->connect_errno) {
@@ -9,16 +15,22 @@ if ($mysqli->connect_errno) {
 $mysqli->set_charset('utf8');
 
 
+function getRowCount($table) {
+  global $mysqli;
+	$mysqli->escape_string($table);
+	return ($count = $mysqli->query('SELECT COUNT(*) AS cnt FROM `'.$table.'`')) ? $count->fetch_object()->cnt : false;
+}
+
 function getQCountDB() {
 	global $mysqli;
-	$rows = $mysqli->query('SELECT COUNT(*) AS cnt FROM `otazka`');
+	$rows = getRowCount(DB_OTAZKA);
 
 	if (!$rows) {
 		flm("Woe, nemam asi tabulku `otazka`!<br />Takhle to nebubde fungovat!", '', MSG_ERROR);
 		return 0;
 	}
 
-	return $rows->fetch_object()->cnt;
+	return $rows;
 }
 
 
