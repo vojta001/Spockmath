@@ -5,6 +5,7 @@ require PHP_PATH.'spockmath.php';
 $jsScripts[] = 'jquery.min.js';
 $jsScripts[] = 'mathquill.min.js';
 $cssStyles[] = 'mathquill.css';
+$cssStyles[] = 'home.css';
 
 function addDecimalCodes() {
 	global $jsScripts, $cssStyles;
