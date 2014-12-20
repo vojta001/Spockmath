@@ -5,6 +5,7 @@ $cssStyles[] = 'editor.css';
 
 $jsScripts[] = 'jquery.min.js';
 $jsScripts[] = 'mathquill.min.js';
+$jsScripts[] = 'editor.js';
 $cssStyles[] = 'mathquill.css';
 
 if (($_id = getIdFromQuery()) === FALSE)
@@ -53,29 +54,26 @@ function renderQInputs($id) {
 
 	$out .= '<input name="qid" type="hidden" value="'.$id.'" />'.PHP_EOL;
 
-	$out .= '<select name="typ">'; 
+	$out .= '<select name="typ" onchange="editorQTypChange(this.value)">'; 
 	foreach($QT_STR as $key => $typ)
 		$out .= '<option value="'.$key.'"'.($q['typ']==$key?'selected':'').'>'.$typ.'</option>';
 	$out .= '</select>'.PHP_EOL; 
-
+	$out .= '<label><input name="multi" type="checkbox" value="multi" '.($q['multi']?'checked ':'').'/>Možno více voleb</label>'.PHP_EOL;
 	$out .= '<textarea name="comment">'.$q['comment'].'</textarea>'.PHP_EOL;
 
-	switch($q['typ']) {
-		case QT_TEXT:
-			$out .= '<textarea name="data">'.$q['data'].'</textarea>'.PHP_EOL;
-			break;
-		case QT_OBR:
-			$out .= '<img src="'.IMG_PATH.'q/'.$q['data'].'" alt="otázka" />';
-			break;
-		case QT_MATH:
-			$out .= '<span class="mathquill-editable" name="data">'.$q['data'].'</span>'.PHP_EOL;
-			break;
-		default:
-			flm('Není definována šablona pro tento typ otázky ('.$q['typ'].')', '', MSG_ERROR);
-	}
+	$out .= '<div class="qType" id="'.QT_TEXT.'"'.($q['typ']!=QT_TEXT?' style="display: none;"':'').'>';
+	$out .= '<textarea name="data">'.$q['data'].'</textarea>'.PHP_EOL;
+	$out .= '</div>';
 
+	$out .= '<div class="qType" id="'.QT_OBR.'"'.($q['typ']!=QT_OBR?' style="display: none;"':'').'>';
 	$out .= '<textarea name="data2">'.$q['data2'].'</textarea>'.PHP_EOL;
-	$out .= '<label><input name="multi" type="checkbox" value="multi" '.($q['multi']?'checked ':'').'/>Možno více voleb</label>'.PHP_EOL;
+	$out .= '<img src="'.IMG_PATH.'q/'.$q['data'].'" alt="otázka" />';
+	$out .= '</div>';
+
+	$out .= '<div class="qType" id="'.QT_MATH.'"'.($q['typ']!=QT_MATH?' style="display: none;"':'').'>';
+	$out .= '<textarea name="data2">'.$q['data2'].'</textarea>'.PHP_EOL;
+	$out .= '<span class="mathquill-editable" name="data">'.$q['data'].'</span>'.PHP_EOL;
+	$out .= '</div>';
 
 	$out .= '</fieldset>';
 
