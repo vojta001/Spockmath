@@ -48,7 +48,7 @@ function renderQInputs($id) {
 		$q = array('id' => 0, 'typ' => 1, 'comment' => '', 'data' => '', 'data2' => '', 'multi' => 0);
 	}
 	
-	$out = '<fieldset name="otazka-form"><legend>Otázka</legend>';
+	$out = '<fieldset id="otazka"><legend>Otázka</legend>';
 	
 	//$out .= print_r($q, 1).'<br /><br />'.PHP_EOL; 
 
@@ -59,19 +59,19 @@ function renderQInputs($id) {
 		$out .= '<option value="'.$key.'"'.($q['typ']==$key?' selected':'').'>'.$typ.'</option>';
 	$out .= '</select>'.PHP_EOL; 
 	$out .= '<label><input name="multi" type="checkbox" value="multi" '.($q['multi']?'checked ':'').'/>Možno více voleb</label>'.PHP_EOL;
-	$out .= '<textarea name="comment">'.$q['comment'].'</textarea>'.PHP_EOL;
+	$out .= '<textarea placeholder="Spockův komentář k otázce" name="comment">'.$q['comment'].'</textarea>'.PHP_EOL;
 
-	$out .= '<div class="qType" id="'.QT_TEXT.'"'.($q['typ']!=QT_TEXT?' style="display: none;"':'').'>';
-	$out .= '<textarea name="data">'.($q['typ']==QT_TEXT?$q['data']:'').'</textarea>'.PHP_EOL;
+	$out .= '<div class="qType" id="qType-'.QT_TEXT.'"'.($q['typ']!=QT_TEXT?' style="display: none;"':'').'>';
+	$out .= '<textarea placeholder="Text otázky" name="data">'.($q['typ']==QT_TEXT?$q['data']:'').'</textarea>'.PHP_EOL;
 	$out .= '</div>';
 
-	$out .= '<div class="qType" id="'.QT_OBR.'"'.($q['typ']!=QT_OBR?' style="display: none;"':'').'>';
-	$out .= '<textarea name="data2">'.($q['typ']==QT_OBR?$q['data2']:'').'</textarea>'.PHP_EOL;
+	$out .= '<div class="qType" id="qType-'.QT_OBR.'"'.($q['typ']!=QT_OBR?' style="display: none;"':'').'>';
+	$out .= '<textarea placeholder="Doplňující text (otázka) k obrázku" name="data2">'.($q['typ']==QT_OBR?$q['data2']:'').'</textarea>'.PHP_EOL;
 	$out .= '<img src="'.($q['typ']==QT_OBR? IMG_PATH.'q/'.$q['data'] : '').'" alt="otázka" />';
 	$out .= '</div>';
 
-	$out .= '<div class="qType" id="'.QT_MATH.'"'.($q['typ']!=QT_MATH?' style="display: none;"':'').'>';
-	$out .= '<textarea name="data2">'.($q['typ']==QT_MATH?$q['data2']:'').'</textarea>'.PHP_EOL;
+	$out .= '<div class="qType" id="qType-'.QT_MATH.'"'.($q['typ']!=QT_MATH?' style="display: none;"':'').'>';
+	$out .= '<textarea placeholder="Doplňující text (otázka) ke vzorci" name="data2">'.($q['typ']==QT_MATH?$q['data2']:'').'</textarea>'.PHP_EOL;
 	$out .= '<span class="mathquill-editable">'.($q['typ']==QT_MATH?$q['data']:'').'</span>'.PHP_EOL;
 	$out .= '</div>';
 
@@ -106,9 +106,45 @@ function renderQTemas($id) {
 	return $out;
 }
 
+function renderAnswer($id, $typ, $spravna, $data, $data2, $hidden = FALSE) {
+	global $AT_STR;
+	
+	$out = '<div id="odpoved-'.$id.'" class="odpoved"'.($hidden?' style="display: none;"':'').'>';		
+	$out .= '<input id="delete-'.$id.'" name="delete-'.$id.'" type="hidden" value="0" />'.PHP_EOL;
+	$out .= '<a class="delete button" onclick="editorDeleteA('.$id.')">X</a>'.PHP_EOL;
+
+	$out .= '<select name="typ-'.$id.'" onchange="editorATypChange('.$id.', this.value)">'; 
+	foreach($AT_STR as $key => $typeName)
+		$out .= '<option value="'.$key.'"'.($typ == $key?' selected':'').'>'.$typeName.'</option>';
+	$out .= '</select>'.PHP_EOL; 
+
+	$out .= '<label><input name="spravna-'.$id.'" type="checkbox" value="spravna" '.($spravna?'checked ':'').'/>Správná</label>'.PHP_EOL;
+
+	$out .= '<div class="aType typ-'.AT_TEXT.'"'.($typ != AT_TEXT?' style="display: none;"':'').'>';
+	$out .= '<textarea placeholder="Text odpovědi" name="data-'.$id.'">'.($typ == AT_TEXT?$data:'').'</textarea>'.PHP_EOL;
+  	$out .= '</div>';
+
+	$out .= '<div class="aType typ-'.AT_OBR.'"'.($typ != AT_OBR?' style="display: none;"':'').'>';
+	$out .= '<img src="'.($typ == AT_OBR? IMG_PATH.'a/'.$data : '').'" alt="odpověď" />';
+  	$out .= '</div>';
+
+	$out .= '<div class="aType typ-'.AT_MATH.'"'.($typ != AT_MATH?' style="display: none;"':'').'>';
+	$out .= '<span class="mathquill-editable">'.($typ == AT_MATH?$data:'').'</span>'.PHP_EOL;
+  	$out .= '</div>';
+
+	$out .= '<div class="aType typ-'.AT_EDIT.'"'.($typ != AT_EDIT?' style="display: none;"':'').'>';
+	$out .= '<textarea name="data-'.$id.'">'.$data.'</textarea>'.PHP_EOL;
+	$out .= '<textarea name="data2-'.$id.'">'.$data2.'</textarea>'.PHP_EOL;
+  	$out .= '</div>';
+
+	$out .= '</div>';
+	return $out;
+}
+
+
 
 function renderAnswers($id) {
-	global $mysqli, $AT_STR;
+	global $mysqli;
 	
 	$as = array();
 	
@@ -121,38 +157,12 @@ function renderAnswers($id) {
 
 	$out = '<fieldset name="odpovedi"><legend>Odpovědi</legend>';
 	
-	while($a = $rows->fetch_object()) {
-		$out .= '<div class="odpoved-'.$a->id.'">';
-		$out .= '<input id="delete-'.$a->id.'" name="delete-'.$a->id.'" type="hidden" value="0" />'.PHP_EOL;
-		$out .= '<a class="delete button" onclick="editorDeleteA('.$a->id.')">X</a>'.PHP_EOL;
+	while($a = $rows->fetch_object())
+		$out .= renderAnswer($a->id, $a->typ, $a->spravna, $a->data, $a->data2);
 
-		$out .= '<select name="typ-'.$a->id.'" onchange="editorATypChange('.$a->id.', this.value)">'; 
-		foreach($AT_STR as $key => $typ)
-			$out .= '<option value="'.$key.'"'.($a->typ == $key?' selected':'').'>'.$typ.'</option>';
-		$out .= '</select>'.PHP_EOL; 
-
-		$out .= '<label><input name="spravna-'.$a->id.'" type="checkbox" value="spravna" '.($a->spravna?'checked ':'').'/>Správná</label>'.PHP_EOL;
-
-		$out .= '<div class="aType typ-'.AT_TEXT.'"'.($a->typ != AT_TEXT?' style="display: none;"':'').'>';
-		$out .= '<textarea name="data-'.$a->id.'">'.($a->typ == QT_TEXT?$a->data:'').'</textarea>'.PHP_EOL;
-    	$out .= '</div>';
-
-		$out .= '<div class="aType typ-'.AT_OBR.'"'.($a->typ != AT_OBR?' style="display: none;"':'').'>';
-		$out .= '<textarea name="data-'.$a->id.'">'.($a->typ == AT_OBR?$a->data:'').'</textarea>'.PHP_EOL;
-		$out .= '<img src="'.($a->typ == AT_OBR? IMG_PATH.'a/'.$a->data : '').'" alt="odpověď" />';
-    	$out .= '</div>';
-
-		$out .= '<div class="aType typ-'.AT_MATH.'"'.($a->typ != AT_MATH?' style="display: none;"':'').'>';
-		$out .= '<span class="mathquill-editable">'.($a->typ == AT_MATH?$A->data:'').'</span>'.PHP_EOL;
-    	$out .= '</div>';
-
-		$out .= '<div class="aType typ-'.AT_EDIT.'"'.($a->typ != AT_EDIT?' style="display: none;"':'').'>';
-		$out .= '<textarea name="data-'.$a->id.'">'.$a->data.'</textarea>'.PHP_EOL;
-		$out .= '<textarea name="data2-'.$a->id.'">'.$a->data2.'</textarea>'.PHP_EOL;
-    	$out .= '</div>';
-
-		$out .= '</div>';
-	}
+	$out .= renderAnswer(-1, AT_TEXT, FALSE, "", "", TRUE);
+	$out .= renderAnswer(-2, AT_TEXT, FALSE, "", "", TRUE);
+	$out .= renderAnswer(-3, AT_TEXT, FALSE, "", "", TRUE);
 
 	$out .= '<div>';
 	$out .= '<a class="button" onclick="alert(\'TODO: js, který sem přidá jeden div\')">Přidat novou</a>'.PHP_EOL;
