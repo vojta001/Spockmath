@@ -56,23 +56,23 @@ function renderQInputs($id) {
 
 	$out .= '<select name="typ" onchange="editorQTypChange(this.value)">'; 
 	foreach($QT_STR as $key => $typ)
-		$out .= '<option value="'.$key.'"'.($q['typ']==$key?'selected':'').'>'.$typ.'</option>';
+		$out .= '<option value="'.$key.'"'.($q['typ']==$key?' selected':'').'>'.$typ.'</option>';
 	$out .= '</select>'.PHP_EOL; 
 	$out .= '<label><input name="multi" type="checkbox" value="multi" '.($q['multi']?'checked ':'').'/>Možno více voleb</label>'.PHP_EOL;
 	$out .= '<textarea name="comment">'.$q['comment'].'</textarea>'.PHP_EOL;
 
 	$out .= '<div class="qType" id="'.QT_TEXT.'"'.($q['typ']!=QT_TEXT?' style="display: none;"':'').'>';
-	$out .= '<textarea name="data">'.$q['data'].'</textarea>'.PHP_EOL;
+	$out .= '<textarea name="data">'.($q['typ']==QT_TEXT?$q['data']:'').'</textarea>'.PHP_EOL;
 	$out .= '</div>';
 
 	$out .= '<div class="qType" id="'.QT_OBR.'"'.($q['typ']!=QT_OBR?' style="display: none;"':'').'>';
-	$out .= '<textarea name="data2">'.$q['data2'].'</textarea>'.PHP_EOL;
-	$out .= '<img src="'.IMG_PATH.'q/'.$q['data'].'" alt="otázka" />';
+	$out .= '<textarea name="data2">'.($q['typ']==QT_OBR?$q['data2']:'').'</textarea>'.PHP_EOL;
+	$out .= '<img src="'.($q['typ']==QT_OBR? IMG_PATH.'q/'.$q['data'] : '').'" alt="otázka" />';
 	$out .= '</div>';
 
 	$out .= '<div class="qType" id="'.QT_MATH.'"'.($q['typ']!=QT_MATH?' style="display: none;"':'').'>';
-	$out .= '<textarea name="data2">'.$q['data2'].'</textarea>'.PHP_EOL;
-	$out .= '<span class="mathquill-editable" name="data">'.$q['data'].'</span>'.PHP_EOL;
+	$out .= '<textarea name="data2">'.($q['typ']==QT_MATH?$q['data2']:'').'</textarea>'.PHP_EOL;
+	$out .= '<span class="mathquill-editable">'.($q['typ']==QT_MATH?$q['data']:'').'</span>'.PHP_EOL;
 	$out .= '</div>';
 
 	$out .= '</fieldset>';
@@ -122,19 +122,35 @@ function renderAnswers($id) {
 	$out = '<fieldset name="odpovedi"><legend>Odpovědi</legend>';
 	
 	while($a = $rows->fetch_object()) {
-		$out .= '<div>';
-		$out .= '<input name="delete-'.$a->id.'" type="hidden" value="0" />'.PHP_EOL;
-		$out .= '<a class="delete button" onclick="alert(\'TODO: js, nastaví delete-ID na 1 a skryje tento div\')">X</a>'.PHP_EOL;
+		$out .= '<div class="odpoved-'.$a->id.'">';
+		$out .= '<input id="delete-'.$a->id.'" name="delete-'.$a->id.'" type="hidden" value="0" />'.PHP_EOL;
+		$out .= '<a class="delete button" onclick="editorDeleteA('.$a->id.')">X</a>'.PHP_EOL;
 
-		$out .= '<select name="typ-'.$a->id.'">'; 
+		$out .= '<select name="typ-'.$a->id.'" onchange="editorATypChange('.$a->id.', this.value)">'; 
 		foreach($AT_STR as $key => $typ)
-			$out .= '<option value="'.$key.'">'.$typ.'</option>';
+			$out .= '<option value="'.$key.'"'.($a->typ == $key?' selected':'').'>'.$typ.'</option>';
 		$out .= '</select>'.PHP_EOL; 
 
+		$out .= '<label><input name="spravna-'.$a->id.'" type="checkbox" value="spravna" '.($a->spravna?'checked ':'').'/>Správná</label>'.PHP_EOL;
+
+		$out .= '<div class="aType typ-'.AT_TEXT.'"'.($a->typ != AT_TEXT?' style="display: none;"':'').'>';
+		$out .= '<textarea name="data-'.$a->id.'">'.($a->typ == QT_TEXT?$a->data:'').'</textarea>'.PHP_EOL;
+    	$out .= '</div>';
+
+		$out .= '<div class="aType typ-'.AT_OBR.'"'.($a->typ != AT_OBR?' style="display: none;"':'').'>';
+		$out .= '<textarea name="data-'.$a->id.'">'.($a->typ == AT_OBR?$a->data:'').'</textarea>'.PHP_EOL;
+		$out .= '<img src="'.($a->typ == AT_OBR? IMG_PATH.'a/'.$a->data : '').'" alt="odpověď" />';
+    	$out .= '</div>';
+
+		$out .= '<div class="aType typ-'.AT_MATH.'"'.($a->typ != AT_MATH?' style="display: none;"':'').'>';
+		$out .= '<span class="mathquill-editable">'.($a->typ == AT_MATH?$A->data:'').'</span>'.PHP_EOL;
+    	$out .= '</div>';
+
+		$out .= '<div class="aType typ-'.AT_EDIT.'"'.($a->typ != AT_EDIT?' style="display: none;"':'').'>';
 		$out .= '<textarea name="data-'.$a->id.'">'.$a->data.'</textarea>'.PHP_EOL;
 		$out .= '<textarea name="data2-'.$a->id.'">'.$a->data2.'</textarea>'.PHP_EOL;
+    	$out .= '</div>';
 
-		$out .= '<label><input name="spravna-'.$a->id.'" type="checkbox" value="spravna" '.($a->spravna?'checked ':'').'/>Správná</label>'.PHP_EOL;
 		$out .= '</div>';
 	}
 
