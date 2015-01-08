@@ -10,7 +10,7 @@ function renderMenu() {
 	  'about' => 'O projektu'
 	);
 
-	if (1/*TODO check auth*/) {
+	if (loggedIn()) {
 	  $menu['edit'] = 'Editor';
 	}
 
