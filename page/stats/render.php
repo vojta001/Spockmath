@@ -7,4 +7,3 @@ if (isset($_GET['name']) && $_GET['name'] && is_string($_GET['name'])) {
 	echo(jarSay('Jo tobě to ještě nestačio? Zadej mi sem jméno a podíváme se na tebe:', JAR_SPOCK, true));
 	echo(renderNameEdit());
 }
-?>

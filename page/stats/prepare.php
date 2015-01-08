@@ -15,6 +15,6 @@ function renderStats() {
 }
 
 function renderNameEdit() {
-
+	return '<form method="get">'.PHP_EOL.'<input type="text" name="name" placeholder="Jméno" /><input type="submit" value="odeslat" /></form>';
 }
 
