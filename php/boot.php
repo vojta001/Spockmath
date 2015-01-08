@@ -6,9 +6,9 @@ $jsScripts = array();
 $cssStyles = array();
 
 
+require 'simpleauth.php';
 require 'database.php';
 require 'flashmsg.php';
-
 
 $page = 'home';
 if (isset($_GET['page'])) {
