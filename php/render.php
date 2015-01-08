@@ -28,6 +28,7 @@ if (file_exists($renderFile))
 <div id="footer">
   <img id="kane" src="<?php echo IMG_PATH?>design/kane-foot.png" alt="" />připravil <a href="mailto:kane@terciani.cz">Vojtěch Káně</a>
   <img id="rgb" src="<?php echo IMG_PATH?>design/rgb-foot.png" alt="" />a <a href="mailto:rgb@trdlo.net">RgB</a>
+	<a href="https://<?php echo($_SERVER['SERVER_NAME'].'/login') ?>"><img src="<?php echo IMG_PATH?>design/login.png" alt="login icon" /></a>
 </div>
 </div>
 <?php echo renderFlashMsg(); ?>
