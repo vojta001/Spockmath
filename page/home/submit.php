@@ -5,7 +5,7 @@ require_once PHP_PATH.'spockmath.php';
 flm($_POST, '$_POST caught in submit:');
 
 if (isset($_POST['submit-seznam'])) {
-  clearSet();
+	clearSet();
 	header("Location: http://seznam.cz");
 	exit;
 }
@@ -53,7 +53,7 @@ elseif (isset($_POST['submit-reg'])) {
 		if (isset ($_POST['name']) && is_string($_POST['name']) && trim($_POST['name'])) {
 			if (updateSadaName($_POST['name'])) {
 				flm('Nastavil jsem ti jméno na: "'.$_POST['name'].'"', '', MSG_INFO);
-        setSetState(SADA_SCORE);
+				setSetState(SADA_SCORE);
 			}
 		} else
 			flm('Uveď prosím své jméno nebo přezdívku!', '', MSG_INFO);
@@ -86,10 +86,12 @@ elseif (isset($_POST['submit-save-ro'])) {
 		if (isset ($_POST['name']) && is_string($_POST['name']) && trim($_POST['name'])) {
 			if (updateSadaName($_POST['name']))
 				flm('Nastavil jsem ti jméno na: "'.$_POST['name'].'"', '', MSG_INFO);
-		} elseif(getSetState() == SADA_SCORE) {
-			clearSet();
 		}
 	}
+}
+elseif (isset($_POST['submit-end'])) {
+	if (getSetState(SADA_REG))
+		clearSet();
 }
 elseif (isset($_POST['submit-score'])) {
 	if (getSetState() == SADA_READ_ONLY) {

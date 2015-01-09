@@ -28,28 +28,23 @@
 <?php } elseif (getSetState() == SADA_REG) { ?>
 <form method="post">
 	<?php echo jarSay('Pověz nám něco o sobě a můžeš si prohlédnout své skóre!', JAR_SPOCK); ?>
-  <input type="text" name="name" placeholder="Zadej svoje jméno:" />
-  <input type="submit" name="submit-reg" value="Dokončit a vyhodnotit" />
+	<input type="text" name="name" placeholder="Zadej svoje jméno:" />
+	<input type="submit" name="submit-reg" value="Dokončit a vyhodnotit" />
 </form>
 <?php } elseif (getSetState() == SADA_READ_ONLY) { ?>
 <form method="post">
 	<?php echo renderSpockQuestion(); ?>
 	<?php echo renderQ(); ?>
 
-	<input type="submit" name="submit-prev-ro" value="Předchozí" />
-
-	<?php if (getPosition() < getQCount()-1) { ?>
-	<input type="submit" name="submit-next-ro" value="Další" />
-	<?php } else { ?>
-	<input type="submit" name="submit-save-ro" value="Konec" />
-	<?php } ?>
-	<input type="submit" name="submit-clear" value="Smazat sadu" onclick="return confirm('Opravdu smazat?')"/>
+	<input type="submit" name="submit-prev-ro" value="Předchozí" <?php if (getPosition() == 0) echo 'disabled="disabled" '; ?>/>
+	<input type="submit" name="submit-score" value="Přehled skóre" />
+	<input type="submit" name="submit-next-ro" value="Další" <?php if (getPosition() >= getQCount() -1) echo 'disabled="disabled" '; ?>/>
 </form>
 <?php } elseif (getSetState() == SADA_SCORE) { ?>
 <form method="post">
 	<?php echo jarSay('No tak takhle jsi dopadl:', JAR_SPOCK, TRUE); ?>
 	<?php echo renderScore(); ?>
 	<input type="submit" name="submit-walk" value="Projít sadu" />
-	<input type="submit" name="submit-save-ro" value="Konec" />
+	<input type="submit" name="submit-end" value="Konec" />
 </form>
 <?php } ?>
