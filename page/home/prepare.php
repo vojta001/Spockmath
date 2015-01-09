@@ -19,8 +19,8 @@ function addDecimalCodes() {
 			}
 		}
 		if ($raise) {
-			$jsScripts[] = JS_PATH.'validatedecimals.js';
-			$cssStyles[] = CSS_PATH.'editsanimations.css';
+			$jsScripts[] = 'validatedecimals.js';
+			$cssStyles[] = 'editsanimations.css';
 		}
 	}
 }
