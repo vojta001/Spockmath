@@ -15,7 +15,7 @@ if (($_id = getIdFromQuery()) === FALSE)
 
 function redirect404() {
 	header('HTTP/1.0 404 Not Found');
-  header('Location: '.WEB_ROOT.'404');
+	header('Location: '.WEB_ROOT.'404');
 	exit;
 }	
 
@@ -90,16 +90,16 @@ function renderQTemas($id) {
 	foreach (getTemas($id) as $tema) {
 		if ($predmet != $tema->p_jmeno) {
 			if ($predmet)
-	      $out .= '</ul></li>';
+				$out .= '</ul></li>';
 
-      $predmet = $tema->p_jmeno;
-      $out .= '<li><span class="predmet">'.$predmet.'</span><ul>';
+			$predmet = $tema->p_jmeno;
+			$out .= '<li><span class="predmet">'.$predmet.'</span><ul>';
 		}
 
 		$out .= '<li><label><input type="checkbox" name="tema-'.$tema->id.'" '.($tema->cnt?'checked ':'').'/>'.htmlspecialchars($tema->jmeno).'</label><div class="description">'.htmlspecialchars($tema->komentar).'</div></li>';
 	}
 	if ($predmet)
-    $out .= '</ul></li>';
+	$out .= '</ul></li>';
 
 	$out .= '</ul></fieldset>';
 
@@ -122,20 +122,20 @@ function renderAnswer($id, $typ, $spravna, $data, $data2, $hidden = FALSE) {
 
 	$out .= '<div class="aType typ-'.AT_TEXT.'"'.($typ != AT_TEXT?' style="display: none;"':'').'>';
 	$out .= '<textarea placeholder="Text odpovědi" name="data-'.$id.'">'.($typ == AT_TEXT?$data:'').'</textarea>'.PHP_EOL;
-  	$out .= '</div>';
+	$out .= '</div>';
 
 	$out .= '<div class="aType typ-'.AT_OBR.'"'.($typ != AT_OBR?' style="display: none;"':'').'>';
 	$out .= '<img src="'.($typ == AT_OBR? IMG_PATH.'a/'.$data : '').'" alt="odpověď" />';
-  	$out .= '</div>';
+	$out .= '</div>';
 
 	$out .= '<div class="aType typ-'.AT_MATH.'"'.($typ != AT_MATH?' style="display: none;"':'').'>';
-	$out .= '<span class="mathquill-editable">'.($typ == AT_MATH?$data:'').'</span>'.PHP_EOL;
-  	$out .= '</div>';
+	$out .= '<span id="data-'.$id.'" class="mathquill-editable">'.($typ == AT_MATH?$data:'').'</span>'.PHP_EOL;
+	$out .= '</div>';
 
 	$out .= '<div class="aType typ-'.AT_EDIT.'"'.($typ != AT_EDIT?' style="display: none;"':'').'>';
 	$out .= '<textarea name="data-'.$id.'">'.$data.'</textarea>'.PHP_EOL;
 	$out .= '<textarea name="data2-'.$id.'">'.$data2.'</textarea>'.PHP_EOL;
-  	$out .= '</div>';
+	$out .= '</div>';
 
 	$out .= '</div>';
 	return $out;

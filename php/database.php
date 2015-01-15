@@ -60,7 +60,7 @@ function getDBUsers() {
 function getRandomQsDB($count, $temas) {
 	global $mysqli;
 
-	$Qrows = $mysqli->query('SELECT o.* FROM `otazka` AS o JOIN `otazka_tema` AS ot ON o.id = ot.otazka_id WHERE ot.tema_id IN ('.implode(',', $temas).') ORDER BY rand() LIMIT '.$count);
+	$Qrows = $mysqli->query('SELECT o.* FROM `otazka` AS o JOIN `otazka_tema` AS ot ON o.id = ot.otazka_id WHERE ot.tema_id IN ('.implode(',', $temas).') GROUP BY o.id ORDER BY rand() LIMIT '.$count);
 	if (!$Qrows) {
 		flm("Ti povidam, že nemam `otazka`!", '', MSG_ERROR);
 		return array();
