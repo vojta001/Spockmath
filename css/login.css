@@ -1,6 +1,14 @@
 .help {
-  font-style: italic;
+	font-style: italic;
 }
 .hackers {
- font-size: 70%;
+	font-size: 70%;
+}
+
+#content table {
+	border-collapse: collapse;
+}
+
+#content th, #content td {
+	border: 1px solid green;
 }

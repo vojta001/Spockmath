@@ -33,6 +33,29 @@ function getQCountDB() {
 	return $rows;
 }
 
+function getHashDB($username) {
+	global $mysqli;
+
+	$safeUsr = $mysqli->escape_string($username);
+	$result = $mysqli->query('SELECT * FROM `login` WHERE `usr`="'.$safeUsr.'";');
+
+	$hash = $result->fetch_object()->passwd;
+	flm ($hash);
+	return $hash;
+}
+
+function getDBUsers() {
+	global $mysqli;
+
+	$result = $mysqli->query('SELECT * FROM `login`');
+
+	$users = array();
+	while ($obj = $result->fetch_object())
+	$users[] = $obj;
+
+	return $users;
+}
+
 
 function getRandomQsDB($count, $temas) {
 	global $mysqli;
@@ -161,7 +184,7 @@ function getTemas($qId = 0) {
 	$retValue = $mysqli->query($sql);
 	$tema = array();
 	while ($obj = $retValue->fetch_object()) {
-    $tema[] = $obj;
+	$tema[] = $obj;
 	}
 	return $tema;
 }
