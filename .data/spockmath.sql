@@ -270,6 +270,19 @@ INSERT INTO `inst_otazka` (`id`, `qid`, `sid`) VALUES
 (159,	1,	59),
 (160,	2,	59);
 
+DROP TABLE IF EXISTS `login`;
+CREATE TABLE `login` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usr` varchar(255) NOT NULL COMMENT 'plaintext username',
+  `passwd` varchar(255) NOT NULL COMMENT 'password hash, NO plaintext',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `usr` (`usr`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+INSERT INTO `login` (`id`, `usr`, `passwd`) VALUES
+(1,	'houba',	'$1$zZ4.Ap2.$DDrtydTDdsESSF43QIiLC0'),
+(2,	'vojta001',	'$1$bt1.IE0.$aM1w3ikDRc27oixpGVeXp/');
+
 DROP TABLE IF EXISTS `odpoved`;
 CREATE TABLE `odpoved` (
   `id` int(11) NOT NULL,
@@ -419,4 +432,4 @@ INSERT INTO `tema` (`id`, `pid`, `jmeno`, `komentar`) VALUES
 (2,	2,	'Geometrie',	'Geometrie z první třídy'),
 (3,	1,	'Jednoduché stroje a veličiny',	'Fyzika pro 1. třídu');
 
--- 2014-12-07 20:53:12
+-- 2015-01-15 21:16:59

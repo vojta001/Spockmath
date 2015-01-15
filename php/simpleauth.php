@@ -4,7 +4,7 @@
 
 
 function isValidLogin($user, $passwd) {
-	return $user == 'houba';
+	return password_verify ($passwd, getHashDB($user));
 }
 
 function loggedIn() {
@@ -17,4 +17,15 @@ function loggOut() {
 
 function loggIn($username) {
 	$_SESSION['user'] = $username;
+}
+
+function getUser() {
+	if (loggedIn())
+		return $_SESSION['user'];
+	else
+		return false;
+}
+
+function getAllUsers() {
+	return getDBUsers();
 }

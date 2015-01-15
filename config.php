@@ -19,3 +19,5 @@ $htmlDesc = 'Web s matematickými testy';
 $htmlKwd = array('testy z matematiky', 'Spock');
 $htmlAuthors = array('Vojtěch Kane Káně', 'RgB');
 $favIcon = IMG_PATH.'design/favicon.png';
+
+$admins = array('vojta001', 'houba',);
