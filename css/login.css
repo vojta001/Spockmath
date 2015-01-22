@@ -7,8 +7,14 @@
 
 #content table {
 	border-collapse: collapse;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 #content th, #content td {
 	border: 1px solid green;
+}
+
+#users table tr.title {
+	font-weight: bold;
 }
