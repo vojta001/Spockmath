@@ -18,4 +18,17 @@ if (!isset($_SERVER['HTTPS']) || !$_SERVER['HTTPS']) {
 }
 $cssStyles[] = 'login.css';
 
+function renderUsers() {
+	$out = '<div id="users"><p>Admin sekce</p><span>Seznam uživatelů a hashů jejich hesel</span>';
+	$out .= '<table>';
+	$out .= '<tr class="title"><td>Username</td><td>Password hash</td></tr>';
+	foreach (getAllUsers() as $user) {
+		$out .= '<tr><td>'.$user->usr.'</td><td>'.$user->passwd.'</td></tr>';
+	}
+	$out .= '</table></div>';
+	return $out;
+}
 
+function renderTools(){
+	return '<form method="post">'.PHP_EOL.'<input type="password" placeholder="Text (heslo...)" name="tohash" />'.PHP_EOL.'<input type="submit" name="make_hash" value="Zahashuj">'.PHP_EOL.'</form>';
+}

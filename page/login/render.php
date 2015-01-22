@@ -11,11 +11,8 @@ echo (jarSay('Ha. Mám tě! Ty jsi klikl na ten klíč. Tak pozor, tohle je pouz
 <p class="help hackers">Poznámka pro hackery: Na vaše, místě bych nepokoušel prezidentovou trpělivost. Stejně to nemá cenu, nefunguje ani SQL injection.</p>
 <?php } else {
 	echo (jarSay('Buďte zdráv, mistře. Teď už můžete do editoru.', JAR_NIXON));
-	if (in_array(getUser(), $admins)) {
-		echo ('<table>');
-		foreach (getAllUsers() as $user) {
-			echo ('<tr><td>'.$user->usr.'</td><td>'.$user->passwd.'</td></tr>');
-	}
-	echo ('</table>');
+	if (isAdmin(getUser())) {
+		echo (renderUsers());
+		echo (renderTools());
 	}
 }
