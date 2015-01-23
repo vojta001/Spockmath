@@ -26,13 +26,9 @@ if (file_exists($renderFile))
 ?>
 </div>
 <div id="footer">
-	<img id="kane" src="<?php echo IMG_PATH?>design/kane-foot.png" alt="" />připravil <a href="mailto:kane@terciani.cz">Vojtěch Káně</a>
-	<img id="rgb" src="<?php echo IMG_PATH?>design/rgb-foot.png" alt="" />a <a href="mailto:rgb@trdlo.net">RgB</a>
-	<?php if (loggedIn()) { ?>
-	<a href="https://<?php echo($_SERVER['SERVER_NAME'].'/spock/login/out') ?>"><img src="<?php echo IMG_PATH?>design/logout.png" alt="login icon" title="Ohlásit" /></a>
-	<?php } else { ?>
-	<a href="https://<?php echo($_SERVER['SERVER_NAME'].'/spock/login') ?>"><img src="<?php echo IMG_PATH?>design/login.png" alt="login icon" title="Příhlásit" /></a>
-	<?php } ?>
+	<img id="kane" class="author-jar" src="<?php echo IMG_PATH?>design/kane-foot.png" alt="" />připravil <a href="mailto:kane@terciani.cz">Vojtěch Káně</a>
+	<img id="rgb" class="author-jar" src="<?php echo IMG_PATH?>design/rgb-foot.png" alt="" />a <a href="mailto:rgb@trdlo.net">RgB</a>
+	<?php echo renderLoginLogoutLink(); ?>
 </div>
 </div>
 <?php echo renderFlashMsg(); ?>

@@ -10,13 +10,17 @@ $_msgClasses = array(
 	0 => 'debug',
 	1 => 'info',
 	2 => 'warning',
-	3 => 'error');
+	3 => 'error'
+);
 
 
 function flm($msg, $caption = '', $priority = MSG_DBG) {
 	if (is_object($msg) || is_array($msg)) {
 		$msg = '<pre>'.print_r($msg, 1).'</pre>';
 	}
+
+	//$calledFrom = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2); 	
+	//$msg .= '<p style="font-size: xx-small;">Called from function '.$calledFrom[1]['function'].' in '.$calledFrom[0]['file'].':'.$calledFrom[0]['line'].'</p>';
 
 	$obj = new stdClass();
 	$obj->caption = $caption;
@@ -39,7 +43,7 @@ function renderFlashMsg() {
 
 	unset($_SESSION['flm']);
 
-//$_SESSION['flm-history'][] = $output;
+	//$_SESSION['flm-history'][] = $output;
 
 	return '<div id="flash-msg">'.$output.PHP_EOL.'</div>'.PHP_EOL;
 }
