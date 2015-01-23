@@ -37,10 +37,10 @@ function getHashDB($username) {
 	global $mysqli;
 
 	$safeUsr = $mysqli->escape_string($username);
-	$result = $mysqli->query('SELECT * FROM `login` WHERE `usr`="'.$safeUsr.'";');
+	$result = $mysqli->query('SELECT passwd FROM `login` WHERE `usr`="'.$safeUsr.'";');
 
 	$hash = $result->fetch_object()->passwd;
-	flm ($hash);
+	flm($hash, 'Hash retrieved from DB');
 	return $hash;
 }
 
@@ -51,7 +51,7 @@ function getDBUsers() {
 
 	$users = array();
 	while ($obj = $result->fetch_object())
-	$users[] = $obj;
+		$users[] = $obj;
 
 	return $users;
 }
