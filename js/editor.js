@@ -19,3 +19,14 @@ function editorDeleteA(id) {
 	$("#content input#delete-"+id).val(1);
 	$("#content div#odpoved-"+id).hide('slow');	
 }
+
+function replaceNext(obj) {
+
+}
+
+function editorAddA() {
+	var orig = $("#content #odpoved-NEXT_ID");
+	var copy = orig.clone(true);
+	//orig.id = 17;
+	copy.appendTo(orig.parent());
+}
