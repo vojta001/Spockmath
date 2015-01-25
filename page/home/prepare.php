@@ -144,16 +144,16 @@ function renderSetParams(){
 	foreach (getTemas() as $tema) {
 		if ($predmet != $tema->p_jmeno) {
 			if ($predmet)
-	      $out .= '</ul></li>';
+				$out .= '</ul></li>';
 
-      $predmet = $tema->p_jmeno;
-      $out .= '<li><span class="predmet">'.$predmet.'</span><ul>';
+			$predmet = $tema->p_jmeno;
+			$out .= '<li><span class="predmet">'.$predmet.'</span><ul>';
 		}
 
 		$out .= '<li><input type="checkbox" name="tema-'.$tema->id.'" /><span class="name">'.htmlspecialchars($tema->jmeno).'</span><div class="description">'.htmlspecialchars($tema->komentar).'</div></li>';
 	}
 	if ($predmet)
-    $out .= '</ul></li>';
+		$out .= '</ul></li>';
 
 	$out .= '</ul></div>';
 	//zohlednit defaultSetParams

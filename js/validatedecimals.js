@@ -24,8 +24,7 @@ function validateEdit(obj){
 		$(obj).removeClass('error');
 		if (isValidDecimal($('.decimalTextBox')))
 			hideFlmError();
-	}
-	else {
+	} else {
 		$(obj).addClass('error');
 		showFlmError();
 	}
@@ -33,8 +32,8 @@ function validateEdit(obj){
 
 
 $('document').ready(function() {
-		$('.decimalTextBox').keyup(function() {
-   		validateEdit(this);
-		});
+	$('.decimalTextBox').keyup(function() {
+		validateEdit(this);
+	});
 });
 
