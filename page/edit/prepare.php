@@ -1,5 +1,12 @@
 <?php
 
+if (!loggedIn())
+	redirect404();
+
+if (($_id = getIdFromQuery()) === FALSE)
+	redirect404();
+
+
 require PHP_PATH.'spockmath.php';
 $cssStyles[] = 'editor.css';
 
@@ -7,9 +14,6 @@ $jsScripts[] = 'jquery.min.js';
 $jsScripts[] = 'mathquill.min.js';
 $jsScripts[] = 'editor.js';
 $cssStyles[] = 'mathquill.css';
-
-if (($_id = getIdFromQuery()) === FALSE)
-	redirect404();
 
 
 
@@ -108,23 +112,20 @@ function renderQTemas($id) {
 
 function renderAnswer($id, $typ, $spravna, $data, $data2, $isTemplate = FALSE) {
 	global $AT_STR;
-	$replaceId = ($isTemplate ? ' replace-id' : '');
-	$replaceName = ($isTemplate ? ' replace-name' : '');
-	$replaceOnClick = ($isTemplate ? ' replace-onclick' : '');
+	
+	$out = '<div id="odpoved-'.$id.'" class="odpoved"'.($isTemplate?' style="display: none;"':'').'>';
+	$out .= '<input id="delete-'.$id.'" name="delete-'.$id.'" type="hidden" value="0" />'.PHP_EOL;
+	$out .= '<a class="delete button" onclick="editorDeleteA('.$id.')">X</a>'.PHP_EOL;
 
-	$out = '<div id="odpoved-'.$id.'" class="odpoved'.$replaceId.'"'.($isTemplate?' style="display: none;"':'').'>';
-	$out .= '<input id="delete-'.$id.'" class="'.$replaceId.$replaceName.'" name="delete-'.$id.'" type="hidden" value="0" />'.PHP_EOL;
-	$out .= '<a class="delete button" class="'.$replaceOnClick.'" onclick="editorDeleteA('.$id.')">X</a>'.PHP_EOL;
-
-	$out .= '<select name="typ-'.$id.'" class="'.$replaceName.$replaceOnClick.'" onchange="editorATypChange('.$id.', this.value)">';
+	$out .= '<select name="typ-'.$id.'" onchange="editorATypChange('.$id.', this.value)">';
 	foreach($AT_STR as $key => $typeName)
 		$out .= '<option value="'.$key.'"'.($typ == $key?' selected':'').'>'.$typeName.'</option>';
 	$out .= '</select>'.PHP_EOL;
 
-	$out .= '<label><input class="'.$replaceName.'" name="spravna-'.$id.'" type="checkbox" value="spravna" '.($spravna?'checked ':'').'/>Správná</label>'.PHP_EOL;
+	$out .= '<label><input name="spravna-'.$id.'" type="checkbox" value="spravna" '.($spravna?'checked ':'').'/>Správná</label>'.PHP_EOL;
 
 	$out .= '<div class="aType typ-'.AT_TEXT.'"'.($typ != AT_TEXT?' style="display: none;"':'').'>';
-	$out .= '<textarea class="'.$replaceName.'" name="data-'.$id.'" placeholder="Text odpovědi">'.($typ == AT_TEXT?$data:'').'</textarea>'.PHP_EOL;
+	$out .= '<textarea name="data-'.$id.'" placeholder="Text odpovědi">'.($typ == AT_TEXT?$data:'').'</textarea>'.PHP_EOL;
 	$out .= '</div>';
 
 	$out .= '<div class="aType typ-'.AT_OBR.'"'.($typ != AT_OBR?' style="display: none;"':'').'>';
@@ -132,12 +133,12 @@ function renderAnswer($id, $typ, $spravna, $data, $data2, $isTemplate = FALSE) {
 	$out .= '</div>';
 
 	$out .= '<div class="aType typ-'.AT_MATH.'"'.($typ != AT_MATH?' style="display: none;"':'').'>';
-	$out .= '<span id="data-'.$id.'" class="mathquill-editable'.$replaceId.'">'.($typ == AT_MATH?$data:'').'</span>'.PHP_EOL;
+	$out .= '<span id="data-'.$id.'" class="mathquill-editable">'.($typ == AT_MATH?$data:'').'</span>'.PHP_EOL;
 	$out .= '</div>';
 
 	$out .= '<div class="aType typ-'.AT_EDIT.'"'.($typ != AT_EDIT?' style="display: none;"':'').'>';
-	$out .= '<textarea class="'.$replaceName.'" name="data-'.$id.'">'.$data.'</textarea>'.PHP_EOL;
-	$out .= '<textarea class="'.$replaceName.'" name="data2-'.$id.'">'.$data2.'</textarea>'.PHP_EOL;
+	$out .= '<textarea name="data-'.$id.'">'.$data.'</textarea>'.PHP_EOL;
+	$out .= '<textarea name="data2-'.$id.'">'.$data2.'</textarea>'.PHP_EOL;
 	$out .= '</div>';
 
 	$out .= '</div>';
@@ -160,20 +161,26 @@ function renderAnswers($id) {
 
 	$out = '<fieldset name="odpovedi"><legend>Odpovědi</legend>';
 
-	while($a = $rows->fetch_object())
+	$maxId = 0;
+	while($a = $rows->fetch_object()) {
 		$out .= renderAnswer($a->id, $a->typ, $a->spravna, $a->data, $a->data2);
+		if ($maxId < $a->id)
+			$maxId = $a->id; 			
+	}
 
 	//$out .= renderAnswer('NEXT_ID', AT_TEXT, FALSE, "", "", TRUE);
 	//$out .= renderAnswer(-2, AT_TEXT, FALSE, "", "", TRUE);
 	//$out .= renderAnswer(-3, AT_TEXT, FALSE, "", "", TRUE);
 
-	$out .= '<div>';
-	$out .= '<a class="button" onclick="alert(\'TODO: js, který sem přidá jeden div\')">Přidat novou</a>'.PHP_EOL;
-	$out .= '</div>';
-
     $out .= renderAnswer('NEXT_ID', AT_TEXT, FALSE, "", "", TRUE);
 
+	$out .= '<div>';
+	$out .= '<a class="button" onclick="editorAddA()">Přidat novou</a>'.PHP_EOL;
+	$out .= '</div>';
+	$out .= '<input type="hidden" name="nextId" value="'.($maxId + 1).'" />'.PHP_EOL;
+
 	$out .= '</fieldset>';
+
 
 	return $out;
 }

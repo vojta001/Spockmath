@@ -21,7 +21,7 @@ function flm($msg, $caption = '', $priority = MSG_DBG) {
 
 	//TODO comment out before release!
 	$calledFrom = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2); 	
-	$msg .= '<p style="font-size: xx-small;">Called from function '.$calledFrom[1]['function'].' in '.$calledFrom[0]['file'].':'.$calledFrom[0]['line'].'</p>';
+	$msg .= '<p style="font-size: xx-small;">Called from function '.$calledFrom[1]['function'].' in<br />'.$calledFrom[0]['file'].':'.$calledFrom[0]['line'].'</p>';
 
 	$obj = new stdClass();
 	$obj->caption = $caption;
