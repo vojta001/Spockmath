@@ -10,7 +10,7 @@ echo (jarSay('Ha! Mám tě! Ty jsi klikl na ten klíč! Tak pozor, tohle je pouz
 </div>
 <p class="help hackers">Poznámka pro hackery: Na vašem místě bych nepokoušel prezidentovou trpělivost. Stejně to nemá cenu, nefunguje ani SQL injection.</p>
 <?php } else {
-	echo (jarSay('Buďte zdráv, mistře. Teď už můžete do editoru.', JAR_NIXON));
+	echo (jarSay('Buďte zdráv, mistře! Teď už můžete do editoru.', JAR_NIXON));
 	if (isAdmin(getUser())) {
 		echo renderUsers();
 		echo renderTools();
