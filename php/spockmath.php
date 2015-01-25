@@ -51,7 +51,7 @@ function prepareRandomSet($count, $temas) {
 	if (!isset($_SESSION['home']['sada']))
 		$_SESSION['home']['sada'] = array();
 
-  if (!getChosenTema()) {
+	if (!getChosenTema()) {
 		flm('Nejdřív si vyber téma', '', MSG_ERROR);
 		return false;
 	}
@@ -97,9 +97,9 @@ function setMovePrev() {
 
 function getSetState() {
 	if (!isset($_SESSION['home']['stav']))
-    $_SESSION['home']['stav'] = HOME_INIT;
+		$_SESSION['home']['stav'] = HOME_INIT;
 
- 	return ($_SESSION['home']['stav']);
+	return ($_SESSION['home']['stav']);
 }
 
 function setSetState($state){

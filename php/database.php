@@ -16,7 +16,7 @@ $mysqli->set_charset('utf8');
 
 
 function getRowCount($table) {
-  global $mysqli;
+	global $mysqli;
 	$mysqli->escape_string($table);
 	return ($count = $mysqli->query('SELECT COUNT(*) AS cnt FROM `'.$table.'`')) ? $count->fetch_object()->cnt : false;
 }
@@ -154,7 +154,7 @@ function sadaSave() {
 function updateSadaName($name) {
 	global $mysqli;
 
-  $secName = $mysqli->escape_string($name);
+	$secName = $mysqli->escape_string($name);
 	if (isset($_SESSION['home']['sada']['dbId']) && is_numeric($_SESSION['home']['sada']['dbId']) && $_SESSION['home']['sada']['dbId'] > 0)
 		$id = $_SESSION['home']['sada']['dbId'];
 	else {

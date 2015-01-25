@@ -2,21 +2,21 @@
 
 
 function renderMenu() {
-  global $page;
+	global $page;
 
 	$menu = array(
-	  'home' => 'Testy',
-	  'stats' => 'Statistiky',
-	  'about' => 'O projektu'
+		'home' => 'Testy',
+		'stats' => 'Statistiky',
+		'about' => 'O projektu'
 	);
 
 	if (loggedIn()) {
-	  $menu['edit'] = 'Editor';
+		$menu['edit'] = 'Editor';
 	}
 
-  $out = '';
-  foreach ($menu as $key => $item)
-    $out .= '<li><a href="'.WEB_ROOT.$key.'"'.($page == $key?' class="active"':'').'>'.$item.'</a></li>';
+	$out = '';
+	foreach ($menu as $key => $item)
+		$out .= '<li><a href="'.WEB_ROOT.$key.'"'.($page == $key?' class="active"':'').'>'.$item.'</a></li>';
 
-  return '<div id="menu"><ul>'.$out.'</ul></div>';
+	return '<div id="menu"><ul>'.$out.'</ul></div>';
 }

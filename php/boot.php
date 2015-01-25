@@ -35,11 +35,11 @@ if (!empty($_POST)) {
 
 $jsFileName = JS_PATH.$page.'.js';
 if (file_exists($jsFileName))
-  $jsScripts[] = $jsFileName;
+	$jsScripts[] = $jsFileName;
 
 $cssFileName = CSS_PATH.$page.'.css';
 if (file_exists($cssFileName))
-  $cssStyles[] = $cssFileName;
+	$cssStyles[] = $cssFileName;
 
 $cssStyles[] = "style.css";
 
@@ -55,5 +55,3 @@ include $prepFile;
 flm($_GET, '$_GET is:');
 //flm($_POST, '$_POST is:');
 flm($page, '$page is:');
-
-  

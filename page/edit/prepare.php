@@ -172,7 +172,7 @@ function renderAnswers($id) {
 	//$out .= renderAnswer(-2, AT_TEXT, FALSE, "", "", TRUE);
 	//$out .= renderAnswer(-3, AT_TEXT, FALSE, "", "", TRUE);
 
-    $out .= renderAnswer('NEXT_ID', AT_TEXT, FALSE, "", "", TRUE);
+	$out .= renderAnswer('NEXT_ID', AT_TEXT, FALSE, "", "", TRUE);
 
 	$out .= '<div>';
 	$out .= '<a class="button" onclick="editorAddA()">Přidat novou</a>'.PHP_EOL;
