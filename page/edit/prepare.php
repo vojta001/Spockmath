@@ -115,7 +115,7 @@ function renderAnswer($id, $typ, $spravna, $data, $data2, $isTemplate = FALSE) {
 	
 	$out = '<div id="odpoved-'.$id.'" class="odpoved"'.($isTemplate?' style="display: none;"':'').'>';
 	$out .= '<input id="delete-'.$id.'" name="delete-'.$id.'" type="hidden" value="0" />'.PHP_EOL;
-	$out .= '<a class="delete button" onclick="editorDeleteA('.$id.')">X</a>'.PHP_EOL;
+	$out .= '<a class="delete button" onclick="editorDeleteA(parentNode.id)">X</a>'.PHP_EOL;
 
 	$out .= '<select name="typ-'.$id.'" onchange="editorATypChange('.$id.', this.value)">';
 	foreach($AT_STR as $key => $typeName)
