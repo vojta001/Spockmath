@@ -16,18 +16,14 @@ function editorATypChange(id, val) {
 }
 
 function editorDeleteA(id) {
+	//convert "blabla-1" to "1"
+	if (isNaN(id))
+		id = id.substring(id.indexOf("-")+1); 
+	
 	$("#content input#delete-"+id).val(1);
 	$("#content div#odpoved-"+id).hide('slow');	
 }
 
-function replacePattern(obj, id) {
-	/*rekurzivně projít DOM "obj"ektu a prohledávat atributy:
-		id, name, onClick
-		pokud obsahují podřetězec NEXT_ID, nahradí se číslem id (2. param) 	
-	*/
-
-	//TODO	
-}
 
 function getNextId() {
 	var nextIdObj = $('input[name=nextId]');
@@ -39,7 +35,16 @@ function getNextId() {
 function editorAddA() {
 	var orig = $("#content #odpoved-NEXT_ID");
 	var cpy = orig.clone(true);
-	cpy.insertBefore(orig);
-	replacePattern(orig, getNextId());
+	cpy.insertAfter(orig);
+
+	var newId = getNextId();
+	var idStr = orig.attr('id').replace("NEXT_ID", newId);
+	orig.attr('id', idStr);	
+
+	$("#content #"+idStr+" [id*='NEXT_ID']").map(function() { this.id = this.id.replace("NEXT_ID", newId); });
+	$("#content #"+idStr+" [name*='NEXT_ID']").map(function() { this.name = this.name.replace("NEXT_ID", newId); });
+	//nelze - onclick není string, ale funkce
+	//$("#content #"+idStr+" [onclick*='NEXT_ID']").map(function() { this.onclick = this.onclick.replace("NEXT_ID", newId); });
+		
 	orig.css("display", "block");
 }
