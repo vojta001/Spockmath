@@ -23,6 +23,6 @@ $favIcon = IMG_PATH.'design/favicon.png';
 $admins = array('vojta001', 'houba',);
 
 define('RELEASE_DEBUG', 1);
-deine('RELEASE_PRODUCTION', 2);
+define('RELEASE_PRODUCTION', 2);
 
 $release = RELEASE_DEBUG;
