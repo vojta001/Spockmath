@@ -76,7 +76,8 @@ function renderQInputs($id) {
 
 	$out .= '<div class="qType" id="qType-'.QT_MATH.'"'.($q['typ']!=QT_MATH?' style="display: none;"':'').'>';
 	$out .= '<textarea placeholder="Doplňující text (otázka) ke vzorci" name="data2">'.($q['typ']==QT_MATH?$q['data2']:'').'</textarea>'.PHP_EOL;
-	$out .= '<span class="mathquill-editable">'.($q['typ']==QT_MATH?$q['data']:'').'</span>'.PHP_EOL;
+	$out .= '<span id="mathQuillizedInput" class="mathquill-editable">'.($q['typ']==QT_MATH?$q['data']:'').'</span>'.PHP_EOL;
+	$out .= '<input id="deMathQuillizedInput" name="dataMQ" type="hidden" value="" />'.PHP_EOL;
 	$out .= '</div>';
 
 	$out .= '</fieldset>';
@@ -133,7 +134,8 @@ function renderAnswer($id, $typ, $spravna, $data, $data2, $isTemplate = FALSE) {
 	$out .= '</div>';
 
 	$out .= '<div class="aType typ-'.AT_MATH.'"'.($typ != AT_MATH?' style="display: none;"':'').'>';
-	$out .= '<span id="data-'.$id.'" class="mathquill-editable">'.($typ == AT_MATH?$data:'').'</span>'.PHP_EOL;
+	$out .= '<span id="mathQuillizedInput-'.$id.'" class="mathquill-editable">'.($typ == AT_MATH?$data:'').'</span>'.PHP_EOL;
+	$out .= '<input id="deMathQuillizedInput-'.$id.'" name="data-'.$id.'" type="hidden" value="" />'.PHP_EOL;
 	$out .= '</div>';
 
 	$out .= '<div class="aType typ-'.AT_EDIT.'"'.($typ != AT_EDIT?' style="display: none;"':'').'>';
@@ -189,7 +191,7 @@ function renderAnswers($id) {
 function renderQEdit($id) {
 	global $mysqli, $QT_STR;
 
-	$out = '<form method="post">'.PHP_EOL;
+	$out = '<form method="post" onsubmit="deMathQuillize();">'.PHP_EOL;
 
 	$out .= renderQInputs($id);
 	$out .= renderQTemas($id);
