@@ -71,7 +71,8 @@ function renderQInputs($id) {
 
 	$out .= '<div class="qType" id="qType-'.QT_OBR.'"'.($q['typ']!=QT_OBR?' style="display: none;"':'').'>';
 	$out .= '<textarea placeholder="Doplňující text (otázka) k obrázku" name="data2">'.($q['typ']==QT_OBR?$q['data2']:'').'</textarea>'.PHP_EOL;
-	$out .= '<img src="'.($q['typ']==QT_OBR? IMG_PATH.'q/'.$q['data'] : '').'" alt="otázka" />';
+	$out .= '<img src="'.($q['typ']==QT_OBR? IMG_PATH.'q/resize/'.$q['data'] : '').'" alt="otázka" />';
+
 	$out .= '</div>';
 
 	$out .= '<div class="qType" id="qType-'.QT_MATH.'"'.($q['typ']!=QT_MATH?' style="display: none;"':'').'>';
