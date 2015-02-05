@@ -41,10 +41,16 @@ function editorAddA() {
 	var idStr = orig.attr('id').replace("NEXT_ID", newId);
 	orig.attr('id', idStr);	
 
-	$("#content #"+idStr+" [id*='NEXT_ID']").map(function() { this.id = this.id.replace("NEXT_ID", newId); });
-	$("#content #"+idStr+" [name*='NEXT_ID']").map(function() { this.name = this.name.replace("NEXT_ID", newId); });
+	$("#content #"+idStr+" [id*='NEXT_ID']").each(function() { this.id = this.id.replace("NEXT_ID", newId); });
+	$("#content #"+idStr+" [name*='NEXT_ID']").each(function() { this.name = this.name.replace("NEXT_ID", newId); });
 	//nelze - onclick není string, ale funkce
 	//$("#content #"+idStr+" [onclick*='NEXT_ID']").map(function() { this.onclick = this.onclick.replace("NEXT_ID", newId); });
 		
 	orig.css("display", "block");
+}
+
+function deMathQuillize() {
+	$("[id*='mathQuillizedInput']").each(function() {
+		$("#deMathQuillizedInput" + this.id.substr("mathQuillizedInput".length)).val($(this).mathquill('latex'));
+	});
 }
