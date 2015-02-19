@@ -17,7 +17,7 @@ $mysqli->set_charset('utf8');
 
 function getRowCount($table) {
 	global $mysqli;
-	$mysqli->escape_string($table);
+	$table = $mysqli->escape_string($table);
 	return ($count = $mysqli->query('SELECT COUNT(*) AS cnt FROM `'.$table.'`')) ? $count->fetch_object()->cnt : false;
 }
 
