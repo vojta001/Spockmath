@@ -3,10 +3,20 @@
 	background-color: #fff;
 }
 
-div#content div.priklad div{
+div#content div.priklad div {
 	width: 50%;
 	float: left;
 }
+
+/*
+TODO
+div#content div.priklad div#otazka {
+	padding-right: 8px;
+}
+
+div#content div.priklad div#odpoved {
+	padding-left: 8px;
+}*/
 
 div#odpoved ul {
 	list-style-type: none;

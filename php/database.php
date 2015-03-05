@@ -14,6 +14,28 @@ if ($mysqli->connect_errno) {
 
 $mysqli->set_charset('utf8');
 
+function getQImageName($id) {
+	global $mysqli;
+
+	$safeId = $mysqli->escape_string($id);
+	$result = $mysqli->query('SELECT * FROM `otazka` WHERE `id`='.$safeId)->fetch_object();
+	if ($result->typ == QT_OBR)
+		return $result->data;
+	else
+		return false;
+}
+
+function getAImageName($fid, $id) {
+	global $mysqli;
+
+	$safeId = $mysqli->escape_string($id);
+	$safeFid = $mysqli->escape_string($fid);
+	$result = $mysqli->query('SELECT * FROM `odpoved` WHERE `fid`='.$safeFid.' AND `id`='.$safeId)->fetch_object();
+	if ($result->typ == AT_OBR)
+		return $result->data;
+	else
+		return false;
+}
 
 function getRowCount($table) {
 	global $mysqli;
@@ -117,7 +139,7 @@ function sadaSave() {
 		return FALSE;
 	}
 
-	$sadaId =  $mysqli->insert_id;
+	$sadaId = $mysqli->insert_id;
 	$_SESSION['home']['sada']['dbId'] = $sadaId;
 
 	$arr = $_SESSION['home']['sada']['otazky'];
@@ -129,7 +151,7 @@ function sadaSave() {
 			flm('Štestí kámo, nejde mi uložit int_otazka. Že tys to hackoval?', '', MSG_ERROR);
 			return FALSE;
 		}
-		$iqId =  $mysqli->insert_id;
+		$iqId = $mysqli->insert_id;
 
 		foreach($q->answer as $a) if ($a->selected) {
 //flm($a);

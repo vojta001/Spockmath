@@ -72,7 +72,7 @@ function renderQInputs($id) {
 	$out .= '<div class="qType" id="qType-'.QT_OBR.'"'.($q['typ']!=QT_OBR?' style="display: none;"':'').'>';
 	$out .= '<textarea placeholder="Doplňující text (otázka) k obrázku" name="data2">'.($q['typ']==QT_OBR?$q['data2']:'').'</textarea>'.PHP_EOL;
 	$out .= '<img src="'.($q['typ']==QT_OBR? IMG_PATH.'q/resize/'.$q['data'] : '').'" alt="otázka" />';
-
+	$out .= '<input name="question" type="file" />';
 	$out .= '</div>';
 
 	$out .= '<div class="qType" id="qType-'.QT_MATH.'"'.($q['typ']!=QT_MATH?' style="display: none;"':'').'>';
@@ -132,6 +132,7 @@ function renderAnswer($id, $typ, $spravna, $data, $data2, $isTemplate = FALSE) {
 
 	$out .= '<div class="aType typ-'.AT_OBR.'"'.($typ != AT_OBR?' style="display: none;"':'').'>';
 	$out .= '<img src="'.($typ == AT_OBR? IMG_PATH.'a/'.$data : '').'" alt="odpověď" />';
+	$out .= '<input name="answer['.$id.']" type="file" />';
 	$out .= '</div>';
 
 	$out .= '<div class="aType typ-'.AT_MATH.'"'.($typ != AT_MATH?' style="display: none;"':'').'>';
@@ -192,7 +193,7 @@ function renderAnswers($id) {
 function renderQEdit($id) {
 	global $mysqli, $QT_STR;
 
-	$out = '<form method="post" onsubmit="deMathQuillize();">'.PHP_EOL;
+	$out = '<form method="post" enctype="multipart/form-data" onsubmit="deMathQuillize();">'.PHP_EOL;
 
 	$out .= renderQInputs($id);
 	$out .= renderQTemas($id);
