@@ -148,8 +148,7 @@ function getSetHash() {
 function saveSingleAnswer() {
 	$q = getCurrentQ();
 
-	$selected = $_POST['moznost'];
-	if (isset($selected) && is_numeric($selected) && ($selected > 0)) {
+	if (isset($_POST['moznost']) && is_numeric($selected = $_POST['moznost']) && ($selected > 0)) {
 		//clear all answer selections
 		foreach ($q->answer as &$a)
 			$a->selected = 0;

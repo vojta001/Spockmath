@@ -1,6 +1,7 @@
 <?php
 
 require PHP_PATH.'spockmath.php';
+require PHP_PATH.'thumb.php';
 
 $jsScripts[] = 'jquery.min.js';
 $jsScripts[] = 'mathquill.min.js';
@@ -34,7 +35,7 @@ function renderOtazka($q) {
 			$x = '<p>'.$q->data.'</p>';
 			break;
 		case QT_OBR:
-			$x = '<p>'.$q->data2.'</p><img src="'.IMG_PATH.'q/'.$q->data.'" alt="otázka" />';
+			$x = '<p>'.$q->data2.'</p><img src="'.makeQuestionThumb($q->id).'" alt="otázka" />';
 			break;
 		case QT_MATH:
 			$x = '<p>'.$q->data2.'</p><span class="mathquill-embedded-latex">'.$q->data.'</span>';
@@ -93,7 +94,7 @@ function renderOdpoved($q) {
 				$x = '<span>'.$a->data.'</span>';
 				break;
 			case AT_OBR:
-				$x = '<img src="'.IMG_PATH.'a/'.$a->data.'" alt="otázka" />';
+				$x = '<img src="'.makeAnswerThumb($a->fid, $a->id).'" alt="otázka" />';
 				break;
 			case AT_MATH:
 				$x = '<span class="mathquill-embedded-latex">'.$a->data.'</span>';
