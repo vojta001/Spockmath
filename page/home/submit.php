@@ -56,7 +56,7 @@ elseif (isset($_POST['submit-reg'])) {
 				setSetState(SADA_SCORE);
 			}
 		} else
-			flm('Uveď prosím své jméno nebo přezdívku!', '', MSG_INFO);
+			flm('Uveď prosím své jméno nebo přezdívku!', '', MSG_WARNING);
 	}
 }
 elseif (isset($_POST['submit-next-ro'])) {
@@ -91,6 +91,7 @@ elseif (isset($_POST['submit-save-ro'])) {
 }
 elseif (isset($_POST['submit-end'])) {
 	if (getSetState(SADA_REG))
+		flm('Konec', '', MSG_INFO);
 		clearSet();
 }
 elseif (isset($_POST['submit-score'])) {

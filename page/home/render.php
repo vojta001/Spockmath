@@ -1,4 +1,4 @@
-<?php /*flm($_SESSION, "Session");*/ if (getSetState() == HOME_INIT) { ?>
+<?php if (getSetState() == HOME_INIT) { ?>
 <?php echo jarSay('Vítej pozemšťane! Co takhle malý test?', JAR_SPOCK, FALSE); ?>
 <form method="post">
 	<input type="submit" name="submit-seznam" value="Nechci, jsem lama!" />

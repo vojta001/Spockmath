@@ -40,9 +40,7 @@ function makeThumb($fileName) {
  * @return - webová adresa thumbnailu (předá z makeThumb)
  */
 function makeQuestionThumb($id) {
-	//fetch fileName
-	$origFileName = 'q/'.$id.'/'.getQImageName($id);   //return makeThumb('q/'.$q.'/'.$a -- z DB!!!);
-//flm($origFileName);
+	$origFileName = 'q/'.$id.'/'.getQImageName($id);
 
 	if (($thumbFileName = makeThumb($origFileName)) === FALSE) {
 		$thumbFileName = IMG_404;
@@ -59,7 +57,7 @@ function makeQuestionThumb($id) {
  */
 function makeAnswerThumb($fid, $id) {
 	//fetch fileName
-	$origFileName = 'q/'.$fid.'/'.getAImageName($fid, $id);   //return makeThumb('q/'.$q.'/'.$a -- z DB!!!);
+	$origFileName = 'q/'.$fid.'/'.getAImageName($fid, $id);
 	flm($origFileName);
 	if (($thumbFileName = makeThumb($origFileName)) === FALSE) {
 		$thumbFileName = IMG_404;
