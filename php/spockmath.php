@@ -33,18 +33,18 @@ function getChosenTema() {
 
 function prepareRandomSet($count, $temas) {
 	if (isset($_SESSION['home']['sada']) && (getSetState() == SADA_OPEN || getSetState() == SADA_READ_ONLY)) {
-		flm("Sada už byla otevřená!");
+		flm("Sada už byla otevřená!", '', MSG_WARNING);
 		return false;
 	}
 
 	if ($count < 1) {
-		flm("Minimální velikost sady je 1 otázka!", '', MSG_ERROR);
+		flm("Minimální velikost sady je 1 otázka!", '', MSG_WARNING);
 		return false;
 	}
 
 	$totalQs = getQCountDB();
 	if ($count > $totalQs) {
-		flm("Žádáš větší sadu, než je otázek!", '', MSG_ERROR);
+		flm("Žádáš větší sadu, než je otázek!", '', MSG_WARNING);
 		return false;
 	}
 
@@ -52,7 +52,7 @@ function prepareRandomSet($count, $temas) {
 		$_SESSION['home']['sada'] = array();
 
 	if (!getChosenTema()) {
-		flm('Nejdřív si vyber téma', '', MSG_ERROR);
+		flm('Nejdřív si vyber téma', '', MSG_WARNING);
 		return false;
 	}
 
@@ -67,7 +67,7 @@ function prepareRandomSet($count, $temas) {
 
 function prepareDebugSet() {
 	if (isset($_SESSION['home']['sada']) && (getSetState() == SADA_OPEN || getSetState() == SADA_READ_ONLY)) {
-		flm("Sada už byla otevřená!");
+		flm("Sada už byla otevřená!", '', MSG_WARNING);
 		return;
 	}
 

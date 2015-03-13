@@ -35,6 +35,7 @@ function flm($msg, $caption = '', $priority = MSG_DBG) {
 
 function renderFlashMsg() {
 	global $_msgClasses;
+	global $release;
 
 	if (!isset($_SESSION['flm']) || !is_array($_SESSION['flm']))
 		return '';
@@ -42,7 +43,8 @@ function renderFlashMsg() {
 	$output = '';
 
 	foreach ($_SESSION['flm'] as $msg)
-		$output .= PHP_EOL.'	<div class="'.$_msgClasses[$msg->priority].'">'.($msg->caption?($msg->caption.'<br />'):'').$msg->text.'</div>';
+		if ($release == RELEASE_DEBUG || $msg->priority != MSG_DBG)
+			$output .= PHP_EOL.'	<div class="'.$_msgClasses[$msg->priority].'">'.($msg->caption?($msg->caption.'<br />'):'').$msg->text.'</div>';
 
 	unset($_SESSION['flm']);
 

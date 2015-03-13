@@ -4,6 +4,7 @@ if (isset($_GET['q']) && $_GET['q'] == 'out') {
 	loggOut();
 	header("HTTP/1.1 303 See Other");
 	header('Location: https://'.$_SERVER['SERVER_NAME'].WEB_ROOT.$page);
+	flm('Byl jste úspěšně odhlášen.', '', MSG_INFO);
 	exit;
 }
 

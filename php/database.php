@@ -143,7 +143,6 @@ function sadaSave() {
 	$_SESSION['home']['sada']['dbId'] = $sadaId;
 
 	$arr = $_SESSION['home']['sada']['otazky'];
-	//flm($arr,'otazky...');
 
 	foreach($arr as $q) {
 		$retVal = $mysqli->query('INSERT INTO `inst_otazka` (`sid`, `qid`) VALUES ('.$sadaId.', '.$q->id.')');
@@ -154,14 +153,12 @@ function sadaSave() {
 		$iqId = $mysqli->insert_id;
 
 		foreach($q->answer as $a) if ($a->selected) {
-//flm($a);
 			if (isset($a->odpovedDecimal))
 				$data = $a->odpovedDecimal;
 			else
 				$data = 0;
 
 			$sql = 'INSERT INTO `inst_odpoved` (`iqid`, `aid`, `data`) VALUES ('.$iqId.', '.$a->id.', '.$data.')';
-//flm($sql);
 			$retVal = $mysqli->query($sql);
 			if ($retVal !== TRUE) {
 				flm('Štestí kámo, nejde mi uložit int_odpoved. Že tys to hackoval?', '', MSG_ERROR);

@@ -106,7 +106,7 @@ function renderOdpoved($q) {
 				break;
 			default:
 				flm('Není definováno chování pro odpověď typu '.$a->typ, '', MSG_ERROR);
-				flm (print_r ($a, 1));
+				flm ($a);
 				$x = '<p class="error">Zobrazení není definováno!</p>';
 				break;
 		}
