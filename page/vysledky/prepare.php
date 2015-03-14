@@ -12,13 +12,14 @@ if (!loggedIn())
 
 function renderSadaTable($jmeno) {
 	$sets = getAnsweredSets($jmeno);
-	$out = '<table><tr><td>Čas</td><td>Jméno</td></tr>';
+	$out = "<table>\n<tr><td>Čas</td><td>Jméno</td></tr>\n";
 	foreach($sets as $set) {
 		$out .= '<tr>';
 		$out .= '<td>'.$set->datum.'</td>';
-		$out .= '<td><a href="'.WEB_ROOT.'vysledky/'.$set->id.'">'.$set->jmeno.'</a></td>';
-		$out .= '</tr>';
+		$name = $set->jmeno?$set->jmeno:'&lt;bez jména&gt;';
+		$out .= '<td><a href="'.WEB_ROOT.'vysledky/'.$set->id.'">'.$name.'</a></td>';
+		$out .= '</tr>'.PHP_EOL;
 	}
-	$out .= '</table>';
+	$out .= '</table>'.PHP_EOL;
 	return $out;
 }

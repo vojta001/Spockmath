@@ -37,15 +37,11 @@ elseif (isset($_POST['submit-clear'])) {
 	flm("Sada smazána.", '', MSG_INFO);
 }
 elseif (isset($_POST['submit-save'])) {
-//TODO: místo toho uložit odpovědi do tabulek, které ještě neexistují
-	//flm('Sorry, tahle funkce ještě není implementována (bude-li vůbec).', '', MSG_ERROR);
 	if (getSetState() == SADA_OPEN)
 		if(saveQPost())
 			if (sadaSave()) {
 				flm("Sada uložena.", '', MSG_INFO);
-				//clearSet();
 				setSetState(SADA_REG);
-				//$_SESSION['home']['sada']['pozice'] = 0;
 			}
 }
 elseif (isset($_POST['submit-reg'])) {
