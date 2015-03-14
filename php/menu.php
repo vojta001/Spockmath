@@ -12,6 +12,7 @@ function renderMenu() {
 
 	if (loggedIn()) {
 		$menu['edit'] = 'Editor';
+		$menu['vysledky'] = 'Výsledky';
 	}
 
 	$out = '';
