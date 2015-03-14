@@ -82,6 +82,24 @@ function prepareDebugSet() {
 	flm("Nová sada vytvořena.", '', MSG_INFO);
 }
 
+function prepareSetById($id) {
+	if (isset($_SESSION['home']['sada']) && (getSetState() == SADA_OPEN || getSetState() == SADA_READ_ONLY)) {
+		flm("Sada už byla otevřená!", '', MSG_WARNING);
+		return false;
+	}
+
+	if (!isset($_SESSION['home']['sada']))
+		$_SESSION['home']['sada'] = array();
+
+	$_SESSION['home']['sada']['ucitel'] = true;
+	$_SESSION['home']['sada']['otazky'] = getSadaQ($id);
+	$_SESSION['home']['sada']['pozice'] = 0;
+	setSetState(SADA_SCORE);
+	$_SESSION['home']['sada']['hash'] = hash('crc32', print_r($_SESSION['home']['sada']['otazky'], 1));
+flm($_SESSION['home']['sada']['otazky']);
+	flm('Načetl jsem sadu', '', MSG_INFO);
+}
+
 function clearSet() {
 	unset($_SESSION['home']['sada']);
 	setSetState(HOME_INIT);

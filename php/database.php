@@ -128,6 +128,36 @@ function getAllQsDB() {
 	return $Qs;
 }
 
+/**
+ * @id id uložené sady
+ * @return pole otázek s jejich odpověďmi včetně stavu
+ */
+
+function getSadaQ($id) {
+	global $mysqli;
+
+	$safeId = $mysqli->escape_string($id);
+	$Qrows = $mysqli->query('SELECT q.*, iq.id AS iqid FROM sada AS s JOIN inst_otazka AS iq ON s.id = iq.sid JOIN otazka AS q ON q.id = iq.qid WHERE s.id = '.$safeId.' ORDER BY q.id');
+	if (!$Qrows) {
+		flm("Ti povidam, že nemam `otazka`!", '', MSG_ERROR);
+		return array();
+	}
+
+	$Qs = array();
+	while ($Q = $Qrows->fetch_object()) {
+
+		//$Arows = $mysqli->query('SELECT * FROM `odpoved` AS a LEFT JOIN inst_odpoved AS ia ON a.id = ia.aid WHERE a.fid = '.$Q->id.' AND (ia.iqid = '.$Q->iqid.' OR iq.id IS NULL)');
+		$Arows = $mysqli->query('SELECT a.*, ia.data AS odpovedDecimal FROM odpoved AS a LEFT JOIN inst_odpoved AS ia ON (a.id = ia.aid AND ia.iqid = '.$Q->iqid.') WHERE a.fid = '.$Q->id.' ORDER BY a.id');
+		$Q->answer = array();
+		while ($A = $Arows->fetch_object()){
+			$A->selected = !is_null($A->odpovedDecimal);
+			$Q->answer[] = $A;
+		}
+		$Qs[] = $Q;
+	}
+	return $Qs;
+}
+
 function sadaSave() {
 	global $mysqli;
 	$name = '';
@@ -206,4 +236,17 @@ function getTemas($qId = 0) {
 	$tema[] = $obj;
 	}
 	return $tema;
+}
+
+function getAnsweredSets($name) {
+	global $mysqli;
+
+	$safeName = $mysqli->escape_string($name);
+	$result = $mysqli->query('SELECT * FROM sada WHERE jmeno="'.$safeName.'" ORDER BY datum');
+
+	$out = array();
+	while ($obj = $result->fetch_object())
+		$out[] = $obj;
+
+	return $out;
 }

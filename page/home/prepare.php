@@ -82,7 +82,7 @@ function renderOdpoved($q) {
 						$cssEdit .= 'wrong';
 				}
 				elseif ($a->spravna) {
-					$editVal = $a->data2 + 0;
+					//$editVal = $a->data2 + 0;
 					$cssEdit .= 'shouldbe';
 				}
 			}
@@ -100,8 +100,6 @@ function renderOdpoved($q) {
 				$x = '<span class="mathquill-embedded-latex">'.$a->data.'</span>';
 				break;
 			case AT_EDIT:
-
-
 				$x = '<span>'.$a->data.'</span><input class="decimalTextBox'.$cssEdit.'" type="text" name="edit-'.$i.'" value="'.$editVal.'" '.$readOnly.'autocomplete="off" />'.$rightA;
 				break;
 			default:
