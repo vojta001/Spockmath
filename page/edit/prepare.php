@@ -90,7 +90,7 @@ function renderQInputs($id) {
 function renderQTemas($id) {
 	global $QT_STR;
 
-	$out = '<fieldset name="temata"><legend>Zařazení do témat</legend><ul>';
+	$out = '<fieldset id="temata"><legend>Zařazení do témat</legend><ul>';
 
 	$predmet = '';
 	foreach (getTemas($id) as $tema) {
@@ -116,18 +116,18 @@ function renderAnswer($id, $typ, $spravna, $data, $data2, $isTemplate = FALSE) {
 	global $AT_STR;
 	
 	$out = '<div id="odpoved-'.$id.'" class="odpoved"'.($isTemplate?' style="display: none;"':'').'>';
-	$out .= '<input id="delete-'.$id.'" name="delete-'.$id.'" type="hidden" value="0" />'.PHP_EOL;
-	$out .= '<a class="delete button" onclick="editorDeleteA(parentNode.id)">X</a>'.PHP_EOL;
+	$out .= '<input id="delete-'.$id.'" name="'.$id.'[delete]" type="hidden" value="0" />'.PHP_EOL;
+	$out .= '<a class="delete button" onclick="markAForErase(parentNode.id)">X</a>'.PHP_EOL;
 
-	$out .= '<select name="typ-'.$id.'" onchange="editorATypChange('.$id.', this.value)">';
+	$out .= '<select name="'.$id.'[typ]" onchange="editorATypChange('.$id.', this.value)">';
 	foreach($AT_STR as $key => $typeName)
 		$out .= '<option value="'.$key.'"'.($typ == $key?' selected':'').'>'.$typeName.'</option>';
 	$out .= '</select>'.PHP_EOL;
 
-	$out .= '<label><input name="spravna-'.$id.'" type="checkbox" value="spravna" '.($spravna?'checked ':'').'/>Správná</label>'.PHP_EOL;
+	$out .= '<label><input name="'.$id.'[spravna]" type="checkbox" value="spravna" '.($spravna?'checked ':'').'/>Správná</label>'.PHP_EOL;
 
 	$out .= '<div class="aType typ-'.AT_TEXT.'"'.($typ != AT_TEXT?' style="display: none;"':'').'>';
-	$out .= '<textarea name="data-'.$id.'" placeholder="Text odpovědi">'.($typ == AT_TEXT?$data:'').'</textarea>'.PHP_EOL;
+	$out .= '<textarea name="'.$id.'[data]" placeholder="Text odpovědi">'.($typ == AT_TEXT?$data:'').'</textarea>'.PHP_EOL;
 	$out .= '</div>';
 
 	$out .= '<div class="aType typ-'.AT_OBR.'"'.($typ != AT_OBR?' style="display: none;"':'').'>';
@@ -137,12 +137,12 @@ function renderAnswer($id, $typ, $spravna, $data, $data2, $isTemplate = FALSE) {
 
 	$out .= '<div class="aType typ-'.AT_MATH.'"'.($typ != AT_MATH?' style="display: none;"':'').'>';
 	$out .= '<span id="mathQuillizedInput-'.$id.'" class="mathquill-editable">'.($typ == AT_MATH?$data:'').'</span>'.PHP_EOL;
-	$out .= '<input id="deMathQuillizedInput-'.$id.'" name="data-'.$id.'" type="hidden" value="" />'.PHP_EOL;
+	$out .= '<input id="deMathQuillizedInput-'.$id.'" name="'.$id.'[data]" type="hidden" value="" />'.PHP_EOL;
 	$out .= '</div>';
 
 	$out .= '<div class="aType typ-'.AT_EDIT.'"'.($typ != AT_EDIT?' style="display: none;"':'').'>';
-	$out .= '<textarea name="data-'.$id.'">'.$data.'</textarea>'.PHP_EOL;
-	$out .= '<textarea name="data2-'.$id.'">'.$data2.'</textarea>'.PHP_EOL;
+	$out .= '<textarea name="'.$id.'[data]">'.$data.'</textarea>'.PHP_EOL;
+	$out .= '<textarea name="'.$id.'[data2]">'.$data2.'</textarea>'.PHP_EOL;
 	$out .= '</div>';
 
 	$out .= '</div>';
@@ -163,7 +163,7 @@ function renderAnswers($id) {
 		return '';
 	}
 
-	$out = '<fieldset name="odpovedi"><legend>Odpovědi</legend>';
+	$out = '<fieldset id="odpovedi"><legend>Odpovědi</legend>';
 
 	$maxId = 0;
 	while($a = $rows->fetch_object()) {
@@ -193,13 +193,14 @@ function renderAnswers($id) {
 function renderQEdit($id) {
 	global $mysqli, $QT_STR;
 
-	$out = '<form method="post" enctype="multipart/form-data" onsubmit="deMathQuillize();">'.PHP_EOL;
+	$out = '<form method="post" enctype="multipart/form-data" onsubmit="prepareForSubmit();">'.PHP_EOL;
 
 	$out .= renderQInputs($id);
 	$out .= renderQTemas($id);
 	$out .= renderAnswers($id);
 
-	$out .= '<input type="submit" value="Submit-test">';
+	$out .= '<input type="submit" value="Submit-test" onclick="warnIfDel();" />';
+	$out .= '<input type="checkbox" id="deleteQ" name="deleteQ" onclick="markQForErase()" />Smazat celou otázku';
 
 	$out .= '</form>'.PHP_EOL;
 	return $out;

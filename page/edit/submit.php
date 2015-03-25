@@ -44,7 +44,7 @@ if (isset($_FILES['question']) && !empty($_POST['qid'])) {
 		if (move_uploaded_file($_FILES['question']['tmp_name'], $uploadfile)) {
 			flm ('Povedlo se, soubor "<i>'.$_FILES['question']['name'].'</i>" byl úspěšně nahrán', '', MSG_INFO);
 			makeThumb($uploadfile);
-		} else {
+		} elseif ($error != UPLOAD_ERR_NO_FILE) {
 			flm ('Ups. Soubor '.$_FILES['question']['tmp_name'].' se nepodařilo správně nahrát do '.$uploadfile, '', MSG_ERROR);
 		}
 	}

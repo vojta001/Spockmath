@@ -65,3 +65,11 @@ a.delete:hover {
 #content div {
 	outline: 1px dashed #097744;
 }
+
+.deleteQ {
+	opacity: 0.3;
+}
+
+.deleteA {
+	opacity: 0.3;
+}
