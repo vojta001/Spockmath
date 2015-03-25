@@ -15,13 +15,18 @@ function editorATypChange(id, val) {
 	show.css("display", "block");
 }
 
-function editorDeleteA(id) {
+function markAForErase(id) {
 	//convert "blabla-1" to "1"
 	if (isNaN(id))
 		id = id.substring(id.indexOf("-")+1); 
-	
-	$("#content input#delete-"+id).val(1);
-	$("#content div#odpoved-"+id).hide('slow');	
+	if ($("#content input#delete-"+id).val() == 1)
+	{
+		$("#content input#delete-"+id).val(0);
+		$("#content div#odpoved-"+id).removeClass("deleteA");
+	} else {
+		$("#content input#delete-"+id).val(1);
+		$("#content div#odpoved-"+id).addClass("deleteA");
+	}
 }
 
 
@@ -53,4 +58,17 @@ function deMathQuillize() {
 	$("[id*='mathQuillizedInput']").each(function() {
 		$("#deMathQuillizedInput" + this.id.substr("mathQuillizedInput".length)).val($(this).mathquill('latex'));
 	});
+}
+
+function markQForErase() {
+	var toMark = $("#otazka, #temata, #odpovedi");
+	if ($("#deleteQ")[0].checked == true)
+	toMark.addClass("deleteQ", 1000);
+	else
+	toMark.removeClass("deleteQ", 1000);
+}
+
+function warnIfDel() {
+	if ($("#deleteQ")[0].checked == true)
+		confirm('Opravdu chete smazat otázku? (Tato akce nemůže být vrácena zpět)');
 }
