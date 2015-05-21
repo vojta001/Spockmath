@@ -52,7 +52,7 @@ a.delete:hover {
 
 #content fieldset {
 	border: 1px solid #51B018;
-  margin: 8px 0;
+	margin: 8px 0;
 }
 
 #content legend {
@@ -66,10 +66,10 @@ a.delete:hover {
 	outline: 1px dashed #097744;
 }
 
-.deleteQ {
+.deleteA {
 	opacity: 0.3;
 }
 
-.deleteA {
-	opacity: 0.3;
+div.hiddenToBeDeleted {
+	display: none;
 }

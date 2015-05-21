@@ -17,7 +17,7 @@ $mysqli->set_charset('utf8');
 function getQImageName($id) {
 	global $mysqli;
 
-	$safeId = $mysqli->escape_string($id);
+	$safeId = (int)$id;
 	$result = $mysqli->query('SELECT * FROM `otazka` WHERE `id`='.$safeId)->fetch_object();
 	if ($result->typ == QT_OBR)
 		return $result->data;
@@ -28,9 +28,10 @@ function getQImageName($id) {
 function getAImageName($fid, $id) {
 	global $mysqli;
 
-	$safeId = $mysqli->escape_string($id);
-	$safeFid = $mysqli->escape_string($fid);
-	$result = $mysqli->query('SELECT * FROM `odpoved` WHERE `fid`='.$safeFid.' AND `id`='.$safeId)->fetch_object();
+	$safeId = (int)$id;
+	$safeFid = (int)$fid;
+	$sql = 'SELECT * FROM `odpoved` WHERE `fid`='.$safeFid.' AND `id`='.$safeId;
+	$result = $mysqli->query($sql)->fetch_object();
 	if ($result->typ == AT_OBR)
 		return $result->data;
 	else
@@ -249,4 +250,138 @@ function getAnsweredSets($name) {
 		$out[] = $obj;
 
 	return $out;
+}
+
+function deleteQDB($id) {
+	global $mysqli;
+
+	$safeId = $mysqli->escape_string($id);
+	$sql = 'DELETE FROM otazka WHERE id='.$safeId;
+	return $mysqli->query($sql);
+}
+
+function deleteADB($id, $fid) {
+	global $mysqli;
+
+
+	$safeId = $mysqli->escape_string($id);
+	$safeFid = $mysqli->escape_string($fid);
+
+	$sql = 'DELETE FROM odpoved WHERE fid = '.$safeFid.' AND id = '.$safeId;
+	return $mysqli->query($sql);
+}
+
+function updateQ($id, $typ, $comment, $data, $data2, $multi) {
+	global $mysqli;
+
+	$safeId = $mysqli->escape_string($id);
+	$safeTyp = 'typ = '.$mysqli->escape_string($typ);
+	$safeComment = 'comment = "'.$mysqli->escape_string($comment).'"';
+	$safeData = ($data !== null)?('data = "'.$mysqli->escape_string($data).'", '):'';
+	$safeData2 = 'data2 = "'.$mysqli->escape_string($data2).'"';
+	$safeMulti = 'multi = '.(int)$multi;
+	$sql = "UPDATE otazka SET $safeTyp, $safeComment, $safeData$safeData2, $safeMulti WHERE id = $safeId";
+	return $mysqli->query($sql);
+}
+
+function updateA($id, $fid, $typ, $data, $data2, $spravna) {
+	global $mysqli;
+
+	$safeId = $mysqli->escape_string($id);
+	$safeFid = $mysqli->escape_string($fid);
+	$safeTyp = 'typ = '.$mysqli->escape_string($typ);
+	$safeComment = 'comment = "'.$mysqli->escape_string($comment).'"';
+	$safeData = 'data = "'.$mysqli->escape_string($data).'"';
+	$safeData2 = 'data2 = "'.$mysqli->escape_string($data2).'"';
+	$safeSpravna = 'spravna = '.(int)$spravna;
+	return $mysqli->query("UPDATE odpoved SET $safeTyp, $safeData, $safeData2, $safeSpravna WHERE id = $safeId AND fid = $safeFid");
+}
+
+function getQuestionTableRows() {
+	global $mysqli;
+
+	$sql = 'SELECT q.*, (SELECT GROUP_CONCAT(t.jmeno SEPARATOR \', \') FROM `otazka_tema` AS qt INNER JOIN tema AS t ON t.id = qt.tema_id WHERE q.id = qt.otazka_id) AS temata, (SELECT COUNT(*) FROM `odpoved` AS a WHERE q.id = a.fid) AS pocet_odpovedi, (SELECT COUNT(*) FROM `inst_otazka` AS io WHERE q.id = io.qid) AS pocet_zodpovezeni FROM `otazka` AS q';
+	$qRows = $mysqli->query($sql);
+	if (!$qRows) {
+		flm("Dotaz na vše z `otazka` selhal.", '', MSG_ERROR);
+		return '';
+	}
+
+	$rows = array();
+	while($q = $qRows->fetch_object()) {
+		$rows[] = $q;
+	}
+	return $rows;
+}
+
+function questionExists($id) {
+	global $mysqli;
+
+	if (is_int($id)) {
+		$sql = 'SELECT EXISTS(SELECT * FROM otazka WHERE id = '.$id.') AS found';
+		$rows = $mysqli->query($sql);
+		return $rows->fetch_object()->found;
+	} else
+		return false;
+}
+
+function answerExists($id, $fid) {
+	global $mysqli;
+
+	if (is_int($id) && is_int($fid)) {
+		$sql = 'SELECT * FROM odpoved WHERE id = '.$id.' AND fid = '.$fid;
+		$rows = $mysqli->query($sql);
+		return $rows->fetch_object();
+	} else {
+		return false;
+	}
+}
+
+function insertQ($typ, $comment, $data, $data2, $multi) {
+	global $mysqli;
+
+	$safeTyp = '"'.$mysqli->escape_string($typ).'"';
+	$safeComment = '"'.$mysqli->escape_string($comment).'"';
+	$safeData = '"'.$mysqli->escape_string($data).'"';
+	$safeData2 = '"'.$mysqli->escape_string($data2).'"';
+	$safeMulti = (int)$multi;
+
+
+
+	if ($mysqli->query("INSERT INTO otazka (typ, comment, data, data2, multi) VALUES ($safeTyp, $safeComment, $safeData, $safeData2, $safeMulti)"))
+		return $mysqli->insert_id;
+	else
+		return false;
+}
+
+function insertA($id, $fid, $typ, $data, $data2, $spravna) {
+	global $mysqli;
+
+	$safeId = (int)$id;
+	$safeFid = (int)$fid;
+	$safeTyp = (int)$typ;
+	$safeData = '"'.$mysqli->escape_string($data).'"';
+	$safeData2 = '"'.$mysqli->escape_string($data2).'"';
+	$safeSpravna = (int)$spravna;
+	if ($mysqli->query("INSERT INTO odpoved (id, fid, typ, data, data2, spravna) VALUES ($safeId, $safeFid, $safeTyp, $safeData, $safeData2, $safeSpravna)"))
+		return $mysqli->insert_id;
+	else
+		return false;
+}
+
+function updateQTemas($qid, $replaceTemaIds, $deleteTemaIds) {
+	global $mysqli;
+
+	$safeQid = (int)$qid;
+	$values = array();
+	foreach($replaceTemaIds as $id) {
+		$values[] = '('.$safeQid.','.$id.')';
+	}
+	$mysqli->query('REPLACE INTO otazka_tema (otazka_id, tema_id) VALUES '.implode(', ', $values));
+
+	$values = array();
+	foreach($replaceTemaIds as $id) {
+		$values[] = '('.$safeQid.','.$id.')';
+	}
+	$mysqli->query('DELETE FROM otazka_tema WHERE otazka_id = '.$safeQid.' AND tema_id IN ('.implode(', ', $deleteTemaIds).')');
 }

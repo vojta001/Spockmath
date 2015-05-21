@@ -19,8 +19,6 @@ define('SADA_REG', 5);
 define('SADA_SCORE', 6);
 
 
-//$cssStyles[] = CSS_PATH.'spockmath.css';
-
 function getChosenTema() {
 	$temas = array();
 
@@ -96,7 +94,6 @@ function prepareSetById($id) {
 	$_SESSION['home']['sada']['pozice'] = 0;
 	setSetState(SADA_SCORE);
 	$_SESSION['home']['sada']['hash'] = hash('crc32', print_r($_SESSION['home']['sada']['otazky'], 1));
-flm($_SESSION['home']['sada']['otazky']);
 	flm('Načetl jsem sadu', '', MSG_INFO);
 }
 
@@ -240,7 +237,7 @@ function saveQuestion() {
 }
 
 
-/*
+/**
  * return value = success
  */
 function saveQPost() {

@@ -15,11 +15,19 @@ $_msgClasses = array(
 
 
 function flm($msg, $caption = '', $priority = MSG_DBG) {
+	global $release;
+
+	$typeMsg = '';
+	if ($priority == MSG_DBG && $release == RELEASE_DEBUG) {
+		$typeMsg = '<p style="font-size: xx-small;">Type is '.gettype($msg).'</p>'.PHP_EOL;
+	}
+
 	if (is_object($msg) || is_array($msg)) {
 		$msg = '<pre>'.print_r($msg, 1).'</pre>';
 	}
 
-	global $release;
+	$msg .= $typeMsg;
+
 	if ($release == RELEASE_DEBUG) {
 		$calledFrom = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
 		$msg .= '<p style="font-size: xx-small;">Called from function '.$calledFrom[1]['function'].' in<br />'.$calledFrom[0]['file'].':'.$calledFrom[0]['line'].'</p>';

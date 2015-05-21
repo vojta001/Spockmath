@@ -3,16 +3,16 @@ function editorQTypChange(val) {
 	divs = $("#content div.qType");
 	hide = divs.not("#qType-" + val);
 	show = divs.filter("#qType-" + val);
-	hide.css("display", "none");
-	show.css("display", "block");
+	hide.addClass("hiddenToBeDeleted");
+	show.removeClass("hiddenToBeDeleted");
 }
 
-function editorATypChange(id, val) {
-	divs = $("#content div#odpoved-"+id+" div.aType");
+function editorATypChange(strId, val) {
+	divs = $("#content div#"+strId+" div.aType");
 	hide = divs.not(".typ-" + val);
 	show = divs.filter(".typ-" + val);
-	hide.css("display", "none");
-	show.css("display", "block");
+	hide.addClass("hiddenToBeDeleted");
+	show.removeClass("hiddenToBeDeleted");
 }
 
 function markAForErase(id) {
@@ -54,21 +54,11 @@ function editorAddA() {
 	orig.css("display", "block");
 }
 
-function deMathQuillize() {
+function prepareForSubmit() {
+	$("div.hiddenToBeDeleted").remove();
+
 	$("[id*='mathQuillizedInput']").each(function() {
-		$("#deMathQuillizedInput" + this.id.substr("mathQuillizedInput".length)).val($(this).mathquill('latex'));
+		var latexVal = $(this).mathquill('latex');
+		$("#deMathQuillizedInput" + this.id.substr("mathQuillizedInput".length)).val(latexVal);
 	});
-}
-
-function markQForErase() {
-	var toMark = $("#otazka, #temata, #odpovedi");
-	if ($("#deleteQ")[0].checked == true)
-	toMark.addClass("deleteQ", 1000);
-	else
-	toMark.removeClass("deleteQ", 1000);
-}
-
-function warnIfDel() {
-	if ($("#deleteQ")[0].checked == true)
-		confirm('Opravdu chete smazat otázku? (Tato akce nemůže být vrácena zpět)');
 }

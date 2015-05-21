@@ -13,14 +13,15 @@ define('IMG_404', IMG_PATH.'sys/404.png');
 function makeThumb($fileName) {
 	$webFileName = IMG_R_PATH.$fileName;
 
-	//check thumbnail exists
 	$thumbFileName = IMG_R_FILEPATH.$fileName;
-	if (file_exists($thumbFileName))
+	$origFileName = IMG_FILEPATH.$fileName;
+
+	//check thumbnail exists
+	if (file_exists($thumbFileName) && file_exists($origFileName) && filemtime($thumbFileName) > filemtime($origFileName))
 		return $webFileName;
 
 	//create thumbnail
-	$origFileName = IMG_FILEPATH.$fileName;
-	if (!file_exists($origFileName))
+	if (!file_exists($origFileName) || is_dir($origFileName))
 		return FALSE;
 
 	$resizePath = dirname($thumbFileName);
@@ -56,9 +57,8 @@ function makeQuestionThumb($id) {
  * @return - webová adresa thumbnailu (předá z makeThumb)
  */
 function makeAnswerThumb($fid, $id) {
-	//fetch fileName
 	$origFileName = 'q/'.$fid.'/'.getAImageName($fid, $id);
-	flm($origFileName);
+
 	if (($thumbFileName = makeThumb($origFileName)) === FALSE) {
 		$thumbFileName = IMG_404;
 	}

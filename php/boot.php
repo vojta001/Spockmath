@@ -9,6 +9,7 @@ $cssStyles = array();
 require 'simpleauth.php';
 require 'database.php';
 require 'flashmsg.php';
+require 'utils.php';
 
 $page = 'home';
 if (isset($_GET['page'])) {
