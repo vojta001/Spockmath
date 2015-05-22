@@ -39,7 +39,7 @@ function isAdmin($user) {
 
 function renderLoginLogoutLink() {
 	if (loggedIn())
-		return '<a href="https://'.$_SERVER['SERVER_NAME'].'/spock/login/out"><img src="'.IMG_PATH.'design/logout.png" alt="login icon" title="Ohlásit" /></a>';
+		return '<a href="https://'.$_SERVER['SERVER_NAME'].WEB_ROOT.'login/out"><img src="'.IMG_PATH.'design/logout.png" alt="login icon" title="Ohlásit" /></a>';
 	else
-		return '<a href="https://'.$_SERVER['SERVER_NAME'].'/spock/login"><img src="'.IMG_PATH.'design/login.png" alt="login icon" title="Příhlásit" /></a>';
+		return '<a href="https://'.$_SERVER['SERVER_NAME'].WEB_ROOT.'login"><img src="'.IMG_PATH.'design/login.png" alt="login icon" title="Příhlásit" /></a>';
 }
