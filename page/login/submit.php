@@ -8,6 +8,6 @@ if (isValidLogin($_POST['usrname'], $_POST['passwd'])) {
 }
 elseif (isset($_POST['make_hash']) && isset($_POST['tohash']) && $_POST['tohash']) {
 	if (isAdmin(getUser())) {
-		flm(makeHash(), 'Hash vstupu jest:', '', MSG_INFO);
+		flm(makeHash($_POST['tohash']), 'Hash vstupu jest:', MSG_INFO);
 	}
 }
