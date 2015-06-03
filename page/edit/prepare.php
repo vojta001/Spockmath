@@ -37,6 +37,7 @@ $jsScripts[] = 'jquery.min.js';
 $jsScripts[] = 'mathquill.min.js';
 $jsScripts[] = 'editor.js';
 $cssStyles[] = 'mathquill.css';
+$jsScripts[] = 'validatedecimals.js';
 
 function renderQInputs($id) {
 	global $mysqli, $QT_STR;
@@ -142,7 +143,7 @@ function renderAnswer($id, $qid, $typ, $spravna, $data, $data2, $isTemplate = FA
 
 	$out .= '<div class="aType typ-'.AT_EDIT.($typ != AT_EDIT?' hiddenToBeDeleted':'').'">';
 	$out .= '<textarea name="answer['.$id.'][data]">'.$data.'</textarea>'.PHP_EOL;
-	$out .= '<textarea name="answer['.$id.'][data2]">'.$data2.'</textarea>'.PHP_EOL;
+	$out .= '<textarea class= "decimalTextBox" name="answer['.$id.'][data2]">'.$data2.'</textarea>'.PHP_EOL;
 	$out .= '</div>';
 
 	$out .= '</div>';
