@@ -10,13 +10,13 @@ if (isset($_POST['delete']) && !empty($_POST['qid'])) {
 }
 elseif (isset($_POST['save']) && isset($_POST['qid']) && !empty($_POST['typ'])) {
 	if ($_POST['qid'] == 0) {
-        $qid = insertQ($_POST['typ'], $_POST['comment'], $data, $_POST['data2'], isset($_POST['multi']));
+		$qid = insertQ($_POST['typ'], $_POST['comment'], $data, $_POST['data2'], isset($_POST['multi']));
 	}
 	else {
 		$qid = (int)$_POST['qid'];
 	}
 
-    $uploadFileBare = null;
+	$uploadFileBare = null;
 	$uploadDirRel = 'q/'.$qid;
 	$uploadDir = IMG_FILEPATH.$uploadDirRel;
 
@@ -77,16 +77,17 @@ elseif (isset($_POST['save']) && isset($_POST['qid']) && !empty($_POST['typ'])) 
 				continue;
 
 			$data = isset($Adata[$id])?$Adata[$id]:$a['data'];
+			$data2 = $a['typ'] != AT_EDIT?'':preg_replace('/\s+/', '', str_replace(',', '.', $a['data2']));
 			if (($answer = answerExists($id, $qid)) != null) {
 				if ($a['delete'])
 					deleteA($id, $qid);
 				else {
 					if ($answer->typ != AT_OBR || $data)
-						updateA($id, $qid, $a['typ'], $data, $a['data2'], isset($a['spravna']));
+						updateA($id, $qid, $a['typ'], $data, $data2, isset($a['spravna']));
 				}
 			} else {
 				if (!$a['delete'])
-					insertA($id, $qid, $a['typ'], $data, $a['data2'], isset($a['spravna']));
+					insertA($id, $qid, $a['typ'], $data, $data2, isset($a['spravna']));
 			}
 		}
 	}
