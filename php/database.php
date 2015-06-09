@@ -379,9 +379,5 @@ function updateQTemas($qid, $replaceTemaIds, $deleteTemaIds) {
 	}
 	$mysqli->query('REPLACE INTO otazka_tema (otazka_id, tema_id) VALUES '.implode(', ', $values));
 
-	$values = array();
-	foreach($replaceTemaIds as $id) {
-		$values[] = '('.$safeQid.','.$id.')';
-	}
 	$mysqli->query('DELETE FROM otazka_tema WHERE otazka_id = '.$safeQid.' AND tema_id IN ('.implode(', ', $deleteTemaIds).')');
 }
