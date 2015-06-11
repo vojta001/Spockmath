@@ -17,3 +17,12 @@ function renderSadaTable($jmeno) {
 	$out .= '</table>'.PHP_EOL;
 	return $out;
 }
+
+$jmeno = (isset($_SESSION['vysledky']['user']) ? $_SESSION['vysledky']['user'] : null);
+
+if (!empty($_GET['q'])) {
+	unset($_SESSION['vysledky']['user']);
+	prepareSetById($_GET['q']);
+	header('Location: '.WEB_ROOT.'home');
+	exit;
+}
