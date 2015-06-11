@@ -16,7 +16,7 @@ CREATE TABLE `inst_odpoved` (
   PRIMARY KEY (`id`),
   KEY `iqid` (`iqid`),
   KEY `aid` (`aid`),
-  CONSTRAINT `inst_odpoved_ibfk_5` FOREIGN KEY (`aid`) REFERENCES `odpoved` (`id`),
+  CONSTRAINT `inst_odpoved_ibfk_5` FOREIGN KEY (`aid`) REFERENCES `odpoved` (`id`) ON DELETE CASCADE,
   CONSTRAINT `inst_odpoved_ibfk_6` FOREIGN KEY (`iqid`) REFERENCES `inst_otazka` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=237 DEFAULT CHARSET=utf8;
 
@@ -238,7 +238,7 @@ CREATE TABLE `inst_otazka` (
   KEY `sid` (`sid`),
   KEY `oid` (`qid`),
   CONSTRAINT `inst_otazka_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `sada` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `inst_otazka_ibfk_5` FOREIGN KEY (`qid`) REFERENCES `otazka` (`id`)
+  CONSTRAINT `inst_otazka_ibfk_5` FOREIGN KEY (`qid`) REFERENCES `otazka` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=253 DEFAULT CHARSET=utf8;
 
 INSERT INTO `inst_otazka` (`id`, `qid`, `sid`) VALUES
