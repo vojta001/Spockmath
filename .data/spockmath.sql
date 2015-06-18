@@ -466,6 +466,7 @@ CREATE TABLE `login` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `usr` varchar(255) NOT NULL COMMENT 'plaintext username',
   `passwd` varchar(255) NOT NULL COMMENT 'password hash, NO plaintext',
+  `perm` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `usr` (`usr`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
