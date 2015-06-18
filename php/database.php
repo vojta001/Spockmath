@@ -79,6 +79,13 @@ function getDBUsers() {
 	return $users;
 }
 
+function getDBUser($user) {
+	global $mysqli;
+
+	$safeUser = $mysqli->escape_string($user);
+	$result = $mysqli->query('SELECT * FROM `login` where usr ="'.$safeUser.'"');
+	return $result->fetch_object();
+}
 
 function getRandomQsDB($count, $temas) {
 	global $mysqli;

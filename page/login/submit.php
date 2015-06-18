@@ -3,7 +3,7 @@
 require_once 'prepare.php';
 
 if (loggedIn()) {
-	if (isset($_POST['make_hash']) && !empty($_POST['tohash']) && isAdmin(getUser()))
+	if (isset($_POST['make_hash']) && !empty($_POST['tohash']) && getPerm(getUser()) == PERM_ADMIN)
 		flm(makeHash($_POST['tohash']), 'Hash vstupu jest:', MSG_INFO);
 } elseif (!empty($_POST['usrname'])) {
 	if (isValidLogin($_POST['usrname'], $_POST['passwd'])) {

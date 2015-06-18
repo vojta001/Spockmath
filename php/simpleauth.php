@@ -1,5 +1,7 @@
 <?php
 
+define('PERM_ADMIN', 1);
+define('PERM_UCITEL', 3);
 
 function isValidLogin($user, $passwd) {
 	return password_verify($passwd, getHashDB($user));
@@ -32,9 +34,11 @@ function makeHash($user) {
 	return crypt($user);
 }
 
-function isAdmin($user) {
-	global $admins;
-	return in_array($user, $admins);
+function getPerm($user) {
+	if ($perm = getDBUser($user)->perm)
+		return $perm;
+	else
+		return false;
 }
 
 function renderLoginLogoutLink() {
