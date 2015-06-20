@@ -61,11 +61,6 @@ a.delete:hover {
 	/*color: #51B018;*/
 }
 
-/*testovaci ramecek
-#content div {
-	outline: 1px dashed #097744;
-}*/
-
 .deleteA {
 	opacity: 0.3;
 }
@@ -110,3 +105,36 @@ div.hiddenToBeDeleted {
 #qType-3 textarea {
 	width: 50%;
 } 
+
+.odpoved textarea {
+	min-height: 64px;		
+}
+
+.odpoved .typ-1 textarea {
+	width: 820px;		
+}
+
+.odpoved .typ-2 img {
+	float: right;
+}
+.odpoved .typ-2 textarea {
+	width: 50%;
+}
+
+.odpoved .typ-3 span {
+	background-color: #fff;
+}
+
+.at-edit-text {
+	width: 50%;
+}
+
+#odpovedi > div {
+	clear: right;
+}
+
+.odpoved {
+	border-bottom: 1px solid #51B018;
+	margin-bottom: 6px;
+	padding-bottom: 6px;
+}
