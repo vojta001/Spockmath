@@ -59,26 +59,27 @@ function renderQInputs($id) {
 
 	$out .= '<input name="qid" type="hidden" value="'.$id.'" />'.PHP_EOL;
 
-	$out .= '<select name="typ" onchange="editorQTypChange(this.value)">';
+	$out .= '<label>Typ otázky: <select name="typ" onchange="editorQTypChange(this.value)">';
 	foreach($QT_STR as $key => $typ)
 		$out .= '<option value="'.$key.'"'.($q['typ']==$key?' selected':'').'>'.$typ.'</option>';
-	$out .= '</select>'.PHP_EOL;
-	$out .= '<label><input name="multi" type="checkbox" value="multi" '.($q['multi']?'checked ':'').'/>Možno více voleb</label>'.PHP_EOL;
-	$out .= '<textarea placeholder="Spockův komentář k otázce" name="comment">'.$q['comment'].'</textarea>'.PHP_EOL;
+	$out .= '</select></label>'.PHP_EOL;
+	$out .= '<label><input name="multi" type="checkbox" value="multi" '.($q['multi']?'checked ':'').'/>Možno více voleb</label><br />'.PHP_EOL;
+	$out .= '<textarea id="spock-comment" placeholder="Spockův komentář k otázce" name="comment">'.$q['comment'].'</textarea>'.PHP_EOL;
 
 	$out .= '<div class="qType'.($q['typ']!=QT_TEXT?' hiddenToBeDeleted':'').'" id="qType-'.QT_TEXT.'">';
 	$out .= '<textarea placeholder="Text otázky" name="data">'.($q['typ']==QT_TEXT?$q['data']:'').'</textarea>'.PHP_EOL;
 	$out .= '</div>';
 
 	$out .= '<div class="qType'.($q['typ']!=QT_OBR?' hiddenToBeDeleted':'').'" id="qType-'.QT_OBR.'">';
-	$out .= '<textarea placeholder="Doplňující text (otázka) k obrázku" name="data2">'.($q['typ']==QT_OBR?$q['data2']:'').'</textarea>'.PHP_EOL;
 	$out .= '<img src="'.($q['typ']==QT_OBR? makeQuestionThumb($id) : '').'" alt="otázka" />';
+	$out .= '<textarea placeholder="Doplňující text (otázka) k obrázku" name="data2">'.($q['typ']==QT_OBR?$q['data2']:'').'</textarea><br />'.PHP_EOL;
 	$out .= '<input name="question" type="file" />';
 	$out .= '</div>';
 
 	$out .= '<div class="qType'.($q['typ']!=QT_MATH?' hiddenToBeDeleted':'').'" id="qType-'.QT_MATH.'">';
+	$out .= '<div><span id="mathQuillizedInput" class="mathquill-editable">'.($q['typ']==QT_MATH?$q['data']:'').'</span><br />'
+		.'<a href="https://www.udacity.com/wiki/ma006/mathquill" target="_blank"><img src="'.IMG_PATH.'design/help.png" alt="" />Nápověda a videa s příklady</a></div>'.PHP_EOL;
 	$out .= '<textarea placeholder="Doplňující text (otázka) ke vzorci" name="data2">'.($q['typ']==QT_MATH?$q['data2']:'').'</textarea>'.PHP_EOL;
-	$out .= '<span id="mathQuillizedInput" class="mathquill-editable">'.($q['typ']==QT_MATH?$q['data']:'').'</span>'.PHP_EOL;
 	$out .= '<input id="deMathQuillizedInput" name="data" type="hidden" value="testval" />'.PHP_EOL;
 	$out .= '</div>';
 

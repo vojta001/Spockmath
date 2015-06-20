@@ -61,10 +61,10 @@ a.delete:hover {
 	/*color: #51B018;*/
 }
 
-/*testovaci ramecek*/
+/*testovaci ramecek
 #content div {
 	outline: 1px dashed #097744;
-}
+}*/
 
 .deleteA {
 	opacity: 0.3;
@@ -73,3 +73,40 @@ a.delete:hover {
 div.hiddenToBeDeleted {
 	display: none;
 }
+
+#spock-comment {
+	width: 820px;		
+}
+
+.qType textarea {
+	min-height: 128px;		
+}
+
+#qType-1 textarea {
+	width: 820px;		
+}
+
+#qType-2 img {
+	float: right;
+}
+#qType-2 textarea {
+	width: 50%;
+}
+
+#qType-3 div {
+	float: right;
+	display: inline-block;
+	text-align: right;
+}
+#qType-3 a {
+	font-size: small;
+}
+#qType-3 #mathQuillizedInput {
+	min-height: 128px;
+	width: 380px;
+	background-color: #fff;
+	text-align: center;
+}
+#qType-3 textarea {
+	width: 50%;
+} 
