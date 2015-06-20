@@ -121,10 +121,10 @@ function renderAnswer($id, $qid, $typ, $spravna, $data, $data2, $isTemplate = FA
 	$out .= '<input id="delete-'.$id.'" name="answer['.$id.'][delete]" type="hidden" value="0" />'.PHP_EOL;
 	$out .= '<a class="delete button" onclick="markAForErase(parentNode.id)">X</a>'.PHP_EOL;
 
-	$out .= '<select name="answer['.$id.'][typ]" onchange="editorATypChange(parentNode.id, this.value)">';
+	$out .= '<label>Typ odpovědi: <select name="answer['.$id.'][typ]" onchange="editorATypChange(parentNode.id, this.value)">';
 	foreach($AT_STR as $key => $typeName)
 		$out .= '<option value="'.$key.'"'.($typ == $key?' selected':'').'>'.$typeName.'</option>';
-	$out .= '</select>'.PHP_EOL;
+	$out .= '</select></label>'.PHP_EOL;
 
 	$out .= '<label><input name="answer['.$id.'][spravna]" type="checkbox" value="spravna" '.($spravna?'checked ':'').'/>Správná</label>'.PHP_EOL;
 
@@ -143,8 +143,8 @@ function renderAnswer($id, $qid, $typ, $spravna, $data, $data2, $isTemplate = FA
 	$out .= '</div>';
 
 	$out .= '<div class="aType typ-'.AT_EDIT.($typ != AT_EDIT?' hiddenToBeDeleted':'').'">';
-	$out .= '<textarea name="answer['.$id.'][data]">'.$data.'</textarea>'.PHP_EOL;
-	$out .= '<textarea class= "decimalTextBox" name="answer['.$id.'][data2]">'.$data2.'</textarea>'.PHP_EOL;
+	$out .= '<textarea class="at-edit-text" name="answer['.$id.'][data]" placeholder="Text k číselné odpovědi">'.$data.'</textarea>'.PHP_EOL;
+	$out .= '<textarea class="decimalTextBox" name="answer['.$id.'][data2]" placeholder="Hodnota uznaná za správnou">'.$data2.'</textarea>'.PHP_EOL;
 	$out .= '</div>';
 
 	$out .= '</div>';
