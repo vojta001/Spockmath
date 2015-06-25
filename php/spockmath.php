@@ -279,7 +279,7 @@ function renderTemasTree($tree, $teacher_hints){
 		$text = htmlspecialchars($node->jmeno . (empty($node->komentar)?'':' ('.$node->komentar.')'));
 
 		if ($teacher_hints || (!$teacher_hints && empty($node->childs))) {
-			$extra = empty($node->childs)?'':' class="teacher-forbidden" title="Témata s podtématy nebude možné vybrat!"';
+			$extra = ($node->checked && !empty($node->childs))?' class="teacher-forbidden" title="Témata s podtématy nebude možné vybrat!"':'';
 	        $out .= '<label'.$extra.'><input type="checkbox" name="tema['.$node->id.']" '.$checked.'/>'.$text.'</label>';
 		}
 		else {

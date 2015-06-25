@@ -138,3 +138,9 @@ div.hiddenToBeDeleted {
 	margin-bottom: 6px;
 	padding-bottom: 6px;
 }
+
+.teacher-forbidden {
+	border-bottom: 1px solid red;
+	color: red; 	
+}
+
