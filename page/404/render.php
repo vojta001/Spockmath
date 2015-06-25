@@ -1,4 +1,4 @@
-<?php echo jarSay("I sem padl americký napalm. To proto tu nic není! Hááá hááá!", JAR_NIXON, TRUE); ?>
+<?php echo jarSay("I sem padl americký napalm. To proto tu nic není! Hááá hááá!", JAR_NIXON, true); ?>
 <p>Pan prezident Vám chtěl nejspíš sdělit, že jste na takové té stránce "404".<br />
 To je případ, kdy zadáte neexistující adresu, nebo kliknete na náš odkaz, který nikam nevede<sup>1)</sup>.
 <hr class="clearfix" />

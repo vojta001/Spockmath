@@ -1,11 +1,11 @@
 <?php if (getSetState() == HOME_INIT) { ?>
-<?php echo jarSay('Vítej pozemšťane! Co takhle malý test?', JAR_SPOCK, FALSE); ?>
+<?php echo jarSay('Vítej pozemšťane! Co takhle malý test?', JAR_SPOCK, false); ?>
 <form method="post">
 	<input type="submit" name="submit-seznam" value="Nechci, jsem lama!" />
 	<input type="submit" name="submit-start" value="Dobře, že jsi vulkánec, zkusím to." />
 </form>
 <?php } elseif (getSetState() == HOME_TEMA) { ?>
-<?php echo jarSay('Vyber si téma!', JAR_SPOCK, TRUE); ?>
+<?php echo jarSay('Vyber si téma!', JAR_SPOCK, true); ?>
 <form method="post">
 	<?php echo renderSetParams(); ?>
 	<input type="submit" name="submit-seznam" value="Rozmyslel jsem si to!" />
@@ -42,7 +42,7 @@
 </form>
 <?php } elseif (getSetState() == SADA_SCORE) { ?>
 <form method="post">
-	<?php echo jarSay('No tak takhle jsi dopadl:', JAR_SPOCK, TRUE); ?>
+	<?php echo jarSay('No tak takhle jsi dopadl:', JAR_SPOCK, true); ?>
 	<?php echo renderScore(); ?>
 	<input type="submit" name="submit-walk" value="Projít sadu" />
 	<input type="submit" name="submit-end" value="Konec" />

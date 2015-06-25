@@ -1,4 +1,4 @@
-<?php echo jarSay('Vítej pozemšťane! Chceš vědět něco o tomto webu?', JAR_SPOCK, FALSE); ?>
+<?php echo jarSay('Vítej pozemšťane! Chceš vědět něco o tomto webu?', JAR_SPOCK, false); ?>
 <p>Stránky školního projektu vznikly samoúčelně. Nešlo původně ani tak o to, co web bude dělat, jako o to, jaké prostředky a postupy k tomu budou použity. Výsledek sesmolili Vojtěch <i>Kane</i> Káně za dohledu RgB.</p>
 <p>Následují nezajímavé technické detaily. Stránky využívají:
 <ul>

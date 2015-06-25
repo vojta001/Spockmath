@@ -1,7 +1,7 @@
 <?php
 
 if ($jmeno === null) {
-	echo jarSay('Chcete se podívat, jak některý ze studentů dopadl? Jen sem zadejte jeho jméno.', JAR_UHURA, TRUE); ?>
+	echo jarSay('Chcete se podívat, jak některý ze studentů dopadl? Jen sem zadejte jeho jméno.', JAR_UHURA, true); ?>
 	<form method="post">
 	<input type="text" name="jmeno" placeholder="Jméno (i prázdné)" />
 	<input type="submit" value="Vybrat" />
