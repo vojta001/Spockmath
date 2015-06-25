@@ -11,10 +11,10 @@ function addDecimalCodes() {
 	global $jsScripts, $cssStyles;
 	if (getSetState() == SADA_OPEN) {
 		$q = getCurrentQ();
-		$raise = FALSE;
+		$raise = false;
 		foreach ($q->answer as $a) {
 			if ($a->typ == AT_EDIT) {
-			$raise = TRUE;
+			$raise = true;
 			break;
 			}
 		}
@@ -132,7 +132,7 @@ function renderQ() {
 
 function renderSpockQuestion() {
 	$comment = getCurrentQ()->comment;
-	return jarSay("Zde je otázka ".(getPosition()+1)." z ".getQCount().($comment?'<br />'.$comment:''), JAR_SPOCK, FALSE);
+	return jarSay("Zde je otázka ".(getPosition()+1)." z ".getQCount().($comment?'<br />'.$comment:''), JAR_SPOCK, false);
 }
 
 function renderSetParams(){

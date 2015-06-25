@@ -6,7 +6,7 @@ define('JAR_SPOCK', 1);
 define('JAR_UHURA', 2);
 define('JAR_NIXON', 3);
 
-function jarSay($text, $jar = JAR_SPOCK, $left = FALSE) {
+function jarSay($text, $jar = JAR_SPOCK, $left = false) {
 	$sideStr = $left?'left':'right';
 	switch($jar) {
 		case JAR_UHURA:

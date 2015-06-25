@@ -171,9 +171,9 @@ function sadaSave() {
 
 	$retVal = $mysqli->query('INSERT INTO `sada` (`jmeno`) VALUES (\''.$name.'\')');
 
-	if ($retVal !== TRUE) {
+	if ($retVal !== true) {
 		flm('Štestí kámo, nejde mi to uložit. Že tys to hackoval?', '', MSG_ERROR);
-		return FALSE;
+		return false;
 	}
 
 	$sadaId = $mysqli->insert_id;
@@ -183,9 +183,9 @@ function sadaSave() {
 
 	foreach($arr as $q) {
 		$retVal = $mysqli->query('INSERT INTO `inst_otazka` (`sid`, `qid`) VALUES ('.$sadaId.', '.$q->id.')');
-		if ($retVal !== TRUE) {
+		if ($retVal !== true) {
 			flm('Štestí kámo, nejde mi uložit int_otazka. Že tys to hackoval?', '', MSG_ERROR);
-			return FALSE;
+			return false;
 		}
 		$iqId = $mysqli->insert_id;
 
@@ -197,14 +197,14 @@ function sadaSave() {
 
 			$sql = 'INSERT INTO `inst_odpoved` (`iqid`, `aid`, `data`) VALUES ('.$iqId.', '.$a->id.', '.$data.')';
 			$retVal = $mysqli->query($sql);
-			if ($retVal !== TRUE) {
+			if ($retVal !== true) {
 				flm('Štestí kámo, nejde mi uložit int_odpoved. Že tys to hackoval?', '', MSG_ERROR);
-				return FALSE;
+				return false;
 			}
 
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 function updateSadaName($name) {
@@ -220,9 +220,9 @@ function updateSadaName($name) {
 
 	$retVal = $mysqli->query('UPDATE `sada` SET `jmeno` = "'.$secName.'" WHERE id='.$id);
 
-	if ($retVal !== TRUE) {
+	if ($retVal !== true) {
 		flm('Hmmm, nějak mi to nejde uložit, asi budeš muset zůstat beze jména.', '', MSG_ERROR);
-		return FALSE;
+		return false;
 	}
 	return true;
 }

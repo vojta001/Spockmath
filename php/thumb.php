@@ -22,7 +22,7 @@ function makeThumb($fileName) {
 
 	//create thumbnail
 	if (!file_exists($origFileName) || is_dir($origFileName))
-		return FALSE;
+		return false;
 
 	$resizePath = dirname($thumbFileName);
 	if (!file_exists($resizePath))
@@ -59,7 +59,7 @@ function makeQuestionThumb($id) {
 function makeAnswerThumb($fid, $id) {
 	$origFileName = 'q/'.$fid.'/'.getAImageName($fid, $id);
 
-	if (($thumbFileName = makeThumb($origFileName)) === FALSE) {
+	if (($thumbFileName = makeThumb($origFileName)) === false) {
 		$thumbFileName = IMG_404;
 	}
 

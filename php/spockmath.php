@@ -179,7 +179,7 @@ function getPostQnum() {
 	if (isset($_POST['qnum']) && is_numeric($_POST['qnum']) && $_POST['qnum'] >= 0 && $_POST['qnum'] < count($_SESSION['home']['sada']['otazky']))
 		return $_POST['qnum'];
 	else
-		return FALSE;
+		return false;
 }
 
 function checkHash() {
@@ -189,7 +189,7 @@ function checkHash() {
 function validatePostEdit() {
 	$count = count($_SESSION['home']['sada']['otazky'][$_POST['qnum']]->answer);
 
-	$isOk = TRUE;
+	$isOk = true;
 	for ($i = 1; $i <= $count; $i++) {
 		if (isset($_POST['edit-'.$i])) {
 			$text = $_POST['edit-'.$i];
@@ -235,15 +235,15 @@ function saveQuestion() {
  * return value = success
  */
 function saveQPost() {
-	if (!checkHash() || ($q = getPostQnum()) === FALSE)
-		return FALSE;
+	if (!checkHash() || ($q = getPostQnum()) === false)
+		return false;
 
 	if (!validatePostEdit())
-		return FALSE;
+		return false;
 
 	saveQuestion();
 
-	return TRUE;
+	return true;
 }
 
 function getTemasTree($id = 0) {

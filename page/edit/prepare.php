@@ -16,17 +16,17 @@ function getIdFromQuery() {
 		elseif (is_numeric($id))
 			return (int)$id;
 		else
-			return FALSE;
+			return false;
 	}
 	else
-		return NULL;
+		return null;
 }
 
 //used in render
 $_id = getIdFromQuery();
 
 
-if ($_id === FALSE || (($_id > 0 || $_id < 0) && !questionExists($_id)))
+if ($_id === false || (($_id > 0 || $_id < 0) && !questionExists($_id)))
 	redirect404();
 
 
@@ -97,7 +97,7 @@ function renderQTemas($id) {
 	return $out.'</fieldset>';
 }
 
-function renderAnswer($id, $qid, $typ, $spravna, $data, $data2, $isTemplate = FALSE) {
+function renderAnswer($id, $qid, $typ, $spravna, $data, $data2, $isTemplate = false) {
 	global $AT_STR;
 
 	$out = '<div id="odpoved-'.$id.'" class="odpoved"'.($isTemplate?' style="display: none;"':'').'>';
@@ -161,7 +161,7 @@ function renderAnswers($id) {
 	//$out .= renderAnswer(-2, AT_TEXT, FALSE, "", "", TRUE);
 	//$out .= renderAnswer(-3, AT_TEXT, FALSE, "", "", TRUE);
 
-	$out .= renderAnswer('NEXT_ID', $id, AT_TEXT, FALSE, "", "", TRUE);
+	$out .= renderAnswer('NEXT_ID', $id, AT_TEXT, false, "", "", true);
 
 	$out .= '<div>';
 	$out .= '<a class="button" onclick="editorAddA()">Přidat novou</a>'.PHP_EOL;
