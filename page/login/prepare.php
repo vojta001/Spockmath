@@ -18,7 +18,6 @@ if (!isset($_SERVER['HTTPS']) || !$_SERVER['HTTPS']) {
 	exit;
 }
 
-$cssStyles[] = 'login.css';
 
 function renderUsers() {
 	$out = '<div id="users"><p>Admin sekce</p><span>Seznam uživatelů a hashů jejich hesel</span>';

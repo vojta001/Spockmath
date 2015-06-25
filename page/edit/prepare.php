@@ -31,7 +31,6 @@ if ($_id === FALSE || (($_id > 0 || $_id < 0) && !questionExists($_id)))
 
 
 require PHP_PATH.'spockmath.php';
-$cssStyles[] = 'editor.css';
 
 $jsScripts[] = 'jquery.min.js';
 $jsScripts[] = 'mathquill.min.js';
@@ -93,25 +92,9 @@ function renderQTemas($id) {
 	global $QT_STR;
 
 	$out = '<fieldset id="temata"><legend>Zařazení do témat</legend><ul>';
+	$out .= renderTemasTree(getTemasTree($id), true);
 
-	$predmet = '';
-	foreach (getTemas($id) as $tema) {
-		if ($predmet != $tema->p_jmeno) {
-			if ($predmet)
-				$out .= '</ul></li>';
-
-			$predmet = $tema->p_jmeno;
-			$out .= '<li><span class="predmet">'.$predmet.'</span><ul>';
-		}
-
-		$out .= '<li><label><input type="checkbox" name="tema['.$tema->id.']" '.($tema->cnt?'checked ':'').'/>'.htmlspecialchars($tema->jmeno).'</label><div class="description">'.htmlspecialchars($tema->komentar).'</div></li>';
-	}
-	if ($predmet)
-	$out .= '</ul></li>';
-
-	$out .= '</ul></fieldset>';
-
-	return $out;
+	return $out.'</fieldset>';
 }
 
 function renderAnswer($id, $qid, $typ, $spravna, $data, $data2, $isTemplate = FALSE) {

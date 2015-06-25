@@ -6,7 +6,6 @@ require PHP_PATH.'thumb.php';
 $jsScripts[] = 'jquery.min.js';
 $jsScripts[] = 'mathquill.min.js';
 $cssStyles[] = 'mathquill.css';
-$cssStyles[] = 'home.css';
 
 function addDecimalCodes() {
 	global $jsScripts, $cssStyles;
@@ -137,24 +136,11 @@ function renderSpockQuestion() {
 }
 
 function renderSetParams(){
-	$out = '<div id="temata"><ul>';
+	$out = '';
 
 	$predmet = '';
-	foreach (getTemas() as $tema) {
-		if ($predmet != $tema->p_jmeno) {
-			if ($predmet)
-				$out .= '</ul></li>';
 
-			$predmet = $tema->p_jmeno;
-			$out .= '<li><span class="predmet">'.$predmet.'</span><ul>';
-		}
-
-		$out .= '<li><input type="checkbox" name="tema-'.$tema->id.'" /><span class="name">'.htmlspecialchars($tema->jmeno).'</span><div class="description">'.htmlspecialchars($tema->komentar).'</div></li>';
-	}
-	if ($predmet)
-		$out .= '</ul></li>';
-
-	$out .= '</ul></div>';
+	$out .= renderTemasTree(getTemasTree(), false);
 	//zohlednit defaultSetParams
 	$out .= '<div id="limit"><span>Velikost sady</span><input type="number" name="limit" min="1" max="30" value="10" step="1" /></div>';
 

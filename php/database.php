@@ -3,7 +3,6 @@
 define('DB_OTAZKA', 'otazka');
 define('DB_SADA', 'sada');
 define('DB_TEMA', 'tema');
-define('DB_PREDMET', 'predmet');
 define('DB_ODPOVED', 'odpoved');
 
 $mysqli = new mysqli("localhost", "root", "", "spockmath");
@@ -234,14 +233,19 @@ function getTemas($qId = 0) {
 	$qId = (int)$qId;
 	
 	if ($qId > 0)
-		$sql = 'SELECT p.jmeno AS p_jmeno, t.*, (ot.otazka_id IS NOT NULL) AS cnt FROM `tema` AS t JOIN `predmet` AS p ON t.`pid` = p.`id` LEFT JOIN `otazka_tema` AS ot ON (t.`id` = ot.`tema_id` AND ot.`otazka_id` = '.$qId.') GROUP BY t.`id` ORDER BY t.`pid`';
+		$sql = 'SELECT t.*,
+(SELECT COUNT(*) FROM `otazka_tema` AS ot WHERE ot.tema_id = t.id) AS usage_count,
+EXISTS (SELECT * FROM `otazka_tema` AS ot WHERE ot.tema_id = t.id AND ot.otazka_id = '.$qId.') AS checked
+FROM `tema` AS t';
 	else
-		$sql = 'SELECT p.jmeno AS p_jmeno, t.*, (SELECT COUNT(*) FROM `otazka_tema` AS ot WHERE ot.tema_id = t.id) AS cnt FROM `tema` AS t JOIN `predmet` AS p ON t.pid = p.id GROUP BY t.id ORDER BY t.`pid`';
+		$sql = 'SELECT t.*,
+(SELECT COUNT(*) FROM `otazka_tema` AS ot WHERE ot.tema_id = t.id) AS usage_count
+FROM `tema` AS t';
 
 	$retValue = $mysqli->query($sql);
 	$tema = array();
 	while ($obj = $retValue->fetch_object()) {
-	$tema[] = $obj;
+		$tema[$obj->id] = $obj;
 	}
 	return $tema;
 }
@@ -342,6 +346,17 @@ function answerExists($id, $fid) {
 	} else {
 		return false;
 	}
+}
+
+function temaExists($id) {
+	global $mysqli;
+
+	if (is_int($id)) {
+		$sql = 'SELECT EXISTS(SELECT * FROM tema WHERE id = '.$id.') AS found';
+		$rows = $mysqli->query($sql);
+		return $rows->fetch_object()->found;
+	} else
+		return false;
 }
 
 function insertQ($typ, $comment, $data, $data2, $multi) {
