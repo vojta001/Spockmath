@@ -59,10 +59,10 @@ function renderQInputs($id) {
 
 	$out .= '<input name="qid" type="hidden" value="'.$id.'" />'.PHP_EOL;
 
-	$out .= '<label>Typ otázky: <select name="typ" onchange="editorQTypChange(this.value)">';
+	$out .= '<label for="question-select">Typ otázky: </label><select id="question-select" name="typ" onchange="editorQTypChange(this.value)">';
 	foreach($QT_STR as $key => $typ)
 		$out .= '<option value="'.$key.'"'.($q['typ']==$key?' selected':'').'>'.$typ.'</option>';
-	$out .= '</select></label>'.PHP_EOL;
+	$out .= '</select>'.PHP_EOL;
 	$out .= '<label><input name="multi" type="checkbox" value="multi" '.($q['multi']?'checked ':'').'/>Možno více voleb</label><br />'.PHP_EOL;
 	$out .= '<textarea id="spock-comment" placeholder="Spockův komentář k otázce" name="comment">'.$q['comment'].'</textarea>'.PHP_EOL;
 
@@ -121,10 +121,10 @@ function renderAnswer($id, $qid, $typ, $spravna, $data, $data2, $isTemplate = FA
 	$out .= '<input id="delete-'.$id.'" name="answer['.$id.'][delete]" type="hidden" value="0" />'.PHP_EOL;
 	$out .= '<a class="delete button" onclick="markAForErase(parentNode.id)">X</a>'.PHP_EOL;
 
-	$out .= '<label>Typ odpovědi: <select name="answer['.$id.'][typ]" onchange="editorATypChange(parentNode.id, this.value)">';
+	$out .= '<label for="answer-'.$id.'-select">Typ odpovědi: </label><select id="answer-'.$id.'-select" name="answer['.$id.'][typ]" onchange="editorATypChange(parentNode.id, this.value)">';
 	foreach($AT_STR as $key => $typeName)
 		$out .= '<option value="'.$key.'"'.($typ == $key?' selected':'').'>'.$typeName.'</option>';
-	$out .= '</select></label>'.PHP_EOL;
+	$out .= '</select>'.PHP_EOL;
 
 	$out .= '<label><input name="answer['.$id.'][spravna]" type="checkbox" value="spravna" '.($spravna?'checked ':'').'/>Správná</label>'.PHP_EOL;
 
