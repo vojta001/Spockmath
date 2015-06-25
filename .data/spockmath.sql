@@ -552,19 +552,6 @@ INSERT INTO `otazka_tema` (`otazka_id`, `tema_id`) VALUES
 (6,	3),
 (7,	3);
 
-DROP TABLE IF EXISTS `predmet`;
-CREATE TABLE `predmet` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `jmeno` varchar(255) NOT NULL,
-  `komentar` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
-INSERT INTO `predmet` (`id`, `jmeno`, `komentar`) VALUES
-(1,	'Fyzika',	'Aplikovaná matematika'),
-(2,	'Matematika',	'Aplikovaná fylosofie'),
-(3,	'Informatika',	'Věda a internetech a počítačích');
-
 DROP TABLE IF EXISTS `sada`;
 CREATE TABLE `sada` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -633,20 +620,22 @@ INSERT INTO `sada` (`id`, `datum`, `jmeno`) VALUES
 (84,	'2015-03-13 16:09:33',	'kejn'),
 (85,	'2015-03-13 16:12:13',	'huh');
 
-DROP TABLE IF EXISTS `tema`;
 CREATE TABLE `tema` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `pid` int(11) NOT NULL COMMENT 'predmetid',
+  `pid` int(11) DEFAULT NULL COMMENT 'parentId',
   `jmeno` varchar(255) NOT NULL,
   `komentar` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`),
-  CONSTRAINT `tema_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `predmet` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  CONSTRAINT `tema_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `tema` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 INSERT INTO `tema` (`id`, `pid`, `jmeno`, `komentar`) VALUES
-(1,	2,	'Zlomky',	'Zlomky pro sekundu'),
-(2,	2,	'Geometrie',	'Geometrie z první třídy'),
-(3,	1,	'Jednoduché stroje a veličiny',	'Fyzika pro 1. třídu');
+(1,	5,	'Zlomky',	'Zlomky pro sekundu'),
+(2,	5,	'Geometrie',	'Geometrie z první třídy'),
+(3,	4,	'Jednoduché stroje a veličiny',	'Fyzika pro 1. třídu'),
+(4,	NULL,	'Fyzika',	'Aplikovaná matematika'),
+(5,	NULL,	'Matematika',	''),
+(6,	NULL,	'Informatika',	'');
 
--- 2015-03-14 13:45:16
+-- 2015-06-25 20:00:35

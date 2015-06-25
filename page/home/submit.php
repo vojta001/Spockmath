@@ -68,7 +68,7 @@ elseif (isset($_POST['submit-prev-ro'])) {
 		if (getPosition() > 0)
 			setMovePrev();
 		else
-			setSetState(SADA_SCORE);;
+			setSetState(SADA_SCORE);
 
 		if (isset ($_POST['name']) && is_string($_POST['name']) && trim($_POST['name'])) {
 			if (updateSadaName($_POST['name']))

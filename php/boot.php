@@ -34,15 +34,14 @@ if (!empty($_POST)) {
 	exit;
 }
 
-$jsFileName = JS_PATH.$page.'.js';
-if (file_exists($jsFileName))
-	$jsScripts[] = $jsFileName;
+if (file_exists(JS_FILEPATH.$page.'.js'))
+	$jsScripts[] = $page.'.js';
 
-$cssFileName = CSS_PATH.$page.'.css';
-if (file_exists($cssFileName))
-	$cssStyles[] = $cssFileName;
 
 $cssStyles[] = "style.css";
+
+if (file_exists(CSS_FILEPATH.$page.'.css'))
+	$cssStyles[] = $page.'.css';
 
 
 require 'bubble.php';

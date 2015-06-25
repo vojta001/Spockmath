@@ -17,6 +17,8 @@ define('FILE_ROOT', __DIR__.'/');
 
 define('IMG_FILEPATH', FILE_ROOT.'img/');
 define('IMG_R_FILEPATH', FILE_ROOT.'img/resize1/');
+define('CSS_FILEPATH', FILE_ROOT.'css/');
+define('JS_FILEPATH', FILE_ROOT.'js/');
 
 
 

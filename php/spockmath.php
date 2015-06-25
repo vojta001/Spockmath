@@ -23,7 +23,7 @@ function getChosenTema() {
 	$temas = array();
 
 	foreach (getTemas() as $tema) {
-		if (isset($_POST['tema-'.$tema->id])) $temas[] = $tema->id;
+		if (isset($_POST['tema'][$tema->id])) $temas[] = $tema->id;
 	}
 
 	return $temas;
@@ -37,12 +37,6 @@ function prepareRandomSet($count, $temas) {
 
 	if ($count < 1) {
 		flm("Minimální velikost sady je 1 otázka!", '', MSG_WARNING);
-		return false;
-	}
-
-	$totalQs = getQCountDB();
-	if ($count > $totalQs) {
-		flm("Žádáš větší sadu, než je otázek!", '', MSG_WARNING);
 		return false;
 	}
 
@@ -250,4 +244,51 @@ function saveQPost() {
 	saveQuestion();
 
 	return TRUE;
+}
+
+function getTemasTree($id = 0) {
+	$buffer = getTemas($id);
+	$tree = array();
+	$map = array();
+
+	while (count($buffer)) {
+		foreach ($buffer as $id => $tema) {
+			$map[$tema->id] = $tema;
+			if (!$tema->pid) {
+				$tree[] = $tema;
+				unset($buffer[$id]);
+			}
+			elseif (isset($map[$tema->pid])) {
+				$map[$tema->pid]->childs[] = $tema;
+				unset($buffer[$id]);
+			}
+		}
+	}
+	return $tree;
+}
+
+/**
+ * param $tree  			strom dat (z getTemasTree)
+ * param $teacher_hints     bool, TRUE - zobrazit varování u zaškrtlých ne-bottom checkboxů, FALSE - renrovat jen bottom checkboxy
+ */
+function renderTemasTree($tree, $teacher_hints){
+	$out = '<ul>';
+	foreach ($tree as $node) {
+		$checked = (isset($node->checked) && $node->checked) ? 'checked="checked" ' : '';
+		$out .= '<li>';
+		$text = htmlspecialchars($node->jmeno . (empty($node->komentar)?'':' ('.$node->komentar.')'));
+
+		if ($teacher_hints || (!$teacher_hints && empty($node->childs))) {
+			$extra = empty($node->childs)?'':' class="teacher-forbidden" title="Témata s podtématy nebude možné vybrat!"';
+	        $out .= '<label'.$extra.'><input type="checkbox" name="tema['.$node->id.']" '.$checked.'/>'.$text.'</label>';
+		}
+		else {
+	        $out .= $text;
+		}
+
+		if (!empty($node->childs))
+			$out .= renderTemasTree($node->childs, $teacher_hints);
+		$out .= '</li>';
+	}
+	return $out.'</ul>';
 }
