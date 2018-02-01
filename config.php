@@ -1,7 +1,7 @@
 <?php
 
 ////////////////// WEB DIRECTORY SETUP
-define('WEB_ROOT', '/spock/');
+define('WEB_ROOT', '/');
 //define('WEB_ROOT', '/'); //pro nasazení na webu
 
 define('PHP_PATH', 'php/');
@@ -36,4 +36,4 @@ $favIcon = IMG_PATH.'design/favicon.png';
 define('RELEASE_DEBUG', 1);
 define('RELEASE_PRODUCTION', 2);
 
-$release = RELEASE_DEBUG;
+$release = RELEASE_PRODUCTION;

@@ -27,11 +27,37 @@ function makeThumb($fileName) {
 	$resizePath = dirname($thumbFileName);
 	if (!file_exists($resizePath))
 		mkdir($resizePath, 0777, true);
-	$img = new Imagick();
-	$img->readImage($origFileName);
-	$img->scaleImage(380, 380, true);
-	$img->writeImage($thumbFileName);
-	$img->clear();
+	#$img = new Imagick();
+	#$img->readImage($origFileName);
+	$img = imagecreatefromstring(file_get_contents($origFileName));
+	if ($img === false) {
+		return false;
+	}
+	#$img->scaleImage(380, 380, true);
+	$x = imagesx($img);
+	$y = imagesy($img);
+	if ($x === false || $y === false) {
+		imagedestroy($img);
+		return false;
+	}
+	if ($x > $y) {
+		$scaled = imagescale($img, 380);
+	} else {
+		$scaled = imagescale($img, -1, 380);
+	}
+	imagedestroy($img);
+	if ($scaled === false) {
+		imagedestroy($scaled);
+		return false;
+	}
+	#$img->writeImage($thumbFileName);
+	if (substr($thumbFileName, strlen($thumbFileName) - 2) === "png") {
+		imagepng($scaled, $thumbFileName, 9);
+	} else {
+		imagejpeg($scaled, $thumbFileName, 75);
+	}
+	#$img->clear();
+	imagedestroy($scaled);
 	return $webFileName;
 }
 
