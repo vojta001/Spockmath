@@ -43,6 +43,11 @@ function getRowCount($table) {
 	return ($count = $mysqli->query('SELECT COUNT(*) AS cnt FROM `'.$table.'`')) ? $count->fetch_object()->cnt : false;
 }
 
+function getSubjectCount() {
+	global $mysqli;
+	return ($count = $mysqli->query('SELECT COUNT(*) AS cnt FROM tema WHERE pid IS NULL')) ? $count->fetch_object()->cnt : false;
+}
+
 function getQCountDB() {
 	global $mysqli;
 	$rows = getRowCount(DB_OTAZKA);
