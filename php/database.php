@@ -53,7 +53,7 @@ function getQCountDB() {
 	$rows = getRowCount(DB_OTAZKA);
 
 	if (!$rows) {
-		flm("Woe, nemam asi tabulku `otazka`!<br />Takhle to nebubde fungovat!", '', MSG_ERROR);
+		flm("Woe, nemam asi tabulku `otazka`!<br />Takhle to nebude fungovat!", '', MSG_ERROR);
 		return 0;
 	}
 
